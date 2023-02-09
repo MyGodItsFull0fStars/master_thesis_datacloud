@@ -54,11 +54,27 @@
             
             Both the input vector $x_t$ as well as the previous state $h_{t-1}$ are multiplied with the two separate weight matrices $W^T_{xh}$ and $W^T{hh}$ respectively, combined and fed to the $\tanh$ activation function. Finally, the $\tanh$ function returns the output vector $\hat{y}_t$ at time step $t$.
 
-
         \subsection{RNN Loop Unfolding}
         \label{sec:rnn-loop-unfolding-background}
 
             The loop unfolding will provide a description about how RNN handle sequential data at every time step.
+            As can  e seen in figure \ref{fig:rnn-loop-unfolding}, the model is adding the input at every time step, and generating an output $\hat{y}_i$ for every time step.
+            The weight matrices $W_{hh}$ that are used for every time step for updating the previous state are the same for every time step.
+            The weight matrix $W_{xh}$ is applied to every $x_i$ and is also the same for every time step $i$.
+
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=0.90\textwidth]{figures/rnn_loop_unfolding.drawio.png}
+                \caption{RNN Loop Unfolding}
+                \label{fig:rnn-loop-unfolding}
+            \end{figure}
+            \begin{itemize}
+                \item $x_i$ denotes the input value at time step $i$.
+                \item $\hat{y}_i$ denotes the output value at time step $i$.
+                \item $W_{hh}$ denotes the weight matrix to update the previous state.
+                \item $W_{xh}$ denotes the weight matrix that is applied to the input value at every time step.
+            
+            \end{itemize}
 
         \subsection{Loss Calculation and Weight Updates for RNN}
         \label{sec:loss-calculation-and-weight-updates-for-rnn-background}

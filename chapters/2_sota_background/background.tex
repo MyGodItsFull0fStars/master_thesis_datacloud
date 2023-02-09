@@ -15,6 +15,10 @@
     \section{Recurrent Neural Network}
     \label{sec:rnn-background}
 
+        Recurrent neural networks (RNN) were designed to improve upon the shortcomings of traditional neural networks when dealing with sequential data.
+        A traditional feed-forward neural network is unidirectional, meaning that they have a single direction and hence cannot persist information over a time step $t$.
+        Looping structures are added to a feed-forward neural network that enable the persistance of information about time-series or sequential data. 
+        This is the reason RNN's are known as "recurrent" neural networks.
 
 
     \section{Long-Short Term Memory}
@@ -23,4 +27,4 @@
         \emph{Long-Short Term Memory (LSTM)} are a type of \nameref{sec:rnn-background} but improve upon the shortcomings of regular RNN models.
         LSTMs are best suited for learning long term dependencies in sequential or time-series data.
 
-        The introduction of \emph{self-looping} to produce paths is the main architectural improvement for LSTMs over RNNs. This additional component diminishes the problem of the vanishing gradients problem and enables gradients to flow for a long duration.
+        The introduction of \emph{self-looping} to produce paths is the main architectural improvement for LSTM's over RNN's. This additional component diminishes the problem of the vanishing gradients problem and enables gradients to flow for a long duration.

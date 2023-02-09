@@ -19,12 +19,19 @@
         A traditional feed-forward neural network is unidirectional, meaning that they have a single direction and hence cannot persist information over a time step $t$.
         Looping structures are added to a feed-forward neural network that enable the persistance of information about time-series or sequential data. 
         This is the reason RNN's are known as "recurrent" neural networks.
+        \cite{datacloudToolbox}
 
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[scale=0.5]{figures/FNN_vs_RNN.drawio.png}
+            \caption{Feed-Forward Neural Network vs. RNN}
+            \label{fig:fnn-vs-rnn}
+        \end{figure}
 
     \section{Long-Short Term Memory}
     \label{sec:lstm-background}
 
-        \emph{Long-Short Term Memory (LSTM)} are a type of \nameref{sec:rnn-background} but improve upon the shortcomings of regular RNN models.
+        \emph{Long-Short Term Memory (LSTM)} are a type of \ref{sec:rnn-background} but improve upon the shortcomings of regular RNN models.
         LSTMs are best suited for learning long term dependencies in sequential or time-series data.
 
-        The introduction of \emph{self-looping} to produce paths is the main architectural improvement for LSTM's over RNN's. This additional component diminishes the problem of the vanishing gradients problem and enables gradients to flow for a long duration.
+        The introduction of \emph{self-looping} to produce paths is the main architectural improvement for LSTMs over RNNs. This additional component diminishes the problem of the vanishing gradients problem and enables gradients to flow for a long duration.

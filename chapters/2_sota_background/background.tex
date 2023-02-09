@@ -16,16 +16,25 @@
     \label{sec:rnn-background}
 
         Recurrent neural networks (RNN) were designed to improve upon the shortcomings of traditional neural networks when dealing with sequential data.
-        A traditional feed-forward neural network is unidirectional, meaning that they have a single direction and hence cannot persist information over a time step $t$.
+        A traditional feed-forward neural network (FNN) is unidirectional, meaning that they have a single direction and hence cannot persist information over a time step $t$.
         Looping structures are added to a feed-forward neural network that enable the persistance of information about time-series or sequential data. 
         This is the reason RNN's are known as "recurrent" neural networks.
-        \cite{datacloudToolbox}
-
         \begin{figure}[h!]
             \centering
             \includegraphics[scale=0.5]{figures/FNN_vs_RNN.drawio.png}
-            \caption{Feed-Forward Neural Network vs. RNN}
+            \caption{FNN vs. RNN}
             \label{fig:fnn-vs-rnn}
+        \end{figure}
+        As can be seen in figure \ref{fig:fnn-vs-rnn}, the RNN has an additional loop inside it to persist time-series information. The loop structure enables the RNN to apply a \emph{recurrence relation} at every time step in order to process a sequence.
+        The rectangle containing the "RNN" label is defined as a "recurrent cell".
+        The current cell state seen in figure \ref{fig:fnn-vs-rnn} is denoted as $h_t$, and is defined as $h_t = f_w(h_{t - 1}, x_t)$, where $f_w$ is a function that is parametrized by the weights, $h_{t-1}$ is the previous state and $x_t$ is the input vector at time step $t$. With the addition of $h_{t-1}$, the model is now also taking the previous time step into account when updating the current time step.
+        This workflow of a single RNN cell can be seen in figure \ref{fig:single-rnn-cell}, where the previous cell state $h_{t-1}$ and the current input $x_t$ are used as the input of the recurrent cell, get combined and forwarded to the $tanh$ \emph{activation function}, which returns the output vector $\hat{y}_t$.
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[scale=0.5]{figures/single_rnn_cell.drawio.png}
+            \caption{Single RNN Cell}
+            \label{fig:single-rnn-cell}
         \end{figure}
 
     \section{Long-Short Term Memory}

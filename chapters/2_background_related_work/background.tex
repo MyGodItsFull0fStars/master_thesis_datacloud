@@ -83,15 +83,18 @@
 
             The loss is defined as $L = L_0, L_1, \dots, L_t$
 
-        \subsection{Common Problems of RNNs}
+            The training of an unfolded RNN is done through multiple time steps, as can be seen in figure \ref{fig:rnn-loop-unfolding}. 
+
+        \subsection{Common Problems and Shortcomings of RNNs}
         \label{sec:shortcomings-of-rnns-background}
 
             Regularly experienced problems of RNNs are the exploding or vanishing gradient problems.
             \begin{quote}
                 The motivation behind why they happen is that it is hard to catch long haul conditions as a result of a multiplicative angle that can be dramatically diminishing/expanding regarding the number of layers. \cite{parikhDisadvantagesRNN2021}
             \end{quote}
+            While unfolding, the error gradient is calculated as the sum of all gradient errors across time steps. Therefore, the loss calculation in unfolded RNNs is also known as \emph{backpropagation through time (BPTT)}.
+            Over time while calculating the error gradients the domination of the multiplicative term increases due to the chain rule application. And thus the gradients either explode or vanish.
             These problems occur when the sequence is too long and this may result in the model training with either null weights (i.e. the model won't learn while training) or exploding weights.
-            
             
             \paragraph{Exploding Gradients}
             \label{par:exploding-gradients-background}
@@ -108,6 +111,17 @@
                 This results in the problem of \emph{long term dependency}, were smaller sequences can be remembered and the weights updated accordingly. But for longer sequences, the model will unlikely be able to yield a good prediction performance.
 
                 There are multiple solutions to the Vanishing Gradient problem, such as changing the activation function from $\tanh$ to \emph{Rectified Linear Unit (ReLU)}. Also initialising the weights of the model can solve this problem, though tailored heuristics (such as the \emph{Xavier Weight Initialisation}) should be used to result in omitting the Vanishing Gradients problem and also increase the efficiency of the training. Another solution is to change the architecture of the neural network and adding more complex recurrent units that are mentioned in section \ref{sec:lstm-background}.
+
+            \paragraph{RNNs cannot be Stacked}
+
+            \paragraph{Slow and Complex Training}
+
+                Since RNNs are recurrent one of their fundamental problems is that they require a lot of time for training when compared to FNNs. Additionally, RNNs need to calibrate the previous outputs as well as current inputs into a state change function, which in turn make RNNs harder to implement and customize and more complex to train.
+
+            \paragraph{Difficult to Process Longer Sequences}
+
+                As already mentioned earlier, training RNNs on too long sequences is difficult without taking any measures to improve the prediction performance. This is especially true while using the $tanh$ activation function. 
+                
 
     \section{Long-Short Term Memory}
     \label{sec:lstm-background}

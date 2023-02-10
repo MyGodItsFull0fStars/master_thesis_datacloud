@@ -15,6 +15,7 @@
     \section{Recurrent Neural Network}
     \label{sec:rnn-background}
 
+
         Recurrent neural networks (RNN) were designed to improve upon the shortcomings of traditional neural networks when dealing with sequential data.
         
         
@@ -68,24 +69,45 @@
                 \caption{RNN Loop Unfolding}
                 \label{fig:rnn-loop-unfolding}
             \end{figure}
-            \begin{itemize}
+            \begin{itemize}[label=\textemdash]
                 \item $x_i$ denotes the input value at time step $i$.
                 \item $\hat{y}_i$ denotes the output value at time step $i$.
                 \item $W_{hh}$ denotes the weight matrix to update the previous state.
                 \item $W_{xh}$ denotes the weight matrix that is applied to the input value at every time step.
             \end{itemize}
-            The output vectors $\hat{y}_0, \hat{y}_1, \hat{y}_2, \dots, \hat{y}_t$ can be used to calculate the Loss $L0, L1, L2, \dots, Lt$ at each time step $t$.
+            The output vectors $\hat{y}_0, \hat{y}_1, \hat{y}_2, \dots, \hat{y}_t$ can be used to calculate the separate losses $L_0, L_1, L_2, \dots, L_t$ at each time step $t$.
             % This completes the forward propagation (see \ref{sec:forward-propagation}).
 
         \subsection{Loss Calculation and Weight Updates for RNN}
         \label{sec:loss-calculation-and-weight-updates-for-rnn-background}
 
-            Placeholder
+            The loss is defined as $L = L_0, L_1, \dots, L_t$
 
-        \subsection{Shortcomings of RNNs}
+        \subsection{Common Problems of RNNs}
         \label{sec:shortcomings-of-rnns-background}
+
+            Regularly experienced problems of RNNs are the exploding or vanishing gradient problems.
+            \begin{quote}
+                The motivation behind why they happen is that it is hard to catch long haul conditions as a result of a multiplicative angle that can be dramatically diminishing/expanding regarding the number of layers. \cite{parikhDisadvantagesRNN2021}
+            \end{quote}
+            These problems occur when the sequence is too long and this may result in the model training with either null weights (i.e. the model won't learn while training) or exploding weights.
             
-            Placeholder
+            
+            \paragraph{Exploding Gradients}
+            \label{par:exploding-gradients-background}
+
+                The Exploding Gradients problem occurs when many of the values (i.e. weight matrices, or gradients themselves) involved in the repeated gradient computations are greater than 1. 
+                If this is the case, then gradients become extremely large and optimising them becomes computationally intensive.
+                To solve the Exploding Gradients problem, a process called \emph{Gradient Clipping} is applied, that scales the gradient values to smaller values less than 1.
+
+
+            \paragraph{Vanishing Gradients}
+            \label{par:vanishing-gradients-background}
+
+                The Vanishing Gradients problem occurs when many of the values (i.e. weight matrices or gradients themselves) that are involved in the repeated gradient computations are too small or less than 1. Opposed to the \nameref{par:exploding-gradients-background} problem, the gradients become smaller with each repeated computation of the gradients.
+                This results in the problem of \emph{long term dependency}, were smaller sequences can be remembered and the weights updated accordingly. But for longer sequences, the model will unlikely be able to yield a good prediction performance.
+
+                There are multiple solutions to the Vanishing Gradient problem, such as changing the activation function from $\tanh$ to \emph{Rectified Linear Unit (ReLU)}. Also initialising the weights of the model can solve this problem, though tailored heuristics (such as the \emph{Xavier Weight Initialisation}) should be used to result in omitting the Vanishing Gradients problem and also increase the efficiency of the training. Another solution is to change the architecture of the neural network and adding more complex recurrent units that are mentioned in section \ref{sec:lstm-background}.
 
     \section{Long-Short Term Memory}
     \label{sec:lstm-background}

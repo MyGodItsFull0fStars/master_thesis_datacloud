@@ -15,8 +15,21 @@
     \section{Recurrent Neural Network}
     \label{sec:rnn-background}
 
+        Recurrent Neural Networks (RNNs) are a type of neural network designed to handle sequential data.
+        Opposed to traditional feedforward neural networks, which receive a fixed-sized vector as input and produce a fixed-sized vector as output, 
+        RNNs are able to handle sequences of variable length and produce a hidden state that summarizes information from the entire sequence.
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[scale=0.5]{figures/FNN_vs_RNN.drawio.png}
+            \caption{FNN vs. RNN}
+            \label{fig:fnn-vs-rnn}
+        \end{figure}
+        In an RNN, each unit in the network processes the input sequence one time step at a time, maintaining a hidden state that summarizes information from all previous time steps. At each time step, the hidden state is updated based on both the current input and the hidden state from the previous time step. The hidden state is then used to generate the output for that time step, and the process is repeated for each time step in the sequence.
+        RNNs are used for a variety of tasks, including natural language processing, speech recognition, and video analysis. They can also be used to generate sequences, such as in text generation or music composition.
 
-        Recurrent neural networks (RNN) were designed to improve upon the shortcomings of traditional neural networks when dealing with sequential data.
+        The ability to maintain information across a sequence of inputs makes RNNs a fitting tool for modeling sequential data.
+        Yet, this also results in them being prone to \nameref{par:vanishing-gradients-background} and \nameref{par:exploding-gradients-background}, that make it cumbersome to train the network effectively. 
+        To address these issues, several variants of RNNs have been developed, \nameref{sec:lstm-background} networks and Gated Recurrent Units (GRUs).
         
         
         \subsection{Recurrent Cell Architecture}
@@ -25,12 +38,7 @@
             A traditional feed-forward neural network (FNN) is unidirectional, meaning that they have a single direction and hence cannot persist information over a time step $t$.
             Looping structures are added to a feed-forward neural network that enable the persistance of information about time-series or sequential data. 
             This is the reason RNN's are known as "recurrent" neural networks.
-            \begin{figure}[h!]
-                \centering
-                \includegraphics[scale=0.5]{figures/FNN_vs_RNN.drawio.png}
-                \caption{FNN vs. RNN}
-                \label{fig:fnn-vs-rnn}
-            \end{figure}
+
             As can be seen in figure \ref{fig:fnn-vs-rnn}, the RNN has an additional loop inside it to persist time-series information. The loop structure enables the RNN to apply a \emph{recurrence relation} (see \ref{sec:recurrence-relation-background}) at every time step in order to process a sequence.
 
             The rectangle containing the "RNN" label is defined as a "recurrent cell".
@@ -80,10 +88,23 @@
 
         \subsection{Loss Calculation and Weight Updates for RNN}
         \label{sec:loss-calculation-and-weight-updates-for-rnn-background}
+        
+            The training of an unfolded RNN is done through multiple time steps, as can be seen in figure \ref{fig:rnn-loop-unfolding}.
+            The overall loss is defined as $L = L_0, L_1, \dots, L_t$ and is calculated from the outputs $\hat{y}_0, \hat{y}_1, \dots, \hat{y}_t$  for each time step $t$ in the \emph{forward-propagation} process.
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=0.6\textwidth]{figures/rnn_loss_calculation.drawio.png}
+                \caption{Loss Calculation and Weight Update in RNNs}
+                \label{fig:loss-calculation-weight-update-rnn}
+            \end{figure}
+            Then the total loss $L$ is used to propagate backwards and calculate the \emph{back-propagation} in order to update the weights of the model.
+            This is shown in figure \ref{fig:loss-calculation-weight-update-rnn}, where the black arrows display the forward-propagation step that are accumulated as the total loss $L$, and then the back-propagation shown as the red arrows update the weights by using the partial derivative.
 
-            The loss is defined as $L = L_0, L_1, \dots, L_t$
+            \begin{quote}
+                The central problem that back-propagation solves is the evaluation of the influence of a parameter on a function whose computation involves several elementary \emph{steps}. The solution to this problem is given by the chain rule, but back-propagation exploits the particular form of the functions used at each step (or layer) to provide an elegant and local procedure. \cite{lecunTheoreticalFrameworkBackpropagation1988}
+            \end{quote}
+            Back-propagation is the practice of fine-tuning the weights of a neural network based on the error rate (i.e. loss) obtained in the previous epoch. Proper tuning of the weights ensures lower error rates, making the model reliable by increasing its generalization.
 
-            The training of an unfolded RNN is done through multiple time steps, as can be seen in figure \ref{fig:rnn-loop-unfolding}. 
 
         \subsection{Common Problems and Shortcomings of RNNs}
         \label{sec:shortcomings-of-rnns-background}
@@ -112,8 +133,6 @@
 
                 There are multiple solutions to the Vanishing Gradient problem, such as changing the activation function from $\tanh$ to \emph{Rectified Linear Unit (ReLU)}. Also initialising the weights of the model can solve this problem, though tailored heuristics (such as the \emph{Xavier Weight Initialisation}) should be used to result in omitting the Vanishing Gradients problem and also increase the efficiency of the training. Another solution is to change the architecture of the neural network and adding more complex recurrent units that are mentioned in section \ref{sec:lstm-background}.
 
-            \paragraph{RNNs cannot be Stacked}
-
             \paragraph{Slow and Complex Training}
 
                 Since RNNs are recurrent one of their fundamental problems is that they require a lot of time for training when compared to FNNs. Additionally, RNNs need to calibrate the previous outputs as well as current inputs into a state change function, which in turn make RNNs harder to implement and customize and more complex to train.
@@ -126,25 +145,38 @@
     \section{Long-Short Term Memory}
     \label{sec:lstm-background}
 
-        \emph{Long-Short Term Memory (LSTM)} are a type of \ref{sec:rnn-background} but improve upon the shortcomings of regular RNN models.
-        LSTMs are best suited for learning long term dependencies in sequential or time-series data.
-
-        The introduction of \emph{self-looping} to produce paths is the main architectural improvement for LSTMs over RNNs. This additional component diminishes the problem of the vanishing gradients problem and enables gradients to flow for a long duration.
-
-    % \section{Forward-Propagation}
-    % \label{sec:forward-propagation}
-        
-    %     Placeholder
-
-    % \section{Backward-Propagation}
-
-    % \section{Activation Function}
-
-    % \section{Loss Function}
+        \emph{Long-Short Term Memory (LSTM)} are a type of \nameref{sec:rnn-background} architecture but are designed to improve upon the issues of regular RNN models as are mentioned in \nameref{par:vanishing-gradients-background} and \nameref{par:exploding-gradients-background}. 
+        The main architectural improvement for LSTMs over traditional RNNs is that they have introduced \nameref{sec:self-looping-background} to produce paths, which let gradients flow for a long duration, and thus gradients will not vanish.
+        Compared to RNNs, LSTMs are better suited for learning long term dependencies in sequential or time-series data that have temporal dependence such as natural language processing, speech recognition, music generation and financial prediction.
+        LSTMs are a type of deep learning algorithm that can be trained end-to-end, making them highly flexible and suitable for complex problems where the underlying relationships between input and output are not well understood.
 
 
-    \section{Public Cloud Provider Traces in Available Data}
-    \label{sec:public-cloud-provider-traces-in-available-data-sota}
 
-    \section{Resource Prediction based on Machine Learning}
-    \label{sec:resource-prediction-based-on-machine-learning-sota}
+        \subsection{LSTM Memory Cell Architecture}
+        \label{sec:lstm-memory-cell-architecture-background}
+
+            The LSTM architecture is comprised of a series of memory cells that store information and gate mechanisms that are used to control the flow of information into and out of the cells.
+            Compared to RNN cells, they are more complex and require more computations in general.
+            LSTM memory cells are able to store information for an extended period of time compared to regular RNNs and its \emph{cell state} functions as the memory of the network.
+
+            The key building block in LSTM cells is a gate structure.
+            Each memory cell has gate components that control the flow of information into and out of the cell.
+            Information is either added or removed through these gates.
+            The gate types are as follows:
+
+            \begin{itemize}
+                \item \textbf{Input gate:} This gate determines the flow of new information and how much from the current time step should be added to the cell state.
+                \item \textbf{Forget gate:} This gate determines how much of the previously obtained information should be forgotten in order for the network to maintain a long-term memory of relevant information and discard irrelevant information.
+                \item \textbf{Output gate:} This gate determines what information should be output from the cell state.
+            \end{itemize}
+            The usage of gates to control the information flow allows the LSTM model to selectively remember or forget information, making it well-suited for tasks that require long-term memory.
+            The LSTM architecture implements so called \emph{back-propagation through time (BPTT)}, a variant of back-propagation that allows the gradients to flow backwards through the entire sequence of inputs as can be seen in figure \ref{fig:loss-calculation-weight-update-rnn}.
+
+
+
+        \subsection{Self-Looping}
+        \label{sec:self-looping-background}
+
+                    
+            The introduction of \emph{self-looping} to produce paths is the main architectural improvement for LSTMs over RNNs. This additional component diminishes the problem of the vanishing gradients problem and enables gradients to flow for a long duration.
+

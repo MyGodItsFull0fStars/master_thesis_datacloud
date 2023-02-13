@@ -159,6 +159,7 @@
             Compared to RNN cells, they are more complex and require more computations in general.
             LSTM memory cells are able to store information for an extended period of time compared to regular RNNs and its \emph{cell state} functions as the memory of the network.
 
+            \paragraph{LSTM Gate Structure}
             The key building block in LSTM cells is a gate structure.
             Each memory cell has gate components that control the flow of information into and out of the cell.
             Information is either added or removed through these gates.
@@ -170,7 +171,22 @@
                 \item \textbf{Output gate:} This gate determines what information should be output from the cell state.
             \end{itemize}
             The usage of gates to control the information flow allows the LSTM model to selectively remember or forget information, making it well-suited for tasks that require long-term memory.
-            The LSTM architecture implements so called \emph{back-propagation through time (BPTT)}, a variant of back-propagation that allows the gradients to flow backwards through the entire sequence of inputs as can be seen in figure \ref{fig:loss-calculation-weight-update-rnn}.
+
+            \paragraph{Sigmoid Layer and Pointwise-Multiplication}
+            \label{par:sigmoid-layer-and-pointwise-multiplication}
+                Optionally, information can also be passed through by those gates via a Sigmoid layer and point-wise multiplication as can be seen in figure \ref{fig:sigmoid-layer-and-pointwise-multiplication}.
+                \begin{figure}[h!]
+                    \centering
+                    \includegraphics[width=0.2\textwidth]{figures/sigmoid_layer.drawio.png}
+                    \caption{Sigmoid Layer and Pointwise Multiplication}
+                    \label{fig:sigmoid-layer-and-pointwise-multiplication}
+                \end{figure}
+                The Sigmoid layer is used to map the input to an output in a range of $0$ and $1$, which is used to determine how much of the information is captured while passing through the gate, and how much of the information will be retained while the pass-through.
+                If the Sigmoid output is $0$, no information is kept and if the Sigmoid output is $1$, all information about the input is kept.
+
+            \paragraph{Back-Propagation Through Time}
+            \label{par:back-propagation-through-time}
+                The LSTM architecture implements so called \emph{back-propagation through time (BPTT)}, a variant of back-propagation that allows the gradients to flow backwards through the entire sequence of inputs as can be seen in figure \ref{fig:loss-calculation-weight-update-rnn}.
 
 
 

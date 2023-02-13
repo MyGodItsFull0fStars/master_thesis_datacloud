@@ -141,7 +141,6 @@
 
                 As already mentioned earlier, training RNNs on too long sequences is difficult without taking any measures to improve the prediction performance. This is especially true while using the $tanh$ activation function. 
                 
-
     \section{Long-Short Term Memory}
     \label{sec:lstm-background}
 
@@ -159,21 +158,37 @@
             Compared to RNN cells, they are more complex and require more computations in general.
             LSTM memory cells are able to store information for an extended period of time compared to regular RNNs and its \emph{cell state} functions as the memory of the network.
 
-            \paragraph{LSTM Gate Structure}
+            \subsubsection{LSTM Gate Structure}
+            \label{sec:lstm-gate-structure}
             The key building block in LSTM cells is a gate structure.
             Each memory cell has gate components that control the flow of information into and out of the cell.
             Information is either added or removed through these gates.
+            The usage of gates to control the information flow allows the LSTM model to selectively remember or forget information, making it well-suited for tasks that require long-term memory.
             The gate types are as follows:
 
-            \begin{itemize}
-                \item \textbf{Input gate:} This gate determines the flow of new information and how much from the current time step should be added to the cell state.
-                \item \textbf{Forget gate:} This gate determines how much of the previously obtained information should be forgotten in order for the network to maintain a long-term memory of relevant information and discard irrelevant information.
-                \item \textbf{Output gate:} This gate determines what information should be output from the cell state.
-            \end{itemize}
-            The usage of gates to control the information flow allows the LSTM model to selectively remember or forget information, making it well-suited for tasks that require long-term memory.
+            \paragraph{Input Gate} 
+            
+                This gate determines the flow of new information and how much from the current time step should be added to the cell state.
 
-            \paragraph{Sigmoid Layer and Pointwise-Multiplication}
-            \label{par:sigmoid-layer-and-pointwise-multiplication}
+            \paragraph{Forget Gate}
+
+                This gate determines how much of the previously obtained information should be forgotten in order for the network to maintain a long-term memory of relevant information and discard irrelevant information.
+                The forget gate is denoted by $$f_i^{(t)} = \sigma \left(b_i^f + \sum_{j} U_{i, j}^f x_j^{(t)} + \sum_{j} W_{i, j}^f h_j^{(t - 1)}\right)$$, where $t$ is the time step and $i$ is the memory cell, $x^{(t)}$ is the current input vector, $h^{t}$ is the current hidden state containing the outputs of all the LSTM cells, $b^f$ is the bias, $U^f$ the input weights and $W^f$ the recurrent weights for the forget gates.
+                
+                % which sets the weight value of the forget gate between $0$ and $1$. 
+
+                
+
+            \paragraph{Output Gate}
+
+                The output gate controls what information is being used fo the cell state, and is sent to the network as input for the next time step.
+
+
+
+
+
+            \subsubsection{Sigmoid Layer and Pointwise-Multiplication}
+            \label{sec:sigmoid-layer-and-pointwise-multiplication}
                 Optionally, information can also be passed through by those gates via a Sigmoid layer and point-wise multiplication as can be seen in figure \ref{fig:sigmoid-layer-and-pointwise-multiplication}.
                 \begin{figure}[h!]
                     \centering
@@ -184,10 +199,11 @@
                 The Sigmoid layer is used to map the input to an output in a range of $0$ and $1$, which is used to determine how much of the information is captured while passing through the gate, and how much of the information will be retained while the pass-through.
                 If the Sigmoid output is $0$, no information is kept and if the Sigmoid output is $1$, all information about the input is kept.
 
-            \paragraph{Back-Propagation Through Time}
-            \label{par:back-propagation-through-time}
+            \subsubsection{Back-Propagation Through Time}
+            \label{sec:back-propagation-through-time}
                 The LSTM architecture implements so called \emph{back-propagation through time (BPTT)}, a variant of back-propagation that allows the gradients to flow backwards through the entire sequence of inputs as can be seen in figure \ref{fig:loss-calculation-weight-update-rnn}.
 
+            
 
 
         \subsection{Self-Looping}
@@ -196,3 +212,57 @@
                     
             The introduction of \emph{self-looping} to produce paths is the main architectural improvement for LSTMs over RNNs. This additional component diminishes the problem of the vanishing gradients problem and enables gradients to flow for a long duration.
 
+
+    \subsection{LSTM Learning Process} % working title
+
+        \paragraph{1. Forget Irrelevant History}
+
+            The process of forgetting irrelevant history is done by the forget gates (see \ref{sec:lstm-gate-structure}).
+            This process is beneficial since not all information in a sequence is important. 
+
+        \paragraph{2. Perform Computations and Store Relevant Information}
+
+            The importance of sequential information is decided by the LSTM model, that either keeps information that is relevant to keep or will be discarded by the forget gates in order to be able to store new information.
+            This process is mathematically represented as:
+        
+            $$g_i^{(t)} = \sigma \left(b_i^g + \sum_{j} U_{i, j}^f x_j^{(t)} + \sum_{j} W_{i, j}^g h_j^{(t - 1)}\right)$$
+            The computation of new information is done via the input gates. The internal cell state is updated by the previous hidden state $h^{(t - 1)}$, the current input $x^{(t)}$ and the bias $b^{(t)}$ that are passed to the Sigmoid activation function that weights the value by transforming it between $0$ and $1$ based on how relevant the information is.
+
+
+        \paragraph{3. Self-Loop to Update Internal State}
+        \label{par:self-loop-to-update-internal-state}
+
+            Once enough data was gathered by the model, the self-loop weight $f_i^t$ is used to update the internal state of the model.
+
+            $$s_i^{(t)} = f_i^t s_i^{t - 1} + g_i^t \sigma \left(b_i + \sum_{j} U_{i, j} x_j^{(t)} + \sum_{j} W_{i, j} h_j^{(t - 1)}\right)$$
+            First, point-wise multiplication that was calculated of the previous cell state denoted as $s_i^{(t - 1)}$  is applied. Next, the output of input gate $g_i^t$ with the computation of the biases, input and recurrent weights are calculated and then added to the self-loop weight.
+
+        \paragraph{4. Output Gate}
+
+            In the last step, the output is forwarded by the output gate. This output is also called \emph{hidden state}, that is sent to the next network component and also used for predictions.
+            This hidden state is denoted by $h_i^t$ and has the mathematical representation:
+
+            $$h_i^{(t)} = \tanh \left(s_i^{(t)}\right) \sigma \left(b_i^o + \sum_{j} U_{i, j}^o x_j^{(t)} + \sum_j W_{i, j}^o h_j^{(t - 1)}\right)$$
+            The new cell state that was calculated in \nameref{par:self-loop-to-update-internal-state} is passed to the $\tanh$ activation function. Then is multiplied by the Sigmoid output of the neural network operation that was performed on the input of the current time step and the previous outputs.
+
+    \subsection{Stacked LSTM}
+    \label{sec:stacked-lstm}
+
+        The original LSTM model is comprised of a single hidden LSTM layer and it's output is consumed by a standard feedforward output layer.
+        A stacked LSTM is an extension to this model, and it can be defined as an LSTM model comprised of multiple LSTM layers.
+        An LSTM layer above another layer provides a sequence output rather than a single value output to the LSTM layer below. Each layer contains of multiple memory cells and those layers are stacked onto each other, giving the name to this variant.
+        The usage of stacked LSTM hidden layers is responsible for making the model deeper.
+        The success of neural networks is generally attributed to the increased depth of neural networks in recent years, resulting to be applicable for a wide range of challenging prediction and optimisation problems.
+
+        \begin{quote}
+            [The success of deep neural networks] is commonly attributed to the hierarchy that is introduced due to the several layers.
+            Each layer processes some part of the task we wish to solve, and passes it on to the next.
+            In this sense, the DNN can be seen as a processing pipeline, in which each layer solves a part of the task before passing it on to the next, until finally the last layer provides the output. \cite{hermansTrainingAnalysingDeep2013}
+        \end{quote}
+        The additional hidden layers are understood to recombine the learned representation from prior layers and create new representations at high level of abstraction.
+        Thus, since LSTMs operate on sequential data, the addition of layers adds levels of abstraction of input observations over time.
+
+        \begin{quote}
+            While it is not theoretically clear what is the additional power gained by the deeper architecture, it was observed empirically that deep RNNs work better than shallower ones on some tasks. In particular, Sutskever et al (2014) report that a 4-layer deep architecture was crucial in achieving good machine-translation performance in an encoder-decoder framework. Irsoy and Cardie (2014) also report improved results from moving from a one-layer-BI-RNN to an architecture with several layers. Many other works report results using layered RNN architectures, but do not explicitly compare to 1-layer RNNs. \cite{goldbergPrimerNeuralNetwork2016}
+        \end{quote}
+        While the above quote states that it is not theoretically proven as to why a deeper RNN architecture is beneficial for predictions, stacked LSTMs have become a stable technique for challenging sequence prediction problems.

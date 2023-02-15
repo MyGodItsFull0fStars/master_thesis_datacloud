@@ -9,6 +9,23 @@
   In this section the evaluation setup will be described in detail. 
   This involves what tools and technologies were used and how they were combined in order to evaluate our test cases. Additionally, the \nameref{sec:forecasting-metrics-evaluation-setup} that are used are briefly described since they are crucial for the forecast prediction performance comparisons.
   
+  \subsection{Hardware}
+  \label{sec:hardware}
+
+    The training of the \nameref{sec:lstm-background} model was done on a GPU server provided by ITEC, University Klagenfurt. The server specifications are as follows:
+
+    \begin{center}
+      \begin{tabular}{| l | l |}
+        \hline
+        \textbf{Processor}   &   Intel Xeon Gold 5218 CPU @ 2.30GHz (64 cores) \\ \hline
+        \textbf{GPU}         &   2 x NVIDIA Quadro RTX 8000 GPU (48 GB RAM)    \\ \hline
+        \textbf{Main Memory} &   754 GB                                        \\ \hline
+        \textbf{Operating System} &  Ubuntu Linux 18.04 LTS                    \\ \hline
+
+        \hline
+      \end{tabular}
+      \end{center}
+
   \subsection{Docker}
   \label{sec:docker-evaluation-setup}
 
@@ -16,8 +33,6 @@
     Abstracting applications as containers provide a consistent and reproducible environment, which makes it easier to move applications between development, testing and production environments.
     Containers are often used to package an entire application with all it's dependencies into a single container image that can easily be moved and run on any device with a Docker runtime.
     The docker toolbox provides tools for building, shipping and running containers, including a runtime environment for containers called Docker Engine, Docker Hub (a repository for storing and sharing images) and the Docker CLI to be able to interact with Docker via a command-line interface.
-
-
 
   \subsection{Kubernetes}
   \label{sec:kubernetes-evaluation-setup}
@@ -51,9 +66,24 @@
 
   \subsection{PyTorch}
   \label{sec:pytorch-evaluation-setup}
-  \footnote{https://pytorch.org/}
+    PyTorch\footnote{https://pytorch.org/} is an open-source machine learning library for Python, developed by Facebook's AI Research lab (FAIR). It provides tensor computation (similar to NumPy) with strong support for deep neural networks built on a tape-based autograd system. PyTorch is designed to provide flexibility and ease of use, with a focus on deep learning and neural networks. It can be used for various tasks such as natural language processing, computer vision, and speech recognition.
+    PyTorch also supports deployment on various platforms, including CPUs, GPUs, and TPUs, and has an active community of users and contributors that continue to improve and expand its capabilities.
+  
 
   \subsection{LSTM Model Setup}
+
+
+  \subsection{Weights \& Biases}
+    
+    Weights \& Biases (W\&B)\footnote{https://wandb.ai} is a software company that provides an AI platform for machine learning and deep learning. Their platform provides tools for tracking experiments, visualizing models, and collaborating with team members.
+    The platform provides a centralized repository for all of the information related to a machine learning project, including code, data, models, and results.
+    W\&B offers a range of features to help users better understand their models, including interactive visualizations of model architecture, weight distributions, and training metrics. The platform also provides a suite of tools for tracking experiments, which makes it easy to compare different models and understand the impact of changes to the code or data.
+
+    % The W\&B platform is designed to make it easier for data scientists, machine learning engineers, and researchers to manage the complexity of developing and deploying machine learning models. 
+
+
+    % Overall, W\&B provides a comprehensive solution for machine learning and deep learning development, and can be a valuable tool for organizations looking to streamline their machine learning operations and improve their ability to develop high-quality models.
+  
   \subsection{Forecasting Metrics}
   \label{sec:forecasting-metrics-evaluation-setup}
 
@@ -125,19 +155,9 @@
 
 % Overall, Theil's U-Statistic is a valuable tool for evaluating the accuracy of forecasting models, and for comparing the accuracy of different models relative to a simple, baseline forecast.
     \paragraph{Resource Wastage}
+    \label{par:resource-wastage-metric-evaluation}
       Calculated by subtracting the surface area of allocated - predicted.
 
-  \subsection{Weights \& Biases}
-    
-    Weights \& Biases (W\&B)\footnote{https://wandb.ai} is a software company that provides an AI platform for machine learning and deep learning. Their platform provides tools for tracking experiments, visualizing models, and collaborating with team members.
-    The platform provides a centralized repository for all of the information related to a machine learning project, including code, data, models, and results.
-    W\&B offers a range of features to help users better understand their models, including interactive visualizations of model architecture, weight distributions, and training metrics. The platform also provides a suite of tools for tracking experiments, which makes it easy to compare different models and understand the impact of changes to the code or data.
-
-    % The W\&B platform is designed to make it easier for data scientists, machine learning engineers, and researchers to manage the complexity of developing and deploying machine learning models. 
-
-
-    % Overall, W\&B provides a comprehensive solution for machine learning and deep learning development, and can be a valuable tool for organizations looking to streamline their machine learning operations and improve their ability to develop high-quality models.
-  
 \section{Evaluation Scenarios}
 \label{sec:evaluation-scenarios}
 
@@ -158,7 +178,7 @@
     % Different models?
 
     
-\section{Monitoring}
+% \section{Monitoring}
 
 
 \section{Data Analysis}

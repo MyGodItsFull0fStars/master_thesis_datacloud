@@ -11,8 +11,41 @@
   \subsection{Alibaba Resource Analysis}
   \subsection{LSTM Architecture}
 
+  \lstinputlisting[
+    language=Python, 
+    caption=LSTM Architecture, 
+    label=lst:pmse-python-class,
+    captionpos=b,
+    keywordstyle=\color{blue},
+    frame=single,
+    morekeywords={torch, nn, Module, Tensor, self},
+    backgroundcolor=\color{gray!10!white},
+    breaklines=true,
+    numberstyle=\tiny\color{black},
+    numbers=left,
+    ]{code_samples/lstm_architecture.py}
+
+  
+
 \section{Adaptation}
   \subsection{Resource Prediction}
   % flow chart of resource prediction
   \subsection{DataFrame Scaler}
   \subsection{Penalty Mean Squared Error Loss Function}
+  \label{sec:penalty-mse-loss-function-architecture-and-implementation}
+
+    The \emph{Penalty Mean Squared Error (PMSE) loss function} is a custom loss function based on the commonly used \emph{Mean Squared Error (MSE) loss function}.
+
+    \lstinputlisting[
+      language=Python, 
+      caption=Penalty Mean Squared Error Python Class, 
+      label=lst:pmse-python-class,
+      captionpos=b,
+      keywordstyle=\color{blue},
+      frame=single,
+      morekeywords={torch, nn, Module, Tensor, self},
+      backgroundcolor=\color{gray!10!white},
+      ]{code_samples/pmse.py}
+
+    $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
+

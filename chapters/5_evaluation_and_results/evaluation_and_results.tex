@@ -4,7 +4,10 @@
 % \section{Introduction}
 \section{Evaluation Setup}
 \label{sec:evaluation-setup}
-  How everything was set up (kubernetes, ml,...)
+% How everything was set up (kubernetes, ml,...)
+
+  In this section the evaluation setup will be described in detail. 
+  This involves what tools and technologies were used and how they were combined in order to evaluate our test cases. Additionally, the \nameref{sec:forecasting-metrics-evaluation-setup} that are used are briefly described since they are crucial for the forecast prediction performance comparisons.
   
   \subsection{Docker}
   \label{sec:docker-evaluation-setup}
@@ -42,15 +45,17 @@
   \subsection{Prometheus}
   \label{sec:prometheus-evaluation-setup}
   
-    Prometheus is an open source application used for monitoring and alerting of events and is designed to run across various platforms in a scalable and easily deployable manner.
+    Prometheus\footnote{https://prometheus.io/} is an open source application used for monitoring and alerting of events and is designed to run across various platforms in a scalable and easily deployable manner.
     Same as Netdata it records in real-time, and stores the gathered metrics in a time series database by using a \emph{HTTP pull model}. It also allows real-time alerting via a rule defining configuration and also has a flexible query language called \emph{PromQL}, that enables the retrieval and processing the gathered data. Prometheus has great integration with other tools such as Netdata.
     In the project it is used inside a monitoring master node that is continuously scraping all resources that have Netdata installed for monitoring data. In case a predefined rule is broken at a monitored resource, such as CPU over-allocation, Prometheus triggers an event that notifies ADA-PIPE in order to be able to take measurements.
 
   \subsection{PyTorch}
   \label{sec:pytorch-evaluation-setup}
+  \footnote{https://pytorch.org/}
 
   \subsection{LSTM Model Setup}
-  \subsection{Metrics}
+  \subsection{Forecasting Metrics}
+  \label{sec:forecasting-metrics-evaluation-setup}
 
     Forecasting metrics are measures used to evaluate the accuracy of forecasting models. These metrics are used to compare different models, assess the quality of the forecasts, and identify areas for improvement.
 

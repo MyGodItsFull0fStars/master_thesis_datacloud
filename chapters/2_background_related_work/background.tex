@@ -170,7 +170,7 @@
     \section{Long-Short Term Memory}
     \label{sec:lstm-background}
 
-        \emph{Long-Short Term Memory (LSTM)} are a type of \nameref{sec:rnn-background} architecture but are designed to improve upon the issues of regular RNN models as are mentioned in \nameref{par:vanishing-gradients-background} and \nameref{par:exploding-gradients-background}. 
+        \emph{Long-Short Term Memory (LSTM)} \cite{hochreiterLongShortTermMemory1997} \cite{gravesLongShorttermMemory2012} are a type of \nameref{sec:rnn-background} architecture but are designed to improve upon the issues of regular RNN models as are mentioned in \nameref{par:vanishing-gradients-background} and \nameref{par:exploding-gradients-background}. 
         The main architectural improvement for LSTMs over traditional RNNs is that they have introduced \nameref{sec:self-looping-background} to produce paths, which let gradients flow for a long duration, and thus gradients will not vanish.
         Compared to RNNs, LSTMs are better suited for learning long term dependencies in sequential or time-series data that have temporal dependence such as natural language processing, speech recognition, music generation and financial prediction.
         LSTMs are a type of deep learning algorithm that can be trained end-to-end, making them highly flexible and suitable for complex problems where the underlying relationships between input and output are not well understood.

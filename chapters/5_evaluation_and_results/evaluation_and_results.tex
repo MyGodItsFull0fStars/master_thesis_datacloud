@@ -102,7 +102,7 @@
 
     \paragraph{MAPE}
     \label{par:mape-metrics-evaluation}
-      Mean Absolute Percentage Error (MAPE) is a commonly used metric for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values.
+      Mean Absolute Percentage Error (MAPE) \cite{demyttenaereMeanAbsolutePercentage2016} is a commonly used metric for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values.
       The formula for MAPE is:
 
       $$MAPE = \frac{1}{n} \times \sum \left|\frac{Actual - Predicted}{Actual}\right| \times 100$$
@@ -117,7 +117,7 @@
     \paragraph{sMAPE}
     \label{par:smape-metrics-evaluation}
     
-      Symmetric Mean Absolute Percentage Error (SMAPE) is a metric used for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values, and is symmetrical in that it treats positive and negative errors equally.
+      Symmetric Mean Absolute Percentage Error (SMAPE) \cite{kreinovichHowEstimateForecasting2014} is a metric used for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values, and is symmetrical in that it treats positive and negative errors equally.
       In our evaluation of the prediction performance this is especially useful since both over-, and under-utilisation are present in all prediction variants.
       The formula for SMAPE is:
 
@@ -129,7 +129,7 @@
     \paragraph{RMSE}
     \label{par:rmse-metrics-evaluation}
 
-      Root Mean Squared Error (RMSE) is a metric used for evaluating the accuracy of forecasting models. It measures the average magnitude of the error between the predicted values and the actual values, and provides a useful way to compare the magnitude of the errors in different models.
+      Root Mean Square Error (RMSE) \cite{chaiRootMeanSquare2014} is a metric used for evaluating the accuracy of forecasting models. It measures the average magnitude of the error between the predicted values and the actual values, and provides a useful way to compare the magnitude of the errors in different models.
       The formula for RMSE is:
       $$RMSE = \sqrt{\frac{\sum_{i = 1}^{N}\left(Predicted_i - Actual_i\right)^2}{N}}$$
       where $n$ denotes the number of data points and $Actual$ and $Predicted$ are the actual and predicted values, respectively.

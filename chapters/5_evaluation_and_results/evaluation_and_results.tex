@@ -171,12 +171,18 @@
 
 % the different evaluations I did like task type or batch size
 
-  \subsection{Simple LSTM Model}
-  \label{sec:simple-lstm-model-evaluation-scenarios}
+  \subsection{Simple Feature Set}
+  \label{sec:simple-feature-set-evaluation-scenarios}
+    
+    The simple feature set denotes a \nameref{sec:lstm-background} model that was trained with a feature set that only contains the allocated CPU and memory a user provided for the submitted task as well as the capacity of the worker pool resource the task should be deployed to. Additionally, since LSTMs are designed to handle sequential data, the order of the incoming tasks is also an important information for the model, and thus cannot be randomized as is common for other machine learning algorithms.
 
   \subsection{Adding Task Knowledge}
   \label{sec:adding-task-knowledge-evaluation-scenarios}
 
+    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:simple-feature-set-evaluation-scenarios} also \emph{task knowledge}. This task knowledge refers to the type a task is classified as. The task knowledge was first extracted from the data set and transformed with the \emph{one-hot encoding} \cite{husseinEnhancementPerformanceRandom2021} method. One-hot encoding adds a feature vector to the feature set consisting of $0$ and $1$, where $1$ denotes the type of a task, and the rest of the vector values are $0$ for that task.
+    The additional information about the task type enables the LSTM model to better discern the actual utilisation that is required for each task.
+    The task knowledge also provides information regarding the order of tasks, since patterns of reoccurring tasks also help the model to generate more accurate predictions in theory.
+    
   \subsection{Adding Instance Knowledge}
   \label{sec:adding-instance-knowledge-evaluation-scenarios}
 

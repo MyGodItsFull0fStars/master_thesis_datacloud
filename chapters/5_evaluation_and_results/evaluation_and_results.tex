@@ -188,6 +188,25 @@
     The additional information about the task type enables the LSTM model to better discern the actual utilisation that is required for each task.
     The task knowledge also provides information regarding the order of tasks, since patterns of reoccurring tasks also help the model to generate more accurate predictions in theory.
 
+    \paragraph{CPU Prediction Evaluation}
+    \label{par:cpu-prediction-evaluation-task-knowledge}
+
+      Providing categorical data is able to positively influence the prediction performance of the machine learning model. This is also seen in the predictions of our LSTM model. The additional knowledge about what type of tasks are present in the pipeline enabled the ML model to create more accurate predictions of the CPU utilisation for each task.
+
+      As can be seen in the figure 
+      % \ref{fig:cpu-comparision-no-tasks-vs-tasks} 
+      the CPU utilization could be predicted more accurately if the model was trained with the additional information about which type of task will be allocated onto the system.
+      Compared to the ML model trained without this additional knowledge (further on called NT-model, short for No-Tasks-model), the model trained with task knowledge is able to predict the required allocation on a finer granularity.
+      This is observed in the predictions as more changes in the prediction values occur compared to the NT-model, which often seems to predict an average value over a greater time span rather than predicting the allocation for each task itself.
+      The WT-model is also more sensitive to great utilization spikes and periods of utilization close to zero compared to the NT-model.
+
+    \paragraph{Memory Prediction Evaluation}
+    \label{par:memory-prediction-evaluation-task-knowledge}
+
+      Similar to the prediction of the CPU utilization, the memory utilization was improved if the ML model was trained with additional information about the task type. This enabled the model to achieve more a accurate prediction of the actual memory usage compared to the NT-model.
+
+      This improvement is even more apparent compared to the allocated memory data which heavily over-allocated the required amount of memory. Compared to the NT-model and allocated memory the WT-models predictions are able to reduce the gap between predicted memory utilization and actual memory utilization the furthest.
+
   \subsection{3. Adding Instance Knowledge}
   \label{sec:adding-instance-knowledge-evaluation-scenarios}
 

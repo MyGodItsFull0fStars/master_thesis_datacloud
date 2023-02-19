@@ -10,7 +10,7 @@
 *.lof
 *.log
 *.out
-*.pdf
+main.pdf
 *.synctex.gz
 *.toc
 *.aux

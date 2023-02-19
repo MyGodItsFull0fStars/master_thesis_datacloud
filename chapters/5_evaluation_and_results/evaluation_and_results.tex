@@ -225,11 +225,55 @@
   \subsection{5. Inference Time}
   \label{sec:inference-time-evaluation-scenarios}
 
+
   \subsection{6. Prediction Performance depending on Batch Size}
   \label{sec:prediction-performance-depending-on-batch-size-evaluation-scenarios}
 
     % Different batch sizes
     % Different models?
+
+
+
+  The batch size not only influences the required training time and  on how much sampling data at once the model weights are updated on. The used batch size even has an impact on the prediction performance of the LSTM model.
+    
+  As can be seen in figure 
+  % \ref{fig:comparison-of-500-1000-batch-size}, 
+  
+  the batch size used while training the LSTM model has significant impact on the overall prediction performance.
+  In the figure, the training batches have the sizes 500 (orange dashed line) and 1000 (blue dashed line) elements per batch, the actual CPU utilization is shown as the black line and the CPU cores (in percent) allocated by the user are shown in the green line. While the prediction with a batch size of 500 did overestimate the CPU utilization, it has some great prediction results in the largest utilization spike, where it did come closest to the actual CPU utilization and also corrected the CPU allocation in multiple instances to either correctly use less or more CPU cores for a task.
+  
+  % The training was done on a dataset size of 4000 elements total, which is only a small fraction of the actual dataset size.
+  
+  
+  % \begin{figure}[h!]
+  %     \centering
+  %      \includegraphics[width=\columnwidth]{figures/500_1000bs_comparison.png}
+  %     \caption{CPU Comparison of Batch Sizes 500 and 1000 - Part 1}
+  %     \label{fig:comparison-of-500-1000-batch-size}
+  % \end{figure}
+
+
+  In figure 
+  % \ref{fig:comparison-of-500-1000-batch-size-2},
+   it is shown that the model with a batch size of 1000 is more accurately predicting lower utilization values and its overall bias in the dataset is to predict lower utilization values.
+  The model trained with batch size 500 predicts a higher CPU utilization in general, but also did correctly increase/decrease the CPU utilization if the actual utilization was high/low for a longer period of time.
+
+  The opposite is observed for the model with batch size 1000. 
+  This model is more accurate in predicting short utilization spikes or declines compared to the model with a batch size of 500.
+  
+  % \begin{figure}[h!]
+  %     \centering
+  %      \includegraphics[width=\columnwidth]{figures/500_1000bs_comparison2.png}
+  %     \caption{CPU Comparison of Batch Sizes 500 and 1000 - Part 2}
+  %     \label{fig:comparison-of-500-1000-batch-size-2}
+  % \end{figure}
+
+
+  In figure 
+  % \ref{fig:comparison-of-500-1000-batch-size-mem}, 
+  the prediction of the memory utilization is shown.
+  Opposed to the CPU utilization prediction, in the model trained with the smaller batch size is biased to predict lower values in general, and the model trained with a batch size of 1000 predicted higher utilization values. Also it was able to produce accurate predictions of the memory utilization of tasks.
+  
 
     
 % \section{Monitoring}

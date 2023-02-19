@@ -53,7 +53,11 @@
         In an RNN, each unit in the network processes the input sequence one time step at a time, maintaining a hidden state that summarizes information from all previous time steps. At each time step, the hidden state is updated based on both the current input and the hidden state from the previous time step. The hidden state is then used to generate the output for that time step, and the process is repeated for each time step in the sequence.
         RNNs are used for a variety of tasks, including natural language processing, speech recognition, and video analysis. They can also be used to generate sequences, such as in text generation or music composition.
 
-        The ability to maintain information across a sequence of inputs makes RNNs a fitting tool for modeling sequential data.
+
+        The ability to maintain information across a sequence of inputs makes RNNs a fitting tool for modelling sequential data.
+        \begin{quote}
+            ... recurrent neural networks contain cycles that feed the network activations from a previous time step as inputs to the network to influence predictions at the current time step. These activations are stored in the internal states of the network which can in principle hold long-term temporal contextual information. This mechanism allows RNNs to exploit a dynamically changing contextual window over the input sequence history. \cite{sakLongShortTermMemory2014}
+        \end{quote}
         Yet, this also results in them being prone to \nameref{par:vanishing-gradients-background} and \nameref{par:exploding-gradients-background}, that make it cumbersome to train the network effectively. 
         To address these issues, several variants of RNNs have been developed, \nameref{sec:lstm-background} networks and Gated Recurrent Units (GRUs).
         
@@ -194,7 +198,7 @@
 
             \paragraph{Input Gate} 
             
-                This gate determines the flow of new information and how much from the current time step should be added to the cell state.
+                This gate determines the flow of new information and how much from the current time step should be added to the cell state. The input gate is implemented as a multiplicative gate which protects other units such as the cell state from perturbation by irrelevant input information.
 
             \paragraph{Forget Gate}
 

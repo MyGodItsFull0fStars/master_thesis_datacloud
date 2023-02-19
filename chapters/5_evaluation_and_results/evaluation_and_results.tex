@@ -179,15 +179,27 @@
   \subsection{Adding Task Knowledge}
   \label{sec:adding-task-knowledge-evaluation-scenarios}
 
-    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:simple-feature-set-evaluation-scenarios} also \emph{task knowledge}. This task knowledge refers to the type a task is classified as. The task knowledge was first extracted from the data set and transformed with the \emph{one-hot encoding} \cite{husseinEnhancementPerformanceRandom2021} method. One-hot encoding adds a feature vector to the feature set consisting of $0$ and $1$, where $1$ denotes the type of a task, and the rest of the vector values are $0$ for that task.
+    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:simple-feature-set-evaluation-scenarios} also \emph{task knowledge}. This task knowledge refers to the type a task is classified as. The task knowledge was first extracted from the data set and transformed with the \emph{one-hot encoding} \cite{husseinEnhancementPerformanceRandom2021} method. One-hot encoding adds a feature vector to the feature set consisting of $0$ and $1$, where $1$ denotes the type of a task, and the rest of the vector values are $0$ for that task. This technique is useful when categorical data should be fed to a machine learning model since many model architectures can only handle numerical values, making it necessary to transform strings or other data types to numbers.
+    \begin{quote}
+      One hot encoding is a process of converting categorical data variables so they can be provided to machine learning algorithms to improve predictions. \emph{One hot encoding is a crucial part of feature engineering for machine learning.} \cite{fawcettDataScienceMinutes}
+    \end{quote}
     The additional information about the task type enables the LSTM model to better discern the actual utilisation that is required for each task.
     The task knowledge also provides information regarding the order of tasks, since patterns of reoccurring tasks also help the model to generate more accurate predictions in theory.
-    
+
   \subsection{Adding Instance Knowledge}
   \label{sec:adding-instance-knowledge-evaluation-scenarios}
 
+    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:adding-task-knowledge-evaluation-scenarios} also information about the number of instances that are required to be deployed. While the knowledge about the number of instances is similarity one-hot encoded as is the task knowledge (see \ref{sec:adding-task-knowledge-evaluation-scenarios}), adding one feature vector column for every instance number would have resulted in exploding the feature data set with 800 additional columns, since the minimum instance number is $1$ and the maximum is $800$.
+    For this reason, the feature vector for the one-hot encoded instances were first clustered into $10$ buckets in $50$ iterations by k-means clustering \cite{hartiganAlgorithm136Kmeans1979}.
+
   \subsection{Training with Custom Loss Function}
   \label{sec:training-with-custom-loss-function-evaluation-scenarios}
+
+      As discussed in the previous evaluation scenarios, 
+      additional information regarding a task (see sections \ref{sec:adding-task-knowledge-evaluation-scenarios} and \ref{sec:adding-instance-knowledge-evaluation-scenarios}) will result in closer predictions to the actual value but also the LSTM model is more likely to predict values that are smaller than the actual value.
+      % TODO explain why this is a bad thing
+      
+      Therefore, a custom loss function was designed and implemented (see \nameref{sec:penalty-mse-loss-function-architecture-and-implementation}) to counter the prediction of values lower than the actual value.
 
   \subsection{Inference Time}
   \label{sec:inference-time-evaluation-scenarios}

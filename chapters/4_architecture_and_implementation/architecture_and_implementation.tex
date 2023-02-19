@@ -11,6 +11,16 @@
 
   \subsection{Alibaba Resource Analysis}
   \subsection{LSTM Architecture}
+  \label{sec:lstm-architecture-and-implementation}
+
+    The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python.
+    \begin{figure}
+      \centering
+      \includegraphics[scale=0.5]{figures/current_lstm_model.png}
+      \caption{LSTM Model Architecture}
+      \label{fig:lstm-model-architecture}
+    \end{figure}
+    As can be seen in figure \ref{fig:lstm-model-architecture} the input vector consisting of a pipeline task batch is forwarded to the \emph{initial layer}. This initial layer then creates an internal state and the initial hidden state
 
   % \lstinputlisting[
   %   language=Python, 

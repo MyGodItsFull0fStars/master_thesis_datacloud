@@ -38,6 +38,8 @@
     \section{Prediction of Load}
     \label{sec:prediction-of-load-background}
 
+        User based prediction via domain expertise
+
     \section{Recurrent Neural Network}
     \label{sec:rnn-background}
 
@@ -175,8 +177,11 @@
     \label{sec:lstm-background}
 
         \emph{Long-Short Term Memory (LSTM)} \cite{hochreiterLongShortTermMemory1997} \cite{gravesLongShorttermMemory2012} are a type of \nameref{sec:rnn-background} architecture but are designed to improve upon the issues of regular RNN models as are mentioned in \nameref{par:vanishing-gradients-background} and \nameref{par:exploding-gradients-background}. 
-        The main architectural improvement for LSTMs over traditional RNNs is that they have introduced \nameref{sec:self-looping-background} to produce paths, which let gradients flow for a long duration, and thus gradients will not vanish.
+        The main architectural improvement for LSTMs over traditional RNNs is that they have introduced \nameref{sec:lstm-memory-cell-architecture-background} to produce paths, which let gradients flow for a long duration, and thus gradients will not vanish.
         Compared to RNNs, LSTMs are better suited for learning long term dependencies in sequential or time-series data that have temporal dependence such as natural language processing, speech recognition, music generation and financial prediction.
+        \begin{quote}
+            Hence standard RNNs fail to learn in the presence of time lags greater than 5 – 10 discrete time steps between relevant input events and target signals. The vanishing error problem casts doubt on whether standard RNNs can indeed exhibit significant practical advantages over time window-based feedforward networks. A recent model, “Long Short-Term Memory” (LSTM), is not affected by this problem. LSTM can learn to bridge minimal time lags in excess of 1000 discrete time steps by enforcing constant error flow through “constant error carousels” (CECs) within special units, called cells. \cite{gersLearningForgetContinual2000}
+        \end{quote}
         LSTMs are a type of deep learning algorithm that can be trained end-to-end, making them highly flexible and suitable for complex problems where the underlying relationships between input and output are not well understood.
 
 
@@ -186,15 +191,25 @@
 
             The LSTM architecture is comprised of a series of memory cells that store information and gate mechanisms that are used to control the flow of information into and out of the cells.
             Compared to RNN cells, they are more complex and require more computations in general.
+            The introduction of \emph{self-looping} to produce paths is the main architectural improvement for LSTMs over RNNs. This additional component diminishes the problem of the vanishing gradients problem and enables gradients to flow for a long duration when extended with gate units as is described in the upcoming sections.
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=0.6\textwidth]{figures/lstm_memory_cell.png}
+                \caption{Architecture of a memory cell and it's gate units \cite{hochreiterLongShortTermMemory1997}}
+                \label{fig:architecture-of-a-memory-cell}
+            \end{figure}
             LSTM memory cells are able to store information for an extended period of time compared to regular RNNs and its \emph{cell state} functions as the memory of the network.
+            The architecture of a memory cell and it's gates can be seen in figure \ref{fig:architecture-of-a-memory-cell} that was taken directly from the paper \cite{hochreiterLongShortTermMemory1997}.
+
 
             \subsubsection{LSTM Gate Structure}
             \label{sec:lstm-gate-structure}
-            The key building block in LSTM cells is a gate structure.
-            Each memory cell has gate components that control the flow of information into and out of the cell.
-            Information is either added or removed through these gates.
-            The usage of gates to control the information flow allows the LSTM model to selectively remember or forget information, making it well-suited for tasks that require long-term memory.
-            The gate types are as follows:
+
+                The key building block in LSTM cells is a gate structure.
+                Each memory cell has gate components that control the flow of information into and out of the cell.
+                Information is either added or removed through these gates.
+                The usage of gates to control the information flow allows the LSTM model to selectively remember or forget information, making it well-suited for tasks that require long-term memory.
+                The gate types are as follows:
 
             \paragraph{Input Gate} 
             
@@ -219,6 +234,7 @@
 
             \subsubsection{Sigmoid Layer and Pointwise-Multiplication}
             \label{sec:sigmoid-layer-and-pointwise-multiplication}
+
                 Optionally, information can also be passed through by those gates via a Sigmoid layer and point-wise multiplication as can be seen in figure \ref{fig:sigmoid-layer-and-pointwise-multiplication}.
                 \begin{figure}[h!]
                     \centering
@@ -231,16 +247,13 @@
 
             \subsubsection{Back-Propagation Through Time}
             \label{sec:back-propagation-through-time}
+
                 The LSTM architecture implements so called \emph{back-propagation through time (BPTT)}, a variant of back-propagation that allows the gradients to flow backwards through the entire sequence of inputs as can be seen in figure \ref{fig:loss-calculation-weight-update-rnn}.
 
             
 
 
-        \subsection{Self-Looping}
-        \label{sec:self-looping-background}
 
-                    
-            The introduction of \emph{self-looping} to produce paths is the main architectural improvement for LSTMs over RNNs. This additional component diminishes the problem of the vanishing gradients problem and enables gradients to flow for a long duration.
 
 
     \subsection{LSTM Learning Process} % working title

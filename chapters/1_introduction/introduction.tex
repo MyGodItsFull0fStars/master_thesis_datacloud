@@ -1,6 +1,12 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
+    Modern large scale systems that contain a vast amount of heterogeneous resources require complex workflow sequences in order to functionally operate. Additionally, specific domain knowledge is required to be able to properly map tasks residing on a big data pipeline onto heterogeneous resources. Yet, this often results in a degradation of the performance of the system since research shows that humans tend to over-provision the available resources.
+
+    \begin{quote}
+        In a data center, computing resources such as CPU and memory are usually managed by a resource manager. The resource manager accepts resource requests from users and allocates resources to their applications. A commonly known problem in resource management is that users often request more resources than their applications actually use. This leads to the degradation of overall resource utilization in a data center. \cite{thonglekImprovingResourceUtilization2019}
+    \end{quote}
+
     This chapter covers the introduction of the master thesis.
     First, the motivation and scope of the thesis will be described in section \ref{sec:motivation-and-scope-introduction}.
     Followed by the explanation, what the existing research problems are, that we want to improve upon in section \ref{sec:research-problems-introduction}. Next are the research objectives in section \ref{sec:research-objectives-introduction}, that describe briefly what the gained insights and improvements upon the research problems are. In the section \ref{sec:research-methodology-introduction} the methodology of this thesis is described. And in the section \ref{sec:thesis-outline-introduction} the outline of the thesis briefly describes the structure and content of all subsequent chapters.
@@ -21,6 +27,11 @@
         % this is a test \cite{datacloudAbout}
         \section{Research Problems}
         \label{sec:research-problems-introduction}
+
+            % explain that a subset of the problem is np-hard/complete
+            \begin{quote}
+                In practice, the planned or expected performance of production units often deviates from the actual performance. Most of these deviations are negative, which means that the actual performance is worse than the expected performance. Apparently, expectations about future performances are often too optimistic. \cite{stoopComplexitySchedulingPractice1996}
+            \end{quote}
 
         \section{Research Objectives}
         \label{sec:research-objectives-introduction}

@@ -225,9 +225,14 @@
   \subsection{5. Inference Time}
   \label{sec:inference-time-evaluation-scenarios}
 
+    The evaluation scenario regarding the inference time measures the time that is required for the LSTM model to forward a prediction.
+    The time measurement is done on different batch sizes. This is important to be able to forward the resource utilisation prediction to the scheduler in an acceptable time frame.
+
 
   \subsection{6. Prediction Performance depending on Batch Size}
   \label{sec:prediction-performance-depending-on-batch-size-evaluation-scenarios}
+
+
 
     % Different batch sizes
     % Different models?
@@ -273,7 +278,8 @@
   % \ref{fig:comparison-of-500-1000-batch-size-mem}, 
   the prediction of the memory utilization is shown.
   Opposed to the CPU utilization prediction, in the model trained with the smaller batch size is biased to predict lower values in general, and the model trained with a batch size of 1000 predicted higher utilization values. Also it was able to produce accurate predictions of the memory utilization of tasks.
-  
+  \subsection{7. Machine-Sorted vs. Time-Stamp-Sorted Data}
+  \label{sec:machine-sorted-vs-time-stamp-sorted-data-evaluation-scenarios}
 
     
 % \section{Monitoring}

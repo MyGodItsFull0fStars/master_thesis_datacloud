@@ -6,7 +6,8 @@ class PenaltyMSELoss(torch.nn.Module):
         self.mse = torch.nn.MSELoss()
         self.penalty = penalty
         
-    def forward(self, pred: torch.Tensor, actual: torch.Tensor):
+    def forward(self, pred: torch.Tensor, actual: torch.Tensor) -> torch.Tensor:
         under_alloc_indices = pred < actual
         pred[under_alloc_indices] = pred[under_alloc_indices] - self.penalty
+        
         return self.mse(pred, actual)

@@ -60,7 +60,15 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
       \caption{LSTM Model Architecture}
       \label{fig:lstm-model-architecture}
     \end{figure}
-    As can be seen in figure \ref{fig:lstm-model-architecture} the input vector consisting of a pipeline task batch is forwarded to the \emph{initial layer}. This initial layer then creates an internal state and the initial hidden state
+    As can be seen in figure \ref{fig:lstm-model-architecture} the input vector consisting of a pipeline task batch is forwarded to the \emph{initial layer}. This initial layer then creates an internal state and the initial hidden state depending on the size of the input (the data points in a time series forecasting data batch).
+    The general LSTM prediction model is split into two smaller LSTM components that each predict the utilisation of one resource unit. A resource unit is either the CPU usage or the allocated memory. At creation these LSTM components use the length of the input as the expected input size and quality of the prediction performance heavily depends on the chosen hidden layer size as well as the number of \nameref{sec:stacked-lstm} layers.
+    The final LSTM output of either resource unit is then send to traditional sequential layers that use batch normalisation as the generalisation strategy.
+    % TODO describe batch normalization
+    Afterwards, the output of those sequential layers is concatenated column-wise as a label vector of the form $\left[(cpu_1, mem_1), \dots, (cpu_{bs}, mem_{bs})\right]$ where $bs$ denotes the batch size or number of data points in the batch.
+
+    % TODO Explain ReLU and other layers
+
+
 
   % \lstinputlisting[
   %   language=Python, 

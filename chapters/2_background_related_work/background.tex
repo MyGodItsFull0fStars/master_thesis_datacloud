@@ -48,13 +48,22 @@
         As input data is fed into the model, it adjusts its weights until the model has been fitted appropriately, which occurs as part of the cross validation process.
         Supervised Learning uses a training set to teach models to yield the desired output.  
         This training dataset includes inputs and correct outputs, which allow the model to learn over time. The algorithm measures its accuracy through a loss function, adjusting until the error rate has been sufficiently minimized.
-        Supervised learning can be separated into \emph{classification} and \nameref{sec:regression-supervised-learning-background} problems.
+        A training dataset with $n$ are of the form $\left\{(x_1, y_1), \dots , (x_n, y_n)\right\}$ such that $x_i$ is defined as the \emph{feature vector} of the $i$-th data point and $y_i$ is defined as its label.
+        A supervised learning algorithm will train to learn a function $g$ such that $g: X \rightarrow Y$, where $X$ is the input space and $Y$ is the output space.
+        The function $g$ is often represented as a scoring function $f: X \times Y \rightarrow \mathcal{R}$ such that $g$ is defined as $g(x) = \arg \max f(x, y)$ such that $g$ returns the $y$ value with the highest score.
+        Supervised learning can be separated into \nameref{sec:classification-supervised-learning-background} and \nameref{sec:regression-supervised-learning-background} problems.
 
         In supervised learning for scheduling the objective is to learn parameters of the neural network such that the trained networks can replicate the behaviour of pre-existing scheduling methods, such as mathematical optimisations, search methods, for example \emph{Priority Dispatching Rule (PDR)}, a heuristic rule that assigns jobs to machines based on their priorities while considering the current status fo the system.
+        Supervised learning can also be used for forecast models that predict the resource utilisation or the runtime of tasks.
+        This is done by providing information such as the capacity of a resource, the naive allocation prediction provided by a human and other factors to the feature vector and including the target that is to be predicted to the labels. 
+        The training dataset for this prediction task is usually a time series forecasting dataset.
+        In a time series forecasting dataset, the order of data points is ascending, meaning that the structure and order of the data points is used as an additional information that is used for the prediction.
 
-        % \subsection{Classification}
-        % \label{sec:classification-supervised-learning-background}
+        \subsection{Classification}
+        \label{sec:classification-supervised-learning-background}
 
+            A classification problem is when the output value is a categorical data type, such as "cat" and "dog".
+            This section is added for completeness but won't be discussed further since it serves no purpose for this masters thesis.
         \subsection{Regression}
         \label{sec:regression-supervised-learning-background}
 

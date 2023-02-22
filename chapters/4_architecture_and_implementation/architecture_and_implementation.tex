@@ -93,14 +93,22 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
   \subsection{Penalty Mean Squared Error Loss Function}
   \label{sec:penalty-mse-loss-function-architecture-and-implementation}
 
-    The \emph{Penalty Mean Squared Error (PMSE) loss function} is a custom loss function based on the commonly used \emph{Mean Squared Error (MSE) loss function} \cite{koksoyMultiresponseRobustDesign2006} for regression. Penalty in this loss function refers to increasing the loss of predicted values $\hat{y}_i$ that are lower than the actual value $y_i$.
-    $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
+    The \emph{Penalty Mean Squared Error (PMSE) loss function} is a custom loss function based on the commonly used \emph{Mean Squared Error (MSE) loss function} \cite{koksoyMultiresponseRobustDesign2006}. 
+    Penalty in this loss function refers to increasing the loss of predicted values $\hat{y}_i$ that are lower than the actual value $y_i$.
+
+
+    \begin{def-box}{Mean Squared Error}
+    \label{def:mean-squared-error-theo}
+      The Mean Squared Error measures how close a \nameref{sec:regression-supervised-learning-background} line is to a set of data points. It is a risk function that corresponds to the expected value $y_i$ fo the squared error loss (see \ref{fig:regression-example}). A larger MSE indicates that the data points are widely dispersed around its mean, where a smaller MSE indicates the opposite.
+      The mathematical representation is:
+      $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
+    \end{def-box}
 
     $$Penalty = [0, \infty]$$
     $$\hat{y'}_i = 
     \begin{cases}
-      \hat{y}_i,  & \hat{y}_i >= y_i \\
-      \hat{y}_i - Penalty, & \hat{y}_i < y_i
+      \hat{y}_i - Penalty, & \quad \textrm{if } \hat{y}_i < y_i \\
+      \hat{y}_i,  & \quad \textrm{otherwise}
     \end{cases}$$
 
     $$PMSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y'}_i\right)^2$$

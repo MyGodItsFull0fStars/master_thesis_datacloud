@@ -14,6 +14,7 @@
 \usepackage{graphicx}
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{amsthm}                   % used for theorems
 \usepackage{url}
 \usepackage[final]{pdfpages}          % used to include PDFs 
 
@@ -37,8 +38,21 @@
 \author{Christian Bauer}
 % \date{November 2022}
  
- \usepackage{fancyhdr}
- \usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{listings}
+
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\newenvironment{def-box}[1]{%
+  \tcolorbox[
+    savedelimiter=mybox,
+    savelowerto=\jobname_bspsave2.tex,lowerbox=ignored,
+    colback=black!5!white,colframe=black!75!black,fonttitle=\bfseries,
+    title={#1}]}%
+{\endtcolorbox}
 
 \begin{document}
 

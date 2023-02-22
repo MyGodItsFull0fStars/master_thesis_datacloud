@@ -93,9 +93,23 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
   \subsection{Penalty Mean Squared Error Loss Function}
   \label{sec:penalty-mse-loss-function-architecture-and-implementation}
 
-    The \emph{Penalty Mean Squared Error (PMSE) loss function} is a custom loss function based on the commonly used \emph{Mean Squared Error (MSE) loss function} \cite{koksoyMultiresponseRobustDesign2006}:
-
+    The \emph{Penalty Mean Squared Error (PMSE) loss function} is a custom loss function based on the commonly used \emph{Mean Squared Error (MSE) loss function} \cite{koksoyMultiresponseRobustDesign2006} for regression. Penalty in this loss function refers to increasing the loss of predicted values $\hat{y}_i$ that are lower than the actual value $y_i$.
     $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
+
+    $$Penalty = [0, \infty]$$
+    $$\hat{y'}_i = 
+    \begin{cases}
+      \hat{y}_i,  & \hat{y}_i >= y_i \\
+      \hat{y}_i - Penalty, & \hat{y}_i < y_i
+    \end{cases}$$
+
+    $$PMSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y'}_i\right)^2$$
+
+    
+    The \texttt{PenaltyMSELoss} class inherits from the PyTorch Module package in order to be able to use it as the loss function for the error calculation of the predicted and actual values.
+    The \texttt{PenaltyMSELoss} class constructor has two parameters, the \texttt{self} keyword that is used to access instance parameters, and the \texttt{penalty} parameter, that is expected to be of type \texttt{float}.
+    Inside the class constructor, a \texttt{MSELoss} instance will be created in order to calculate the final loss values based on the mean square error calculation.
+    
 
     \lstinputlisting[
       language=Python, 

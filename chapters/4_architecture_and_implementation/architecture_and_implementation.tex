@@ -1,6 +1,55 @@
 \chapter{Architecture and Implementation}
 \label{ch:architecture-and-implementation}
 
+\section{Third-Party Tools}
+\label{sec:third-party-tools-architecture}
+
+\subsection{Docker}
+\label{sec:docker-evaluation-setup}
+
+  Docker is an open-source platform for automating the deployment of applications inside containers. A container is a standalone executable package that includes everything needed to run a piece of software, including the code, runtime, libraries, environment variables, and system tools.
+  Abstracting applications as containers provide a consistent and reproducible environment, which makes it easier to move applications between development, testing and production environments.
+  Containers are often used to package an entire application with all it's dependencies into a single container image that can easily be moved and run on any device with a Docker runtime.
+  The docker toolbox provides tools for building, shipping and running containers, including a runtime environment for containers called Docker Engine, Docker Hub (a repository for storing and sharing images) and the Docker CLI to be able to interact with Docker via a command-line interface.
+
+\subsection{Kubernetes}
+\label{sec:kubernetes-evaluation-setup}
+  Kubernetes is an open-source platform for automating deployment, scaling, and management of containerized applications. It was originally developed by Google and is now maintained by the Cloud Native Computing Foundation (CNCF).
+  Kubernetes provides a way to manage and organize containers (such as \nameref{sec:docker-evaluation-setup} containers) at scale, making it easier to deploy, update, and maintain applications. It does this by abstracting the underlying infrastructure and providing a unified API for managing containers.
+  Kubernetes helps to automate many of the manual tasks involved in deploying and managing containers, such as scaling up or down the number of replicas of an application, rolling out updates, and managing network and storage resources. It also provides features for scaling and self-healing, allowing your applications to be more robust and resilient.
+  Kubernetes has become a popular platform for deploying cloud-native applications and is widely used by organizations of all sizes across various industries.
+
+  \subsection{NetData}
+  \label{sec:netdata-evaluation-setup}
+
+    Netdata is an open source tool that collects real-time metrics, including CPU usage, disk activity, bandwidth usage and further more.
+    The reason we chose Netdata for monitoring is that it is a lightweight tool mostly written in C, Python and Javascript and it requires minimal resources, which is necessary when monitoring edge devices.
+    One of its major features is that it runs without interrupting any of the applications running on the same device. This is achieved by only using idle CPU cycles while running.
+    Netdata provides an in-browser dashboard to analyse each metric in real time with help of visual representation. As an example, a screenshot was taken of a cloud resource in our system as can be seen in \ref{fig:netdata-dashboard}.
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.95\textwidth]{figures/netdata.png}
+        \caption{Netdata Dashboard Example}
+        \label{fig:netdata-dashboard}
+    \end{figure}
+    Netdata has a vast amount of support for other tools in order to gather data. 
+    One of the supported tools is \nameref{sec:prometheus-evaluation-setup}, which is used to scrape the monitored data from all resources that have Netdata installed.
+
+  \subsection{Prometheus}
+  \label{sec:prometheus-evaluation-setup}
+  
+    Prometheus\footnote{https://prometheus.io/} is an open source application used for monitoring and alerting of events and is designed to run across various platforms in a scalable and easily deployable manner.
+    Same as Netdata it records in real-time, and stores the gathered metrics in a time series database by using a \emph{HTTP pull model}. It also allows real-time alerting via a rule defining configuration and also has a flexible query language called \emph{PromQL}, that enables the retrieval and processing the gathered data. Prometheus has great integration with other tools such as Netdata.
+    In the project it is used inside a monitoring master node that is continuously scraping all resources that have Netdata installed for monitoring data. In case a predefined rule is broken at a monitored resource, such as CPU over-allocation, Prometheus triggers an event that notifies ADA-PIPE in order to be able to take measurements.
+
+
+
+  \subsection{PyTorch}
+  \label{sec:pytorch-evaluation-setup}
+    PyTorch\footnote{https://pytorch.org/} is an open-source machine learning library for Python, developed by Facebook's AI Research lab (FAIR) but is now part of the \emph{Linux Foundation umbrella}. It provides tensor computation (similar to NumPy) with strong support for deep neural networks built on a tape-based autograd system. PyTorch is designed to provide flexibility and ease of use, with a focus on deep learning and neural networks. It can be used for various tasks such as natural language processing, computer vision, and speech recognition.
+    PyTorch also supports deployment on various platforms, including CPUs, GPUs, and TPUs, and has an active community of users and contributors that continue to improve and expand its capabilities.
+  
+
 \section{Architecture of the Software}
 
   \subsection{Adaptation Loop}
@@ -41,26 +90,58 @@ When tasks on resources are well mapped and no action has to be taken for these 
 When the monitoring component detects under-utilization of a resource, tasks of the pipeline are mapped to it to be efficiently utilized. This state is categorized as $S_2$ in the analyser and the action set will be modified to improve the utilization of resources grouped into $S_2$. 
 
 \paragraph*{Resource load over expected parameters $(S_3)$} 
-If a resource is over-utilized, there are multiple options. If it is detected that horizontal scaling solves the over-utilization and the resource instance is capable of being scaled up, it will be reconfigured to be within expected utilization levels. Furthermore, if an ill-defined task is detected and was mapped to a resource that isn't capable to fulfill the computation within a reasonable time frame, this task will be migrated to another resource. 
+If a resource is over-utilized, there are multiple options. If it is detected that horizontal scaling solves the over-utilization and the resource instance is capable of being scaled up, it will be reconfigured to be within expected utilization levels. Furthermore, if an ill-defined task is detected and was mapped to a resource that isn't capable to fulfil the computation within a reasonable time frame, this task will be migrated to another resource. 
 This is categorized as $S_3$ in the analyser, and the action set will be modified, so that resources grouped in $S_3$ will be less utilized with the upcoming updates of the action set. \cite{kimovskiBigDataPipeline2022}
 
 
 \section{Monitoring}
+\label{sec:monitoring-architecture}
 
 \section{Data Preprocessing and Analysis}
+\label{sec:data-preprocessing-and-analysis-architecture}
 
-  \subsection{Alibaba Resource Analysis}
+  \subsection{Feature Selection}
+  \label{sec:feature-selection-data-preprocessing-architecture}
+
+    Feature selection is the process of reducing the number of input variables of a feature set when developing a predictive model.
+    Feature selection is simply the process of selecting and excluding given features without changing them as is done with \emph{dimensionality reduction}.
+    A reduction of the number of input variables is desirable to both reduce reduce the computational cost of training a model and in some cases it also increases the prediction performance of the model.
+
+    % TODO fill with more content?
+
+  
 \section{LSTM Architecture}
 \label{sec:lstm-architecture-and-implementation}
 
-  The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python.
+  The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python. 
   \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.5]{figures/current_lstm_model.png}
     \caption{LSTM Model Architecture}
     \label{fig:lstm-model-architecture}
   \end{figure}
-  As can be seen in figure \ref{fig:lstm-model-architecture} the input vector consisting of a pipeline task batch is forwarded to the \emph{initial layer}. This initial layer then creates an internal state and the initial hidden state depending on the size of the input (the data points in a time series forecasting data batch).
+
+  The LSTM model implementation is called \texttt{UtilizationLSTM} and is of type \texttt{torch.nn.Module}. This is a default parent class for neural networks that are implemented in PyTorch.
+  The class constructor \texttt{\_\_init\_\_()} has four parameters. First is the instance reference \texttt{self} that is used to access functions and variables of an instance
+  Next, is the input size that refers to the number of feature set columns that were selected by the \nameref{sec:feature-selection-data-preprocessing-architecture} process.
+  The hidden size value in the parameters also refers to the hidden layer size of the LSTM model that is used to variate the size of the model and it's capabilities to remember long-term patterns in time series data.
+  Finally, the number of layers refers to how many \nameref{sec:stacked-lstm} layers should be applied.
+  For the \nameref{sec:evaluation-scenarios}, a default of two stacked layers is used. When using two stacked LSTM layers, the size of the hidden layers of the model is doubled.
+
+  Next, the two LSTM models are instantiated in lines 17 and 25 with the parameters from above. One for the prediction of CPU and one for the prediction of memory utilisation. The \texttt{batch\_first} parameter provided to both models defines how the model shall return its estimation, in this implementation, the batch will be returned first, followed by the hidden state and then the internal state.
+  % TODO research if this return value is correct 
+  Then, the sequential layers for both LSTM models are generated by the function shown in \ref{lst:lstm-init-sequential-layer-batchnorm}.
+  % TODO explain batch norm and why it is used
+  % TODO explain ReLU and why it is used
+  \lstinputlisting[
+    language=Python, 
+    caption=LSTM Init Function, 
+    label={lst:lstm-init-function},
+    style=codestyle
+    ]{code_samples/lstm_init.py}
+
+
+  As can be seen in figure \ref{fig:lstm-model-architecture} the input vector consisting of a pipeline task batch is forwarded to the \emph{initial lstm layers}. This step is implemented in the LSTM \texttt{forward} function (see \ref{lst:lstm-forward-function}) in lines 8 and 9. The \texttt{get\_hidden\_internal\_state} (see \ref{lst:lstm-init-internal-hidden-state}) function seen on the right side of the lines 8 and 9 is used to create the initial internal and hidden state based on the time series batch provided as the \texttt{input} for the model.
   The general LSTM prediction model is split into two smaller LSTM components that each predict the utilisation of one resource unit. A resource unit is either the CPU usage or the allocated memory. At creation these LSTM components use the length of the input as the expected input size and quality of the prediction performance heavily depends on the chosen hidden layer size as well as the number of \nameref{sec:stacked-lstm} layers.
   The final LSTM output of either resource unit is then send to traditional sequential layers that use batch normalisation as the generalisation strategy.
   % TODO describe batch normalization
@@ -68,12 +149,7 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
 
   % TODO Explain ReLU and other layers
   
-  \lstinputlisting[
-    language=Python, 
-    caption=LSTM Init Function, 
-    label={lst:lstm-init-function},
-    style=codestyle
-    ]{code_samples/lstm_init.py}
+
 
 
   \lstinputlisting[
@@ -83,20 +159,20 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
     style=codestyle
     ]{code_samples/lstm_forward.py}
 
+  \lstinputlisting[
+    language=Python, 
+    caption=LSTM Initialise Internal and Hidden State, 
+    label={lst:lstm-init-internal-hidden-state},
+    style=codestyle
+    ]{code_samples/lstm_get_hidden_int_state.py}
 
-  % \lstinputlisting[
-  %   language=Python, 
-  %   caption=LSTM Architecture, 
-  %   label=lst:pmse-python-class,
-  %   captionpos=b,
-  %   keywordstyle=\color{blue},
-  %   frame=single,
-  %   morekeywords={torch, nn, Module, Tensor, self},
-  %   backgroundcolor=\color{gray!10!white},
-  %   breaklines=true,
-  %   numberstyle=\tiny\color{black},
-  %   numbers=left,
-  %   ]{code_samples/lstm_architecture.py}
+  \lstinputlisting[
+    language=Python, 
+    caption=LSTM Initialise Sequential Layers with BatchNorm, 
+    label={lst:lstm-init-sequential-layer-batchnorm},
+    style=codestyle
+    ]{code_samples/lstm_init_seq_layer_bn.py}
+
 
   
 

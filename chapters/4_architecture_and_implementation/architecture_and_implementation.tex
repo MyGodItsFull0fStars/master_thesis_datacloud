@@ -54,7 +54,7 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
 \label{sec:lstm-architecture-and-implementation}
 
   The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python.
-  \begin{figure}
+  \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.5]{figures/current_lstm_model.png}
     \caption{LSTM Model Architecture}
@@ -67,7 +67,21 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
   Afterwards, the output of those sequential layers is concatenated column-wise as a label vector of the form $\left[(cpu_1, mem_1), \dots, (cpu_{bs}, mem_{bs})\right]$ where $bs$ denotes the batch size or number of data points in the batch.
 
   % TODO Explain ReLU and other layers
+  
+  \lstinputlisting[
+    language=Python, 
+    caption=LSTM Init Function, 
+    label={lst:lstm-init-function},
+    style=codestyle
+    ]{code_samples/lstm_init.py}
 
+
+  \lstinputlisting[
+    language=Python, 
+    caption=LSTM Forward Function, 
+    label={lst:lstm-forward-function},
+    style=codestyle
+    ]{code_samples/lstm_forward.py}
 
 
   % \lstinputlisting[

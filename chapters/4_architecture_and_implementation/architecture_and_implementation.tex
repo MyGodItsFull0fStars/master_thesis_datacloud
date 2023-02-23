@@ -50,23 +50,23 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
 \section{Data Preprocessing and Analysis}
 
   \subsection{Alibaba Resource Analysis}
-  \subsection{LSTM Architecture}
-  \label{sec:lstm-architecture-and-implementation}
+\section{LSTM Architecture}
+\label{sec:lstm-architecture-and-implementation}
 
-    The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python.
-    \begin{figure}
-      \centering
-      \includegraphics[scale=0.5]{figures/current_lstm_model.png}
-      \caption{LSTM Model Architecture}
-      \label{fig:lstm-model-architecture}
-    \end{figure}
-    As can be seen in figure \ref{fig:lstm-model-architecture} the input vector consisting of a pipeline task batch is forwarded to the \emph{initial layer}. This initial layer then creates an internal state and the initial hidden state depending on the size of the input (the data points in a time series forecasting data batch).
-    The general LSTM prediction model is split into two smaller LSTM components that each predict the utilisation of one resource unit. A resource unit is either the CPU usage or the allocated memory. At creation these LSTM components use the length of the input as the expected input size and quality of the prediction performance heavily depends on the chosen hidden layer size as well as the number of \nameref{sec:stacked-lstm} layers.
-    The final LSTM output of either resource unit is then send to traditional sequential layers that use batch normalisation as the generalisation strategy.
-    % TODO describe batch normalization
-    Afterwards, the output of those sequential layers is concatenated column-wise as a label vector of the form $\left[(cpu_1, mem_1), \dots, (cpu_{bs}, mem_{bs})\right]$ where $bs$ denotes the batch size or number of data points in the batch.
+  The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python.
+  \begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{figures/current_lstm_model.png}
+    \caption{LSTM Model Architecture}
+    \label{fig:lstm-model-architecture}
+  \end{figure}
+  As can be seen in figure \ref{fig:lstm-model-architecture} the input vector consisting of a pipeline task batch is forwarded to the \emph{initial layer}. This initial layer then creates an internal state and the initial hidden state depending on the size of the input (the data points in a time series forecasting data batch).
+  The general LSTM prediction model is split into two smaller LSTM components that each predict the utilisation of one resource unit. A resource unit is either the CPU usage or the allocated memory. At creation these LSTM components use the length of the input as the expected input size and quality of the prediction performance heavily depends on the chosen hidden layer size as well as the number of \nameref{sec:stacked-lstm} layers.
+  The final LSTM output of either resource unit is then send to traditional sequential layers that use batch normalisation as the generalisation strategy.
+  % TODO describe batch normalization
+  Afterwards, the output of those sequential layers is concatenated column-wise as a label vector of the form $\left[(cpu_1, mem_1), \dots, (cpu_{bs}, mem_{bs})\right]$ where $bs$ denotes the batch size or number of data points in the batch.
 
-    % TODO Explain ReLU and other layers
+  % TODO Explain ReLU and other layers
 
 
 
@@ -93,26 +93,45 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
   \subsection{Penalty Mean Squared Error Loss Function}
   \label{sec:penalty-mse-loss-function-architecture-and-implementation}
 
-    The \emph{Penalty Mean Squared Error (PMSE) loss function} is a custom loss function based on the commonly used \emph{Mean Squared Error (MSE) loss function} \cite{koksoyMultiresponseRobustDesign2006}. 
+    The \emph{Penalty Mean Squared Error (PMSE) loss function} is a custom loss function based on the commonly used \emph{Mean Squared Error (MSE) loss function} \cite{koksoyMultiresponseRobustDesign2006} (see \ref{def:mean-squared-error-definition}). 
+    
+    The Mean Squared Error measures how close a \nameref{sec:regression-supervised-learning-background} line is to a set of data points. It is a risk function that corresponds to the expected value $y_i$ fo the squared error loss (see \ref{fig:regression-example}). A larger MSE indicates that the data points are widely dispersed around its mean, where a smaller MSE indicates the opposite.
+
+    \begin{pabox}{Mean Squared Error}
+    \label{def:mean-squared-error-definition}
+      The \emph{mean squared error (MSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of the errors, which is the average squared difference between the actual value $y$ and the estimated values $\hat{y}$.
+
+      $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
+
+      The squaring is critical to reduce the complexity with negative signs. If used as a loss function (criterion), the machine learning algorithm will update it's weights in order to reduce the calculated loss value produced by the MSE loss function.
+    \end{pabox}
+
     Penalty in this loss function refers to increasing the loss of predicted values $\hat{y}_i$ that are lower than the actual value $y_i$.
 
+    \begin{pabox}{Calculation of the Penalised Prediction Value $\hat{y'}_i$}
+    \label{def:calculation-of-the-penalty-value}
 
-    \begin{def-box}{Mean Squared Error}
-    \label{def:mean-squared-error-theo}
-      The Mean Squared Error measures how close a \nameref{sec:regression-supervised-learning-background} line is to a set of data points. It is a risk function that corresponds to the expected value $y_i$ fo the squared error loss (see \ref{fig:regression-example}). A larger MSE indicates that the data points are widely dispersed around its mean, where a smaller MSE indicates the opposite.
-      The mathematical representation is:
-      $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
-    \end{def-box}
+      The penalty is defined as a positive real number ranging from zero to infinity and it's mathematical representation is $Penalty = [0, \infty]$.
+      The penalty value denoted as $Penalty$ is added to a predicted value $\hat{y}_i$ if it is smaller than the actual value $y_i$.
+      The result of this calculation is the updated penalised prediction value $\hat{y'}_i$.
+      This conditional mathematical representation is shown in the following:
+      $$\hat{y'}_i = 
+      \begin{cases}
+        \hat{y}_i + Penalty, & \quad \textrm{if } \hat{y}_i < y_i \\
+        \hat{y}_i,  & \quad \textrm{otherwise}
+      \end{cases}$$
+      Therefore, the more the prediction values are below the actual values, the more the penalty value is applied, and thus the error of a predicted data batch increases.
 
-    $$Penalty = [0, \infty]$$
-    $$\hat{y'}_i = 
-    \begin{cases}
-      \hat{y}_i - Penalty, & \quad \textrm{if } \hat{y}_i < y_i \\
-      \hat{y}_i,  & \quad \textrm{otherwise}
-    \end{cases}$$
+    \end{pabox}
 
-    $$PMSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y'}_i\right)^2$$
+    The custom PMSE was implemented because the more information was included in the feature set while training, the more likely the LSTM model is to predict values that are lower than the actual value (see \nameref{sec:evaluation-scenarios}). Since an estimation lower than the actual value could lead to problems such as a task not finishing in the required time frame, or an \emph{out of memory} exception, that not only interrupts the system to terminate the task, but could also lead to system failure. This is the reason why a penalty is added to the predicted value in case of being lower than the actual value. With this measure in place, the LSTM model is more likely to predict values that are higher than the actual value. While this might introduce resource wastage, it is still preferable to an unstable system configuration.
 
+    \begin{pabox}{Penalty Mean Squared Error}
+      \label{def:penalty-mean-squared-error-definition}
+      $$PMSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y'}_i\right)^2$$
+
+    \end{pabox}
+    
     
     The \texttt{PenaltyMSELoss} class inherits from the PyTorch Module package in order to be able to use it as the loss function for the error calculation of the predicted and actual values.
     The \texttt{PenaltyMSELoss} class constructor has two parameters, the \texttt{self} keyword that is used to access instance parameters, and the \texttt{penalty} parameter, that is expected to be of type \texttt{float}.

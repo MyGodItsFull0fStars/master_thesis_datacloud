@@ -18,16 +18,8 @@
 \usepackage{url}
 \usepackage[final]{pdfpages}          % used to include PDFs 
 
-% \usepackage{transparent}
-% \usepackage{trimspaces}               % required for SVG package
-% \usepackage{svg}  % used to include SVGs
-
 \usepackage{xcolor}                    % Creates coloured text and background
 \usepackage[colorlinks=true, urlcolor=cyan, filecolor=green, linkcolor=blue]{hyperref} 
-% \usepackage[colorlinks=true,
-% 		     allcolors=black]{hyperref} 
-\usepackage{hyperref}
-%  \usepackage{titling}
 
 \usepackage{graphicx, float, caption}          % used for placement of figures
 
@@ -53,6 +45,14 @@
     colback=black!5!white,colframe=black!75!black,fonttitle=\bfseries,
     title={#1}]}%
 {\endtcolorbox}
+
+\newtcolorbox[auto counter,number within=section]{pabox}[2][]{%
+  colback=black!5!white,
+  colframe=gray!60!cyan,
+  fonttitle=\bfseries,
+  title=Definition~\thetcbcounter: #2,#1}
+
+
 
 \begin{document}
 

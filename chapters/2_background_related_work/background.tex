@@ -134,11 +134,14 @@
                 \label{fig:single-rnn-cell}
             \end{figure}
 
-            The recurrence relation in a more mathematical notation is:
-
-            $$h_t = \tanh(W^T_{hh} h_{t-1} + W^T_{xh} x_t)$$
             
-            Both the input vector $x_t$ as well as the previous state $h_{t-1}$ are multiplied with the two separate weight matrices $W^T_{xh}$ and $W^T{hh}$ respectively, combined and fed to the $\tanh$ activation function. Finally, the $\tanh$ function returns the output vector $\hat{y}_t$ at time step $t$.
+            \begin{pabox}{Recurrence Relation}
+                \label{def:lstm-recurrence-relation-definition}
+                The recurrence relation in a more mathematical notation is:
+                $$h_t = \tanh(W^T_{hh} h_{t-1} + W^T_{xh} x_t)$$
+                Both the input vector $x_t$ as well as the previous state $h_{t-1}$ are multiplied with the two separate weight matrices $W^T_{xh}$ and $W^T{hh}$ respectively, combined and fed to the $\tanh$ activation function. Finally, the $\tanh$ function returns the output vector $\hat{y}_t$ at time step $t$.
+            \end{pabox}
+            
 
         \subsection{RNN Loop Unfolding}
         \label{sec:rnn-loop-unfolding-background}
@@ -263,7 +266,10 @@
             \paragraph{Forget Gate}
 
                 This gate determines how much of the previously obtained information should be forgotten in order for the network to maintain a long-term memory of relevant information and discard irrelevant information.
-                The forget gate is denoted by $$f_i^{(t)} = \sigma \left(b_i^f + \sum_{j} U_{i, j}^f x_j^{(t)} + \sum_{j} W_{i, j}^f h_j^{(t - 1)}\right)$$, where $t$ is the time step and $i$ is the memory cell, $x^{(t)}$ is the current input vector, $h^{t}$ is the current hidden state containing the outputs of all the LSTM cells, $b^f$ is the bias, $U^f$ the input weights and $W^f$ the recurrent weights for the forget gates.
+                \begin{pabox}{Forget Gate}
+                    \label{def:lstm-forget-gate-definition}
+                    The forget gate is denoted by $$f_i^{(t)} = \sigma \left(b_i^f + \sum_{j} U_{i, j}^f x_j^{(t)} + \sum_{j} W_{i, j}^f h_j^{(t - 1)}\right)$$ where $t$ is the time step and $i$ is the memory cell, $x^{(t)}$ is the current input vector, $h^{t}$ is the current hidden state containing the outputs of all the LSTM cells, $b^f$ is the bias, $U^f$ the input weights and $W^f$ the recurrent weights for the forget gates.
+                \end{pabox}
                 
                 % which sets the weight value of the forget gate between $0$ and $1$. 
 
@@ -310,8 +316,10 @@
 
             The importance of sequential information is decided by the LSTM model, that either keeps information that is relevant to keep or will be discarded by the forget gates in order to be able to store new information.
             This process is mathematically represented as:
-        
+
             $$g_i^{(t)} = \sigma \left(b_i^g + \sum_{j} U_{i, j}^f x_j^{(t)} + \sum_{j} W_{i, j}^g h_j^{(t - 1)}\right)$$
+
+        
             The computation of new information is done via the input gates. The internal cell state is updated by the previous hidden state $h^{(t - 1)}$, the current input $x^{(t)}$ and the bias $b^{(t)}$ that are passed to the Sigmoid activation function that weights the value by transforming it between $0$ and $1$ based on how relevant the information is.
 
 

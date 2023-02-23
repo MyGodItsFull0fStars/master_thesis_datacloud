@@ -315,12 +315,18 @@
         \paragraph{2. Perform Computations and Store Relevant Information}
 
             The importance of sequential information is decided by the LSTM model, that either keeps information that is relevant to keep or will be discarded by the forget gates in order to be able to store new information.
-            This process is mathematically represented as:
+            
+            \begin{pabox}{Forget Gate}
 
-            $$g_i^{(t)} = \sigma \left(b_i^g + \sum_{j} U_{i, j}^f x_j^{(t)} + \sum_{j} W_{i, j}^g h_j^{(t - 1)}\right)$$
+                This process is mathematically represented as:
+
+                $$g_i^{(t)} = \sigma \left(b_i^g + \sum_{j} U_{i, j}^f x_j^{(t)} + \sum_{j} W_{i, j}^g h_j^{(t - 1)}\right)$$
+
+                The computation of new information is done via the input gates. The internal cell state is updated by the previous hidden state $h^{(t - 1)}$, the current input $x^{(t)}$ and the bias $b^{(t)}$ that are passed to the Sigmoid activation function that weights the value by transforming it between $0$ and $1$ based on how relevant the information is.
+                
+            \end{pabox}
 
         
-            The computation of new information is done via the input gates. The internal cell state is updated by the previous hidden state $h^{(t - 1)}$, the current input $x^{(t)}$ and the bias $b^{(t)}$ that are passed to the Sigmoid activation function that weights the value by transforming it between $0$ and $1$ based on how relevant the information is.
 
 
         \paragraph{3. Self-Loop to Update Internal State}

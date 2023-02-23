@@ -4,16 +4,9 @@ class UtilizationLSTM(torch.nn.Module):
         ...
 
     def forward(self, input: torch.Tensor) -> torch.Tensor:
-        if self.lstm_mode == 'full':
-            cpu_input, mem_input = input, input
-        elif self.lstm_mode == 'split':
-            cpu_input, mem_input = self.split_input(input)
-
         # Propagate input through LSTM
-        _, (cpu_ht, _) = self.cpu_lstm(cpu_input,
-                                       self.get_hidden_internal_state(input))
-        _, (mem_ht, _) = self.mem_lstm(mem_input,
-                                       self.get_hidden_internal_state(input))
+        _, (cpu_ht, _) = self.cpu_lstm(input, self.get_hidden_internal_state(input))
+        _, (mem_ht, _) = self.mem_lstm(input, self.get_hidden_internal_state(input))
                
         # Reshaping the data for the Dense layer
         cpu_ht = cpu_ht.view(-1, self.hidden_size)

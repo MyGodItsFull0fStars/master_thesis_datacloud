@@ -112,41 +112,55 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
     \label{def:calculation-of-the-penalty-value}
 
       The penalty is defined as a positive real number ranging from zero to infinity and it's mathematical representation is $Penalty = [0, \infty]$.
-      The penalty value denoted as $Penalty$ is added to a predicted value $\hat{y}_i$ if it is smaller than the actual value $y_i$.
+      The penalty value denoted as $Penalty$ is subtracted from a predicted value $\hat{y}_i$ if it is smaller than the actual value $y_i$. A subtraction is required to further increase the distance between the actual value and the (under-allocated) predicted value.
       The result of this calculation is the updated penalised prediction value $\hat{y'}_i$.
       This conditional mathematical representation is shown in the following:
       $$\hat{y'}_i = 
       \begin{cases}
-        \hat{y}_i + Penalty, & \quad \textrm{if } \hat{y}_i < y_i \\
+        \hat{y}_i - Penalty, & \quad \textrm{if } \hat{y}_i < y_i \\
         \hat{y}_i,  & \quad \textrm{otherwise}
       \end{cases}$$
       Therefore, the more the prediction values are below the actual values, the more the penalty value is applied, and thus the error of a predicted data batch increases.
 
     \end{pabox}
 
-    The custom PMSE was implemented because the more information was included in the feature set while training, the more likely the LSTM model is to predict values that are lower than the actual value (see \nameref{sec:evaluation-scenarios}). Since an estimation lower than the actual value could lead to problems such as a task not finishing in the required time frame, or an \emph{out of memory} exception, that not only interrupts the system to terminate the task, but could also lead to system failure. This is the reason why a penalty is added to the predicted value in case of being lower than the actual value. With this measure in place, the LSTM model is more likely to predict values that are higher than the actual value. While this might introduce resource wastage, it is still preferable to an unstable system configuration.
+    The custom PMSE was implemented because the more information was included in the feature set while training, the more likely the LSTM model is to predict values that are lower than the actual value (see \nameref{sec:evaluation-scenarios}). Since an estimation lower than the actual value could lead to problems such as a task not finishing in the required time frame, or an \emph{out of memory} exception, that not only interrupts the system to terminate the task, but could also lead to system failure. This is the reason why a penalty is added to the predicted value in case of being lower than the actual value. With this measure in place, the LSTM model is more likely to predict values that are higher than the actual value. While this might introduce resource wastage, it is still preferable to introduce some resource wastage than providing an unstable system configuration.
 
     \begin{pabox}{Penalty Mean Squared Error}
       \label{def:penalty-mean-squared-error-definition}
+      The \emph{penalty mean squared error (PMSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of errors similar to \emph{mean squared error} but also applies a penalty to estimated values $\hat{y}_i$ that are lower than the actual value $y_i$ (see \ref{def:calculation-of-the-penalty-value}). 
+      The mathematical representation of PMSE is:
       $$PMSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y'}_i\right)^2$$
-
+      As can be seen, it is similar to the representation of MSE (see \ref{def:mean-squared-error-definition}), but uses a modified estimated value $\hat{y'}_i$ that was penalised before the calculation.
     \end{pabox}
-    
-    
+
     The \texttt{PenaltyMSELoss} class inherits from the PyTorch Module package in order to be able to use it as the loss function for the error calculation of the predicted and actual values.
-    The \texttt{PenaltyMSELoss} class constructor has two parameters, the \texttt{self} keyword that is used to access instance parameters, and the \texttt{penalty} parameter, that is expected to be of type \texttt{float}.
-    Inside the class constructor, a \texttt{MSELoss} instance will be created in order to calculate the final loss values based on the mean square error calculation.
+    The \texttt{PenaltyMSELoss} class constructor (see listing \ref{lst:pmse-python-class} line 4) has two parameters, the \texttt{self} keyword that is used to access instance parameters, and the \texttt{penalty} parameter, that is expected to be of type \texttt{float}.
+    Inside the class constructor, a \texttt{MSELoss} instance (line 6) will be created in order to calculate the final loss values based on the mean square error calculation.
+
+    The \texttt{forward} function (see \ref{lst:pmse-python-class} line 9) is used to calculate the loss between the estimation (denoted as \texttt{pred}) and actual values (denoted as \texttt{actual}). Both the estimation and actual values are represented as PyTorch tensors, a multi-dimensional matrix that contains the elements of a single data type, in this case floating point numbers.
+    In line 10 the indices of all predictions smaller than the actual values that would result in an under-allocation of resources are stored in a \texttt{boolean} array.
+    This array is then used in line 11 to update all values that match the indices stored in the array by subtracting the penalty value.
+    After updating all predicted values both tensors are then forwarded to the mean squared error function in line 13, that does the final calculation of the loss.
     
 
+    % \lstinputlisting[
+    %   language=Python, 
+    %   caption=Penalty Mean Squared Error Python Class, 
+    %   label=lst:pmse-python-class,
+    %   captionpos=b,
+    %   keywordstyle=\color{blue},
+    %   frame=single,
+    %   morekeywords={torch, nn, Module, Tensor, self},
+    %   backgroundcolor=\color{gray!10!white},
+    %   numbers=left, 
+    %   numberstyle=\tiny\color{gray},
+    %   ]{code_samples/pmse.py}
     \lstinputlisting[
       language=Python, 
       caption=Penalty Mean Squared Error Python Class, 
-      label=lst:pmse-python-class,
-      captionpos=b,
-      keywordstyle=\color{blue},
-      frame=single,
-      morekeywords={torch, nn, Module, Tensor, self},
-      backgroundcolor=\color{gray!10!white},
+      label={lst:pmse-python-class},
+      style=codestyle
       ]{code_samples/pmse.py}
 
 

@@ -46,12 +46,30 @@
     title={#1}]}%
 {\endtcolorbox}
 
-\newtcolorbox[auto counter,number within=section]{pabox}[2][]{%
+\newtcolorbox[auto counter]{pabox}[2][]{%
+% \newtcolorbox[auto counter,number within=section]{pabox}[2][]{%
   colback=black!5!white,
   colframe=gray!60!cyan,
   fonttitle=\bfseries,
   title=Definition~\thetcbcounter: #2,#1}
 
+\lstdefinestyle{codestyle}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=single,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue!40!black},
+  backgroundcolor=\color{gray!10!white},
+  captionpos=b,
+  % keywordstyle=\color{blue},
+  frame=single,
+  morekeywords={torch, nn, Module, Tensor, self},
+  % backgroundcolor=\color{gray!10!white},
+  numbers=left, 
+  numberstyle=\tiny\color{gray},
+}
 
 
 \begin{document}

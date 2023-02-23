@@ -95,11 +95,11 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
 
     The \emph{Penalty Mean Squared Error (PMSE) loss function} is a custom loss function based on the commonly used \emph{Mean Squared Error (MSE) loss function} \cite{koksoyMultiresponseRobustDesign2006} (see \ref{def:mean-squared-error-definition}). 
     
-    The Mean Squared Error measures how close a \nameref{sec:regression-supervised-learning-background} line is to a set of data points. It is a risk function that corresponds to the expected value $y_i$ fo the squared error loss (see \ref{fig:regression-example}). A larger MSE indicates that the data points are widely dispersed around its mean, where a smaller MSE indicates the opposite.
+    The Mean Squared Error metric measures how close a \nameref{sec:regression-supervised-learning-background} line is to a set of data points. It is a risk function that corresponds to the expected value $y_i$ fo the squared error loss (see \ref{fig:regression-example}). A larger MSE indicates that the data points are widely dispersed around its mean, where a smaller MSE indicates the opposite.
 
     \begin{pabox}{Mean Squared Error}
     \label{def:mean-squared-error-definition}
-      The \emph{mean squared error (MSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of the errors, which is the average squared difference between the actual value $y$ and the estimated values $\hat{y}$.
+      The \emph{Mean Squared Error (MSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of the errors, which is the average squared difference between the actual value $y$ and the estimated values $\hat{y}$.
 
       $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
 
@@ -128,7 +128,7 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
 
     \begin{pabox}{Penalty Mean Squared Error}
       \label{def:penalty-mean-squared-error-definition}
-      The \emph{penalty mean squared error (PMSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of errors similar to \emph{mean squared error} but also applies a penalty to estimated values $\hat{y}_i$ that are lower than the actual value $y_i$ (see \ref{def:calculation-of-the-penalty-value}). 
+      The \emph{Penalty Mean Squared Error (PMSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of errors similar to \emph{mean squared error} but also applies a penalty to estimated values $\hat{y}_i$ that are lower than the actual value $y_i$ (see \ref{def:calculation-of-the-penalty-value}). 
       The mathematical representation of PMSE is:
       $$PMSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y'}_i\right)^2$$
       As can be seen, it is similar to the representation of MSE (see \ref{def:mean-squared-error-definition}), but uses a modified estimated value $\hat{y'}_i$ that was penalised before the calculation.
@@ -142,20 +142,7 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
     In line 10 the indices of all predictions smaller than the actual values that would result in an under-allocation of resources are stored in a \texttt{boolean} array.
     This array is then used in line 11 to update all values that match the indices stored in the array by subtracting the penalty value.
     After updating all predicted values both tensors are then forwarded to the mean squared error function in line 13, that does the final calculation of the loss.
-    
 
-    % \lstinputlisting[
-    %   language=Python, 
-    %   caption=Penalty Mean Squared Error Python Class, 
-    %   label=lst:pmse-python-class,
-    %   captionpos=b,
-    %   keywordstyle=\color{blue},
-    %   frame=single,
-    %   morekeywords={torch, nn, Module, Tensor, self},
-    %   backgroundcolor=\color{gray!10!white},
-    %   numbers=left, 
-    %   numberstyle=\tiny\color{gray},
-    %   ]{code_samples/pmse.py}
     \lstinputlisting[
       language=Python, 
       caption=Penalty Mean Squared Error Python Class, 

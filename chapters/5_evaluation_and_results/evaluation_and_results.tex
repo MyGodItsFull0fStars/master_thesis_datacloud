@@ -75,9 +75,9 @@
       Mean Absolute Percentage Error (MAPE) \cite{demyttenaereMeanAbsolutePercentage2016} is a commonly used metric for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values.
       The formula for MAPE is:
 
-      \begin{definition}{Mean Absolute Percentage Error}
+      \begin{pabox}{Mean Absolute Percentage Error}
         $$MAPE = \frac{1}{n} \times \sum \left|\frac{Actual - Predicted}{Actual}\right| \times 100$$
-      \end{definition}
+      \end{pabox}
       where $n$ denotes the number of data points and $Actual$ and $Predicted$ are the actual and predicted values, respectively.
       MAPE provides a percentage error, which makes it easy to interpret and compare the accuracy of forecasting models. 
       
@@ -93,7 +93,9 @@
       In our evaluation of the prediction performance this is especially useful since both over-, and under-utilisation are present in all prediction variants.
       The formula for SMAPE is:
 
-      $$sMAPE = \frac{1}{n} \times \sum \left|\frac{Actual - Predicted}{\left(Actual + Predicted\right) \div 2}\right| \times 100$$
+      \begin{pabox}{Symmetric Mean Absolute Percentage Error}
+        $$sMAPE = \frac{1}{n} \times \sum \left|\frac{Actual - Predicted}{\left(Actual + Predicted\right) \div 2}\right| \times 100$$
+      \end{pabox}
       where $n$ denotes the number of data points and $Actual$ and $Predicted$ are the actual and predicted values, respectively.
       sMAPE provides a percentage error similar to \nameref{par:mape-metrics-evaluation}, which makes it easy to interpret and compare the accuracy of forecasting models. Unlike MAPE, sMAPE is symmetrical, since it doesn't become undefined when the actual value is zero, and another difference is that it is less sensitive to outliers.
       Overall, sMAPE is a useful metric for evaluating the accuracy of forecasting models and can provide valuable information for understanding the relative magnitude of the errors in the predictions.
@@ -103,7 +105,9 @@
 
       Root Mean Square Error (RMSE) \cite{chaiRootMeanSquare2014} is a metric used for evaluating the accuracy of forecasting models. It measures the average magnitude of the error between the predicted values and the actual values, and provides a useful way to compare the magnitude of the errors in different models.
       The formula for RMSE is:
-      $$RMSE = \sqrt{\frac{\sum_{i = 1}^{N}\left(Predicted_i - Actual_i\right)^2}{N}}$$
+      \begin{pabox}{Root Mean Square Error}
+        $$RMSE = \sqrt{\frac{\sum_{i = 1}^{N}\left(Predicted_i - Actual_i\right)^2}{N}}$$
+      \end{pabox}
       where $n$ denotes the number of data points and $Actual$ and $Predicted$ are the actual and predicted values, respectively.
       RMSE provides a measure of the magnitude of the errors in the predictions, with lower values indicating a more accurate model. 
       RMSE is particularly useful when the goal is to minimize the magnitude of the errors in the predictions.

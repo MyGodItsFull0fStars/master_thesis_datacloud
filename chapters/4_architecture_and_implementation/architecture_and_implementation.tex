@@ -198,12 +198,14 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
     ]{code_samples/lstm_init_seq_layer_bn.py}
 
 
-  As can be seen in figure \ref{fig:lstm-model-architecture} the input vector consisting of a pipeline task batch is forwarded to the \emph{initial lstm layers}. This step is implemented in the LSTM \texttt{forward} function (see \ref{lst:lstm-forward-function}) in lines 8 and 9. The \texttt{get\_hidden\_internal\_state} (see \ref{lst:lstm-init-internal-hidden-state}) function seen on the right side of the lines 8 and 9 is used to create the initial internal and hidden state based on the time series batch provided as the \texttt{input} for the model.
+  As can be seen in figure \ref{fig:lstm-model-architecture} the input vector consisting of a pipeline task batch is forwarded to the \emph{initial lstm layers}. This step is implemented in the LSTM \texttt{forward} function (see \ref{lst:lstm-forward-function}) in lines 8 and 9. The \texttt{get\_hidden\_internal\_state} (see \ref{lst:lstm-init-internal-hidden-state}) function seen on the right side of the lines 8 and 9 is used to create the initial internal and hidden state based on the time series batch provided as the \texttt{input} for the model. The input vector is a PyTorch tensor that is then send to a function that generates the initial hidden and internal state based on the shape of the input vector.
   The general LSTM prediction model is split into two smaller LSTM components that each predict the utilisation of one resource unit. A resource unit is either the CPU usage or the allocated memory. At creation these LSTM components use the length of the input as the expected input size and quality of the prediction performance heavily depends on the chosen hidden layer size as well as the number of \nameref{sec:stacked-lstm} layers.
   The final LSTM output of either resource unit is then send to traditional sequential layers that use batch normalisation as the generalisation strategy.
   % TODO describe batch normalization
   Afterwards, the output of those sequential layers is concatenated column-wise as a label vector of the form $\left[(cpu_1, mem_1), \dots, (cpu_{bs}, mem_{bs})\right]$ where $bs$ denotes the batch size or number of data points in the batch.
-
+  At line 22 the calculated output is then sliced in order to only include the same amount of elements as are the elements of the input vector. This has to be done since using multiple LSTM layers also increases the number of output elements by the simple formula $elements_{input} \times \#layers$. For the estimation of the resource utilisation only the last estimation section of the output is required since this is the section that contains the prediction of the last LSTM layer.
+  In line 25 the absolute values of the output are calculated. This is done to ensure that negative values are not included in the prediction since it is not possible for the hardware utilisation to be less than zero.
+  
   % TODO Explain ReLU and other layers
   
 
@@ -280,9 +282,11 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
     Inside the class constructor, a \texttt{MSELoss} instance (line 6) will be created in order to calculate the final loss values based on the mean square error calculation.
 
     The \texttt{forward} function (see \ref{lst:pmse-python-class} line 9) is used to calculate the loss between the estimation (denoted as \texttt{pred}) and actual values (denoted as \texttt{actual}). Both the estimation and actual values are represented as PyTorch tensors, a multi-dimensional matrix that contains the elements of a single data type, in this case floating point numbers.
+    The function also expects its calculated output to be of type \texttt{float}, which is a common data type for loss functions.
     In line 10 the indices of all predictions smaller than the actual values that would result in an under-allocation of resources are stored in a \texttt{boolean} array.
     This array is then used in line 11 to update all values that match the indices stored in the array by subtracting the penalty value.
     After updating all predicted values both tensors are then forwarded to the mean squared error function in line 13, that does the final calculation of the loss.
+    The MSE function then returns the value to the calling function \texttt{forward} and this returns the loss value as type \texttt{float}.
 
     \lstinputlisting[
       language=Python, 

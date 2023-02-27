@@ -70,8 +70,8 @@
     The choice of forecasting metric will depend on the specific goals and requirements of the forecasting task. Some metrics may be more appropriate for certain types of data or models, while others may be better suited for comparing different models.
     Overall, the use of appropriate forecasting metrics is critical for evaluating the accuracy of forecasting models and for identifying areas for improvement.
 
-    \paragraph{MAPE}
-    \label{par:mape-metrics-evaluation}
+    \subsubsection{Mean Absolute Percentage Error (MAPE)}
+    \label{sec:mape-metrics-evaluation}
       Mean Absolute Percentage Error (MAPE) \cite{demyttenaereMeanAbsolutePercentage2016} is a commonly used metric for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values.
       The formula for MAPE is:
 
@@ -86,10 +86,10 @@
       Overall, MAPE provides a useful way to measure the accuracy of forecasting models and can help to identify areas for improvement in the model or the data.
 
 
-    \paragraph{sMAPE}
-    \label{par:smape-metrics-evaluation}
+    \subsubsection{Symmetric Mean Absolute Percentage Error (sMAPE)}
+    \label{sec:smape-metrics-evaluation}
     
-      Symmetric Mean Absolute Percentage Error (SMAPE) \cite{kreinovichHowEstimateForecasting2014} is a metric used for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values, and is symmetrical in that it treats positive and negative errors equally.
+      Symmetric Mean Absolute Percentage Error (sMAPE) \cite{kreinovichHowEstimateForecasting2014} is a metric used for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values, and is symmetrical in that it treats positive and negative errors equally.
       In our evaluation of the prediction performance this is especially useful since both over-, and under-utilisation are present in all prediction variants.
       The formula for SMAPE is:
 
@@ -97,11 +97,11 @@
         $$sMAPE = \frac{1}{n} \times \sum \left|\frac{Actual - Predicted}{\left(Actual + Predicted\right) \div 2}\right| \times 100$$
       \end{pabox}
       where $n$ denotes the number of data points and $Actual$ and $Predicted$ are the actual and predicted values, respectively.
-      sMAPE provides a percentage error similar to \nameref{par:mape-metrics-evaluation}, which makes it easy to interpret and compare the accuracy of forecasting models. Unlike MAPE, sMAPE is symmetrical, since it doesn't become undefined when the actual value is zero, and another difference is that it is less sensitive to outliers.
+      sMAPE provides a percentage error similar to \nameref{sec:mape-metrics-evaluation}, which makes it easy to interpret and compare the accuracy of forecasting models. Unlike MAPE, sMAPE is symmetrical, since it doesn't become undefined when the actual value is zero, and another difference is that it is less sensitive to outliers.
       Overall, sMAPE is a useful metric for evaluating the accuracy of forecasting models and can provide valuable information for understanding the relative magnitude of the errors in the predictions.
 
-    \paragraph{RMSE}
-    \label{par:rmse-metrics-evaluation}
+    \subsubsection{Root Mean Square Error (RMSE)}
+    \label{sec:rmse-metrics-evaluation}
 
       Root Mean Square Error (RMSE) \cite{chaiRootMeanSquare2014} is a metric used for evaluating the accuracy of forecasting models. It measures the average magnitude of the error between the predicted values and the actual values, and provides a useful way to compare the magnitude of the errors in different models.
       The formula for RMSE is:
@@ -115,7 +115,7 @@
       Because of the scale sensitivity of RMSE, the number of actual and predicted values is equivalent for all our evaluation scenarios in order to be able to use RMSE for a comparison between different approaches.
       Overall, RMSE is a widely used and useful metric for evaluating the accuracy of forecasting models and can provide valuable information for understanding the magnitude of the errors in the predictions.
 
-% \paragraph{Theil's U-Statistic}
+% \subsubsection{Theil's U-Statistic}
 
 % Theil's U-Statistic is a measure of the accuracy of a forecasting model relative to a naïve forecast. The naïve forecast is a simple forecast that uses the average or last observed value as the prediction for all future time points. Theil's U-Statistic is used to compare the accuracy of a forecast with the accuracy of the naïve forecast.
 
@@ -130,8 +130,8 @@
 % Theil's U-Statistic is particularly useful when the goal is to compare the accuracy of a forecast with the accuracy of a simple, baseline forecast. It provides a useful way to evaluate the improvement in accuracy achieved by using a more sophisticated forecasting model.
 
 % Overall, Theil's U-Statistic is a valuable tool for evaluating the accuracy of forecasting models, and for comparing the accuracy of different models relative to a simple, baseline forecast.
-    \paragraph{Resource Wastage}
-    \label{par:resource-wastage-metric-evaluation}
+    \subsubsection{Resource Wastage}
+    \label{sec:resource-wastage-metric-evaluation}
       Calculated by subtracting the surface area of allocated - predicted.
 
 \section{Evaluation Scenarios}

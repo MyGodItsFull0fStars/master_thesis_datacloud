@@ -114,19 +114,22 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
 \label{sec:lstm-architecture-and-implementation}
 
   The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python. 
-  \begin{figure}[h!]
+  \begin{figure}
     \centering
     \includegraphics[scale=0.5]{figures/current_lstm_model.png}
     \caption{LSTM Model Architecture}
     \label{fig:lstm-model-architecture}
   \end{figure}
 
-  The LSTM model implementation is called \texttt{UtilizationLSTM} and is of type \texttt{torch.nn.Module}. This is a default parent class for neural networks that are implemented in PyTorch.
-  The class constructor \texttt{\_\_init\_\_()} has four parameters. First is the instance reference \texttt{self} that is used to access functions and variables of an instance
+  The LSTM model implementation is called \texttt{UtilizationLSTM} and is of type \texttt{Module}. This is a default parent class for neural networks that are implemented in PyTorch.
+  The class constructor \texttt{\_\_init\_\_()} has four parameters. First, is the instance reference \texttt{self} that is used to access functions and variables of an instance. 
+  The available instance variables are \emph{input size, hidden size, number of layers} and \emph{device} that holds the reference to the hardware that will compute the training of the neural network.
+  PyTorch enables the training of neural networks on graphical computing units (GPU) which accelerate the training process. For being able to train on a GPU, the NVIDIA API CUDA (Compute Unified Device Architecture) needs to be installed on the device, in order to send the LSTM model on the GPU and train it on incoming data batches. 
   Next, is the input size that refers to the number of feature set columns that were selected by the \nameref{sec:feature-selection-data-preprocessing-architecture} process.
   The hidden size value in the parameters also refers to the hidden layer size of the LSTM model that is used to variate the size of the model and it's capabilities to remember long-term patterns in time series data.
   Finally, the number of layers refers to how many \nameref{sec:stacked-lstm} layers should be applied.
-  For the \nameref{sec:evaluation-scenarios}, a default of two stacked layers is used. When using two stacked LSTM layers, the size of the hidden layers of the model is doubled.
+  For the \nameref{sec:evaluation-scenarios}, a default of two stacked layers is used. When using two stacked LSTM layers, the size of the hidden layers of the model is doubled. This also includes the model output, where both hidden state outputs are returned by the \texttt{forward} function.
+  The reason why an estimation that is then feed back to the model is returned is to be able to analyse the hidden states of the intermediate model layers.
   \lstinputlisting[
     language=Python, 
     caption=LSTM Init Function, 
@@ -142,8 +145,8 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
     \textbf{Rectified Linear Unit (ReLU)} is a popular function for transforming the summed weighted input from a layer into the activation of a node or output for that input.
     The ReLU function can be mathematically described as $$g(z) = \max \left\{0, z\right\}.$$
 
-    The advantages of ReLU are it's computational simplicity, the representational sparsity (being able to output true zero values opposed to $\tanh$ and $sigmoid$), the linear behaviour and the training of deep neural networks via backpropagation was heavily improved when using ReLU compared to more complex methods. The function is linear for values greater than zero which results in ReLU having many of the advantages of a linear activation function when using backpropagation. Yet, ReLU is a nonlinear function since negative values are always output as zero.
   \end{pabox}
+  The advantages of ReLU are it's computational simplicity, the representational sparsity (being able to output true zero values opposed to $\tanh$ and $sigmoid$), the linear behaviour and the training of deep neural networks via backpropagation was heavily improved when using ReLU compared to more complex methods. The function is linear for values greater than zero which results in ReLU having many of the advantages of a linear activation function when using backpropagation. Yet, ReLU is a nonlinear function since negative values are always output as zero.
 
   \begin{pabox}{Batch Normalisation}
   \label{def:batch-normalisation-definition}
@@ -157,9 +160,12 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
       \cite{goodfellowDeepLearning2016}
     \end{quote}
     Assumptions that a subsequent layer makes during the weight update that regards the spread and distribution of inputs, will not change by a lot if the activations of the prior layer are standardised. 
-    Normalising the input batch also has a regularising effect, which leads to a reduction of generalisation errors, similar to the usage of activation regularisation.
-
   \end{pabox}
+  Normalising the input batch also has a regularising effect, which leads to a reduction of generalisation errors, similar to the usage of activation regularisation.
+  Batch normalisation was proposed to mitigate internal covariate shift. This internal covariate shift occurs because inputs that are forwarded to the neural network and also from each layer have a corresponding distribution that affects the training process because of the randomness of the parameter initialisation and input data.
+  Because of the resulting internal covariate shift, the succeeding network layers need to readjust it's weights in order to update it's state from the data that was forwarded from the proceeding layer with a bias in terms of distribution of activated nodes. This requirement to readjust to new distributions is even more sever in deep neural networks that have many layers and the increased number of layers amplify this effect. Batch normalisation reduces unwanted shifts that is propagated by layers and speeds up the training and also produces more reliable and general models.
+  
+
 
   \begin{pabox}{Linear (Fully-Connected) Layer}
     \label{def:linear-layer-definition}
@@ -178,7 +184,8 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
     % It is capable of learning an \emph{offset} (because of the bias) and a rate of correlation (because of the linear layer).
     % While training it represents an equation of a line $y = w \times x + b$ where it tries to learn both $w$ and $b$.
   \end{pabox}
-  These LSTM and sequential layers are the core of the machine learning component and are responsible for the estimation of the CPU and memory utilisation and are used by forwarding inputs through each layer until the estimation is calculated.
+  These LSTM and sequential layers are the core of the machine learning architecture inside the \texttt{UtilizationLSTM} class and are responsible for the estimation of the CPU and memory utilisation and are used by forwarding inputs through each layer until the estimation is calculated.
+  The received input is send to the \texttt{forward} function of the class that expects a PyTorch tensor as the input type.
 
    
   

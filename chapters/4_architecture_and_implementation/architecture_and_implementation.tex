@@ -103,18 +103,36 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
   \subsection{Preparing the Data}
   \label{sec:preparing-the-data-preprocessing-architecture}
 
-  \subsection{Feature Selection}
-  \label{sec:feature-selection-data-preprocessing-architecture}
+  \subsection{Feature Engineering}
+  \label{sec:feature-engineering-data-preprocessing-architecture}
 
-    Feature selection is the process of reducing the number of input variables of a feature set when developing a predictive model.
-    Feature selection is simply the process of selecting and excluding given features without changing them as is done with \emph{dimensionality reduction}.
-    A reduction of the number of input variables is desirable to both reduce reduce the computational cost of training a model and in some cases it also increases the prediction performance of the model.
+    Feature engineering is the process to model features that are used as the inputs for a machine learning (ML) model either during training or inference to make predictions.
+    The accuracy of an ML model heavily relies on a well composed and precise set of features order to make reliable predictions.
+    Feature engineering involves extraction and transformation of variables of a raw data source. This process is necessary to be able to use the data for the training of a ML model and successfully use it's inference to make predictions.
+    The steps required in feature engineering include data extraction and cleansing (see section \ref{sec:data-extraction-cleansing-preprocessing-architecture}), followed by feature creation and storage (see section \ref{sec:feature-creation-storage-preprocessing-architecture}).
 
-  \subsection{Data Standardisation}
-  \label{sec:data-standardisation-data-preprocessing-architecture}
-    % TODO fill with more content?
-  \subsection{Data Normalisation}
-  \label{sec:data-normalisation-data-preprocessing-architecture}
+    \subsubsection{Data Extraction and Cleansing}
+    \label{sec:data-extraction-cleansing-preprocessing-architecture}
+
+      Data extraction is the process of collecting and assembling all the data that is required for the ML training.
+      Since data often resides in multiple data sources, collecting training data is a challenging process since those different data sources need to be connected with each other for it to be usable. Furthermore, data sources often have vastly different formats and types, which also needs to be taken into account.
+
+    \subsubsection{Feature Creation and Storage}
+    \label{sec:feature-creation-storage-preprocessing-architecture}
+
+    \subsubsection{Data Standardisation}
+    \label{sec:data-standardisation-data-preprocessing-architecture}
+      % TODO fill with more content?
+    \subsubsection{Data Normalisation}
+    \label{sec:data-normalisation-data-preprocessing-architecture}
+
+    \subsubsection{Feature Selection}
+    \label{sec:feature-selection-data-preprocessing-architecture}
+
+      Feature selection is the process of reducing the number of input variables of a feature set when developing a predictive model.
+      Feature selection is simply the process of selecting and excluding given features without changing them as is done with \emph{dimensionality reduction}.
+      A reduction of the number of input variables is desirable to both reduce reduce the computational cost of training a model and in some cases it also increases the prediction performance of the model.
+
 
   
 \section{LSTM Architecture}

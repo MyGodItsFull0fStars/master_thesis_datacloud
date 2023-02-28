@@ -329,7 +329,9 @@
 
             Once enough data was gathered by the model, the self-loop weight $f_i^t$ is used to update the internal state of the model.
 
-            $$s_i^{(t)} = f_i^t s_i^{t - 1} + g_i^t \sigma \left(b_i + \sum_{j} U_{i, j} x_j^{(t)} + \sum_{j} W_{i, j} h_j^{(t - 1)}\right)$$
+            \begin{pabox}{Internal State}
+                $$s_i^{(t)} = f_i^t s_i^{t - 1} + g_i^t \sigma \left(b_i + \sum_{j} U_{i, j} x_j^{(t)} + \sum_{j} W_{i, j} h_j^{(t - 1)}\right)$$
+            \end{pabox}
             First, point-wise multiplication that was calculated of the previous cell state denoted as $s_i^{(t - 1)}$  is applied. Next, the output of input gate $g_i^t$ with the computation of the biases, input and recurrent weights are calculated and then added to the self-loop weight.
 
         \paragraph{4. Output Gate}
@@ -337,7 +339,9 @@
             In the last step, the output is forwarded by the output gate. This output is also called \emph{hidden state}, that is sent to the next network component and also used for predictions.
             This hidden state is denoted by $h_i^t$ and has the mathematical representation:
 
-            $$h_i^{(t)} = \tanh \left(s_i^{(t)}\right) \sigma \left(b_i^o + \sum_{j} U_{i, j}^o x_j^{(t)} + \sum_j W_{i, j}^o h_j^{(t - 1)}\right)$$
+            \begin{pabox}{Output Gate}
+                $$h_i^{(t)} = \tanh \left(s_i^{(t)}\right) \sigma \left(b_i^o + \sum_{j} U_{i, j}^o x_j^{(t)} + \sum_j W_{i, j}^o h_j^{(t - 1)}\right)$$
+            \end{pabox}
             The new cell state that was calculated in \nameref{par:self-loop-to-update-internal-state} is passed to the $\tanh$ activation function. Then is multiplied by the Sigmoid output of the neural network operation that was performed on the input of the current time step and the previous outputs.
 
     \subsection{Stacked LSTM}

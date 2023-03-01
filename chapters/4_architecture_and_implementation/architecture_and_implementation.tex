@@ -139,6 +139,38 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
     \begin{quote}
       One hot encoding is a process of converting categorical data variables so they can be provided to machine learning algorithms to improve predictions. \emph{One hot encoding is a crucial part of feature engineering for machine learning.} \cite{fawcettDataScienceMinutes}
     \end{quote}
+    The one-hot encoding technique is both used for the categorical data of \emph{task type}, where each type of task is represented as an index in the task-type vector. Similarly, one-hot encoding is used to classify different number of instances (or Kubernetes Replicas) into clusters, that are then mapped to an index of the encoded feature vector.
+    
+    To generate one-hot encoded feature vector columns in the application, we used the Python framework \texttt{Pandas}.
+    Pandas is a popular framework that was designed to handle big datasets that are represented with their internal \texttt{Series} and \texttt{DataFrame} data types, where \texttt{Series} is a feature column and a DataFrame is a collection of Series, or a feature vector. The process of generating one-hot encoded columns for a DataFrame is shown in the listing \ref{lst:one-hot-encoding}.
+    To generate one-hot encoded columns for a DataFrame, the column or row with the categorical data has to be isolated.
+    In line 2, the \texttt{instances} Series is used to generate a new Series that contains the index position for the one-hot encoded feature vector.
+    Next, in line 3 the \texttt{get\_dummies(...)} function of Pandas is used to generate the one-hot encoded feature vector of a DataFrame data type that is stored in a variable called \texttt{dummies}.
+    In lines 4-8 the columns of the \texttt{dummies} DataFrame are renamed to be concise with the defined instance clusters. The \texttt{inplace=True} flag is necessary since Pandas usually does not modify DataFrames directly but an operation commonly returns a copy of the modified DataFrame, and this flag omits the copy process and renames the columns directly in the DataFrame.
+    \lstinputlisting[
+      language=Python, 
+      caption=One-Hot Encoding Pandas Example, 
+      label={lst:one-hot-encoding},
+      style=codestyle
+      ]{code_samples/one_hot.py}
+      
+    Finally, the one-hot encoded feature vector \texttt{dummies} is joined with the training DataFrame called \texttt{training\_df} and the result is stored in the variable \texttt{inst\_df}. An example one-hot encoding of the first few values of the training DataFrame is shown in table \ref{tab:one-hot-encoding-instances}, were $task_0$ is categorised to be part of instance cluster $0$ and the following two tasks $task_1, task_2$ are part of instance cluster $3$.
+    \begin{table}
+      \centering
+      \begin{tabular}{|l|rrrr|}
+        \toprule
+        index &  inst\_clust\_0 &  inst\_clust\_1 &  inst\_clust\_2 &  inst\_clust\_3 \\
+        \midrule
+        0 &             1 &             0 &             0 &             0 \\
+        1 &             0 &             0 &             0 &             1 \\
+        2 &             0 &             0 &             0 &             1 \\
+        \bottomrule
+      \end{tabular}
+      \caption{Example of One-Hot Encoding the Instances}
+      \label{tab:one-hot-encoding-instances}
+    \end{table}
+
+    
 
     \subsubsection{Data Standardisation}
     \label{sec:data-standardisation-data-preprocessing-architecture}
@@ -156,6 +188,7 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
       Feature selection is simply the process of selecting and excluding given features without changing them as is done with \emph{dimensionality reduction}.
       A reduction of the number of input variables is desirable to both reduce reduce the computational cost of training a model and in some cases it also increases the prediction performance of the model.
 
+      % mention the iterations and the inclusion of more features
 
   \subsection{Preparing the Data}
   \label{sec:preparing-the-data-preprocessing-architecture}

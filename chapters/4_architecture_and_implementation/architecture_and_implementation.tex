@@ -100,31 +100,54 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
 \section{Data Preprocessing and Analysis}
 \label{sec:data-preprocessing-and-analysis-architecture}
 
-  \subsection{Preparing the Data}
-  \label{sec:preparing-the-data-preprocessing-architecture}
+
 
   \subsection{Feature Engineering}
   \label{sec:feature-engineering-data-preprocessing-architecture}
 
-    Feature engineering is the process to model features that are used as the inputs for a machine learning (ML) model either during training or inference to make predictions.
-    The accuracy of an ML model heavily relies on a well composed and precise set of features order to make reliable predictions.
+    Feature engineering is the process of designing artificial features, that is, to model features that are used as the inputs for a machine learning (ML) model either during training or inference to make predictions.
+    It is a very important step in machine learning since the later prediction performance depends on the quality of data.
+    The accuracy of an ML model heavily relies on a well composed and precise set of features order to make reliable predictions. Regardless of the data or ML architecture, if a feature set is not well-suited, it does have a direct impact on the ML model.
+    \begin{quote}
+      Feature engineering is a machine learning technique that leverages data to create new variables that aren't in the training set. \cite{patelWhatFeatureEngineering2021}
+    \end{quote}
     Feature engineering involves extraction and transformation of variables of a raw data source. This process is necessary to be able to use the data for the training of a ML model and successfully use it's inference to make predictions.
-    The steps required in feature engineering include data extraction and cleansing (see section \ref{sec:data-extraction-cleansing-preprocessing-architecture}), followed by feature creation and storage (see section \ref{sec:feature-creation-storage-preprocessing-architecture}).
+    The steps required in feature engineering include data extraction and cleansing (see section \ref{sec:feature-extraction-cleansing-preprocessing-architecture}), followed by feature creation and analysis (see section \ref{sec:feature-creation-analysis-preprocessing-architecture}).
+    It can produce new features with the goal of enhancing the model accuracy and to simplify and speed up data transformation.
 
-    \subsubsection{Data Extraction and Cleansing}
-    \label{sec:data-extraction-cleansing-preprocessing-architecture}
+    \subsubsection{Feature Extraction and Cleansing}
+    \label{sec:feature-extraction-cleansing-preprocessing-architecture}
 
-      Data extraction is the process of collecting and assembling all the data that is required for the ML training.
-      Since data often resides in multiple data sources, collecting training data is a challenging process since those different data sources need to be connected with each other for it to be usable. Furthermore, data sources often have vastly different formats and types, which also needs to be taken into account.
+      Feature extraction is the process of collecting and assembling all the data that is required for the ML training.
+      Since data often resides in multiple data sources, collecting training data is a challenging process since those different data sources need to be connected with each other for it to be usable. Furthermore, data sources often have vastly different formats and types, which also needs to be taken into account. 
+      Feature extraction also faces the challenge of not distorting the original relationships or significant information of the raw data and also compressing the amount of data into manageable quantities for the ML models to process and train on.
 
-    \subsubsection{Feature Creation and Storage}
-    \label{sec:feature-creation-storage-preprocessing-architecture}
+
+    \subsubsection{Feature Creation and Analysis}
+    \label{sec:feature-creation-analysis-preprocessing-architecture}
+
+      Feature creation involves the process of data labeling.
+      Data labeling identifies data such as images, text files and adds meaningful and informative labels to it by creating new variables which will be the most helpful to the ML model. This is done to provide the data labels as context to the ML model so it is able to learn from it. Data labeling is required for various use cases in \nameref{sec:supervised-learning}, since ML models of that category require labels to train on.
+
+      Feature analysis often uses visualisation like histograms, scatter, box and line plots to analyse if the created feature data set is correct. Feature analysis is also used to discover patterns, spot anomalies, check assumptions or test a hypothesis.
+
+    \subsubsection{One-hot Encoding}
+    \label{sec:one-hot-encoding-preprocessing-architecture}
+
+      One-hot encoding \cite{fawcettDataScienceMinutes} is a type of encoding that is used to represent categorical data of a finite set by an index in that set, where only one element has its index set to $1$, and all other values are assigned the value $0$.
+      This technique is useful when categorical data should be fed to a machine learning model since many model architectures can only handle numerical values, making it necessary to transform strings or other data types to numbers.
+    \begin{quote}
+      One hot encoding is a process of converting categorical data variables so they can be provided to machine learning algorithms to improve predictions. \emph{One hot encoding is a crucial part of feature engineering for machine learning.} \cite{fawcettDataScienceMinutes}
+    \end{quote}
 
     \subsubsection{Data Standardisation}
     \label{sec:data-standardisation-data-preprocessing-architecture}
       % TODO fill with more content?
     \subsubsection{Data Normalisation}
     \label{sec:data-normalisation-data-preprocessing-architecture}
+
+      In data normalisation, all values in a data set are scaled in a specified range between $0$ and $1$ via normalisation and represented as floating-point numbers.
+      Normalisation of data has no influence on the distribution of the features, but it does increase the effects of outliers due to the lower standard deviation after the modification. Because of this, it is necessary to deal with outliers before applying normalisation to a data set.
 
     \subsubsection{Feature Selection}
     \label{sec:feature-selection-data-preprocessing-architecture}
@@ -134,10 +157,14 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
       A reduction of the number of input variables is desirable to both reduce reduce the computational cost of training a model and in some cases it also increases the prediction performance of the model.
 
 
+  \subsection{Preparing the Data}
+  \label{sec:preparing-the-data-preprocessing-architecture}
   
 \section{LSTM Architecture}
 \label{sec:lstm-architecture-and-implementation}
 
+  In this section the architecture of the LSTM model is elaborated.
+  This involves the description of the different layers that are used as well as some operations that are required to improve the prediction of the model.
   The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python. 
   \begin{figure}
     \centering

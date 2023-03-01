@@ -150,10 +150,8 @@
   \subsection{2. Adding Task Knowledge}
   \label{sec:adding-task-knowledge-evaluation-scenarios}
 
-    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:simple-feature-set-evaluation-scenarios} also \emph{task knowledge}. This task knowledge refers to the type a task is classified as. The task knowledge was first extracted from the data set and transformed with the \emph{one-hot encoding} \cite{husseinEnhancementPerformanceRandom2021} method. One-hot encoding adds a feature vector to the feature set consisting of $0$ and $1$, where $1$ denotes the type of a task, and the rest of the vector values are $0$ for that task. This technique is useful when categorical data should be fed to a machine learning model since many model architectures can only handle numerical values, making it necessary to transform strings or other data types to numbers.
-    \begin{quote}
-      One hot encoding is a process of converting categorical data variables so they can be provided to machine learning algorithms to improve predictions. \emph{One hot encoding is a crucial part of feature engineering for machine learning.} \cite{fawcettDataScienceMinutes}
-    \end{quote}
+    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:simple-feature-set-evaluation-scenarios} also \emph{task knowledge}. This task knowledge refers to the type a task is classified as. The task knowledge was first extracted from the data set and transformed with the \nameref{sec:one-hot-encoding-preprocessing-architecture} method. 
+    The tasks are mapped to a finite set of a one-hot encoded feature vector and their corresponding index is represented as the value $1$.
     The additional information about the task type enables the LSTM model to better discern the actual utilisation that is required for each task.
     The task knowledge also provides information regarding the order of tasks, since patterns of reoccurring tasks also help the model to generate more accurate predictions in theory.
 
@@ -249,6 +247,10 @@
   Opposed to the CPU utilization prediction, in the model trained with the smaller batch size is biased to predict lower values in general, and the model trained with a batch size of 1000 predicted higher utilization values. Also it was able to produce accurate predictions of the memory utilization of tasks.
   \subsection{7. Machine-Sorted vs. Time-Stamp-Sorted Data}
   \label{sec:machine-sorted-vs-time-stamp-sorted-data-evaluation-scenarios}
+
+    All of the above evaluation scenarios were done with time-stamp sorted data. Such datasets simply refer to an ordering of the data points that were sorted by the earliest arrival time first, followed by the machine those tasks were deployed to.
+    In the machine-sorted dataset the priority of sorting is reversed, meaning that the data points were first sorted by each machine and then all elements were sorted by the earliest arrival time for each machine. 
+    This was done to see if there are any improvements in the prediction performance if the data set is sorted by the machine parameter first and only then sorted by the time-stamp.
 
     
 % \section{Monitoring}

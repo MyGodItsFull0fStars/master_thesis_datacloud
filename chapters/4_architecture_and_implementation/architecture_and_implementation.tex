@@ -170,11 +170,27 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
       \label{tab:one-hot-encoding-instances}
     \end{table}
 
-    
+    Using one-hot encoding enables the LSTM model to additionally learn from categorical features such as the type of task (see evaluation scenario \nameref{sec:adding-task-knowledge-evaluation-scenarios}) and also to learn and infer from the number of instances (or \nameref{sec:kubernetes-evaluation-setup} replicas). 
+    These further details about each task enable the ML model to better and more accurately react to the given sequence of tasks.
 
     \subsubsection{Data Standardisation}
     \label{sec:data-standardisation-data-preprocessing-architecture}
-      % TODO fill with more content?
+      % https://towardsdatascience.com/what-is-feature-engineering-importance-tools-and-techniques-for-machine-learning-2080b0269f10
+      In standardisation (also referred to as \emph{z-score normalisation}) is a process of scaling values of a dataset by first calculating its standard deviation and accounting for it. In case the standard deviation of features is different, then the range of those features will likewise differ. This has as a result that outliers in the characteristics are reduced.
+      In order to calculate a distribution of the data with a mean of $0$ and a variance of $1$, all the data points are first subtracted by their mean and the result of that is then divided by the variance of the distribution.
+
+      \begin{pabox}{Mean - Standard Deviation - Standardisation}
+        The mean $\mu$ is calculated with the formula:
+        $$\mu = \frac{1}{N}\sum_{i = 1}^{N}\left(x_i\right)$$
+        where $N$ denotes the number of elements in the dataset and $x_i$ the $i$-th element in that dataset.
+
+        The standard deviation is calculated with:
+        $$\sigma = \sqrt{\frac{1}{N} \sum_{i = 1}^{N}\left(x_i - \mu\right)^2}$$
+      
+        Finally, the standardisation is calculated by the formula $$Z = \frac{x - \mu}{\sigma}.$$
+
+      \end{pabox}
+      The standardisation of data points is used to preprocess the feature dataset that is fed to the LSTM model while training or inferring tasks.
     \subsubsection{Data Normalisation}
     \label{sec:data-normalisation-data-preprocessing-architecture}
 

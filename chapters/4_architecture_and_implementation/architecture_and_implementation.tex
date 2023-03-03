@@ -105,7 +105,7 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
   \subsection{Feature Engineering}
   \label{sec:feature-engineering-data-preprocessing-architecture}
 
-    Feature engineering is the process of designing artificial features, that is, to model features that are used as the inputs for a machine learning (ML) model either during training or inference to make predictions.
+    Feature engineering is the process of designing artificial features, that is, to model features that are used as the inputs for a machine learning (ML) model either during training or inference to make predictions. In short, it is the development of new data features from raw data.
     It is a very important step in machine learning since the later prediction performance depends on the quality of data.
     The accuracy of an ML model heavily relies on a well composed and precise set of features order to make reliable predictions. Regardless of the data or ML architecture, if a feature set is not well-suited, it does have a direct impact on the ML model.
     \begin{quote}
@@ -118,18 +118,31 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
     \subsubsection{Feature Extraction and Cleansing}
     \label{sec:feature-extraction-cleansing-preprocessing-architecture}
 
-      Feature extraction is the process of collecting and assembling all the data that is required for the ML training.
-      Since data often resides in multiple data sources, collecting training data is a challenging process since those different data sources need to be connected with each other for it to be usable. Furthermore, data sources often have vastly different formats and types, which also needs to be taken into account. 
+      \textbf{Feature extraction} is the process of collecting and assembling all the data that is required for the ML training into a feature set.
+      Data often resides in multiple data sources, therefore collecting training data is a challenging process since those different data sources need to be connected with each other for it to be usable. Furthermore, data sources often have vastly different formats and types, which also needs to be taken into account. 
       Feature extraction also faces the challenge of not distorting the original relationships or significant information of the raw data and also compressing the amount of data into manageable quantities for the ML models to process and train on.
+      The Alibaba cluster traces consist of a multitude of datasets, each with their respective focus. Because of the distributed nature of the data, first the common key features were required to be analysed in order to be able to later join the data based on this common key features to an actual training and test dataset.
 
+      \textbf{Feature cleansing} is the process of cleaning a dataset. 
+      A major part is to add missing values or to remove data points that are not beneficial for the training of an ML model. 
+      In the Alibaba dataset, all tasks were removed that did not successfully finish their execution. The reason why the cluster of failed tasks was excluded from the training was that the ML model should be trained on successfully finished tasks, since it was not stated what the reason for the failure of the tasks was and adding failed tasks could in this case lead to unwanted behaviour when predicting incoming tasks. And therefore, it was deemed a better approach to not include those tasks. 
+      This process is shown in listing \ref{lst:drop-failed-tasks}, where only tasks will be kept that had their feature column set to \texttt{'terminated'}, which states that they did successfully terminate their execution.
+      \lstinputlisting[
+        language=Python, 
+        caption=Dropping Failed Tasks from DataFrame, 
+        label={lst:drop-failed-tasks},
+        style=codestyle
+        ]{code_samples/drop_failed_tasks.py}
+      After dropping all failed tasks, the feature column \texttt{status} is dropped from the dataset since it now does not provide any information.
+      Next, other feature columns are dropped as well that are either not necessary for the training or inference of the ML model or are duplicated columns that were added by the Pandas framework after joining the DataFrames. Dropped columns contain fields such as \emph{read, write, instance name, instance ID, workerpool name, group, user and status\_t}, were status\_t is simply a duplicated column that was appended while doing a join operation. Feature cleansing also involves the task of ensuring that the correct data types are used for each dataset. In the case of the mentioned dataset, it was necessary to denote the feature field \texttt{start\_date} as a time-stamp as well as the index for the dataset, to ensure an time-series based ordering of the data. Also fields such as the \emph{number of instances} were declared as floating point numbers. To ensure that this will not result in unwanted behaviour, this field data type was changed to an unsigned integer.
 
     \subsubsection{Feature Creation and Analysis}
     \label{sec:feature-creation-analysis-preprocessing-architecture}
 
-      Feature creation involves the process of data labeling.
-      Data labeling identifies data such as images, text files and adds meaningful and informative labels to it by creating new variables which will be the most helpful to the ML model. This is done to provide the data labels as context to the ML model so it is able to learn from it. Data labeling is required for various use cases in \nameref{sec:supervised-learning}, since ML models of that category require labels to train on.
+      \textbf{Feature creation} involves the process of data labeling.
+      Data labeling identifies data such as images, text files and adds meaningful and informative labels to it by creating new variables which will be the most helpful to the ML model. This is done to provide the data labels as context to the ML model so it is able to learn from it. Data labeling is required for various use cases in \nameref{sec:supervised-learning}, since ML models of that category require labels to train on. Features that were created for the datasets that later are fed into the LSTM model are one-hot encoded feature columns. These were either generated from the task type, that is used to differentiate between the various tasks and is used to enable the model to comprehend categorical data for training and inference. Similarly, the \emph{number of instances} is one-hot encoded to provide additional information about a task with providing categorical data as encoded feature columns. The one-hot encoding method and how it is applied is described in more detail in section \nameref{sec:one-hot-encoding-preprocessing-architecture}.
 
-      Feature analysis often uses visualisation like histograms, scatter, box and line plots to analyse if the created feature data set is correct. Feature analysis is also used to discover patterns, spot anomalies, check assumptions or test a hypothesis.
+      \textbf{Feature analysis} often uses visualisation like histograms, scatter, box and line plots to analyse if the created feature data set is correct. Feature analysis is also used to discover patterns, spot anomalies, check assumptions or test a hypothesis.
 
     \subsubsection{One-hot Encoding}
     \label{sec:one-hot-encoding-preprocessing-architecture}
@@ -190,7 +203,8 @@ This is categorized as $S_3$ in the analyser, and the action set will be modifie
         Finally, the standardisation is calculated by the formula $$Z = \frac{x - \mu}{\sigma}.$$
 
       \end{pabox}
-      The standardisation of data points is used to preprocess the feature dataset that is fed to the LSTM model while training or inferring tasks.
+      The standardisation of data points is used to preprocess the feature dataset that is fed to the LSTM model while training or inferring tasks. Standardising the feature dataset is preferred to normalisation (see section \ref{sec:data-normalisation-data-preprocessing-architecture}) since the impact of outliers is reduced compared to the normalisation scaling method.
+
     \subsubsection{Data Normalisation}
     \label{sec:data-normalisation-data-preprocessing-architecture}
 

@@ -5,7 +5,7 @@
     \label{sec:monitoring-background}
 
         Monitoring is the process of continuously observing and tracking a system, process, or activity in order to gather data, identify trends, and detect any deviations or issues.
-        Monitoring has the purpose to ensure that the system is functioning as intended and also to identify any potential problems early on in order to mitigate them. Additionally, monitoring provides necessary information for effective decision making and problem solving.
+        Monitoring has the purpose to ensure that the system is functioning as intended and also identifying any potential problems early on in order to mitigate them. Additionally, monitoring provides necessary information for effective decision-making and problem-solving.
         There are different monitoring types, including \emph{system-, environmental-, process-, performance- and security monitoring}.
         We mainly focus on \nameref{sec:system-monitoring-background} and \nameref{sec:process-monitoring-background}.
         Monitoring can be performed manually or through the use of automated tools and technologies.
@@ -38,14 +38,14 @@
     \section{Prediction of Load}
     \label{sec:prediction-of-load-background}
 
-        User based prediction via domain expertise
+        User-based prediction via domain expertise
 
     \section{Supervised Learning}
     \label{sec:supervised-learning}
 
         Supervised learning is a machine learning paradigm that is applied when available data consists of labelled data points, that not only contain features but also a label that is associated with these features.
         Supervised learning is defined by its use of labelled datasets to train algorithms to classify data or predict outcomes accurately.
-        As input data is fed into the model, it adjusts its weights until the model has been fitted appropriately, which occurs as part of the cross validation process.
+        As input data is fed into the model, it adjusts its weights until the model has been fitted appropriately, which occurs as part of the cross-validation process.
         Supervised Learning uses a training set to teach models to yield the desired output.  
         This training dataset includes inputs and correct outputs, which allow the model to learn over time. The algorithm measures its accuracy through a loss function, adjusting until the error rate has been sufficiently minimized.
         A training dataset with $n$ are of the form $\left\{(x_1, y_1), \dots , (x_n, y_n)\right\}$ such that $x_i$ is defined as the \emph{feature vector} of the $i$-th data point and $y_i$ is defined as its label.
@@ -53,11 +53,11 @@
         The function $g$ is often represented as a scoring function $f: X \times Y \rightarrow \mathcal{R}$ such that $g$ is defined as $g(x) = \arg \max f(x, y)$ such that $g$ returns the $y$ value with the highest score.
         Supervised learning can be separated into \nameref{sec:classification-supervised-learning-background} and \nameref{sec:regression-supervised-learning-background} problems.
 
-        In supervised learning for scheduling the objective is to learn parameters of the neural network such that the trained networks can replicate the behaviour of pre-existing scheduling methods, such as mathematical optimisations, search methods, for example \emph{Priority Dispatching Rule (PDR)}, a heuristic rule that assigns jobs to machines based on their priorities while considering the current status fo the system.
+        In supervised learning for scheduling the objective is to learn parameters of the neural network such that the trained networks can replicate the behaviour of pre-existing scheduling methods, such as mathematical optimisations, and search methods, for example \emph{Priority Dispatching Rule (PDR)}, a heuristic rule that assigns jobs to machines based on their priorities while considering the current status of the system.
         Supervised learning can also be used for forecast models that predict the resource utilisation or the runtime of tasks.
         This is done by providing information such as the capacity of a resource, the naive allocation prediction provided by a human and other factors to the feature vector and including the target that is to be predicted to the labels. 
         The training dataset for this prediction task is usually a time series forecasting dataset.
-        In a time series forecasting dataset, the order of data points is ascending, meaning that the structure and order of the data points is used as an additional information that is used for the prediction.
+        In a time series forecasting dataset, the order of data points is ascending, meaning that the structure and order of the data points is used as additional information that is used for the prediction.
 
         \subsection{Classification}
         \label{sec:classification-supervised-learning-background}
@@ -76,13 +76,13 @@
                 \caption{Regression Example}
                 \label{fig:regression-example}
             \end{figure}
-            In the figure \ref{fig:regression-example} an example regression is shown by the orange line that is done by a linear regression. As can be seen, the linear regression line is estimating the values of the data points by trying to fit closest to all data points that are shown as the blue dots.
+            In figure \ref{fig:regression-example} an example regression is shown by the orange line that is done by linear regression. As can be seen, the linear regression line is estimating the values of the data points by trying to fit closest to all data points that are shown as the blue dots.
             This is done by using the function $f(x)$ to find a best-fit line and see how much the data is dispersed around this line.
             \begin{quote}
-                Regression is a statistical method used in finance, investing, and other disciplines that attempts to determine the strength and character of the relationship between one dependent variable (usually denoted by Y) and a series of other variables (known as independent variables). \cite{beersWhatRegressionDefinition}
+                Regression is a statistical method used in finance, investing, and other disciplines that attempt to determine the strength and character of the relationship between one dependent variable (usually denoted by Y) and a series of other variables (known as independent variables). \cite{beersWhatRegressionDefinition}
             \end{quote}
             Therefore, regression analysis is a useful tool for finding associations of variables that are observed in data. Yet, those associations do not indicate causation but merely correlation.
-            This is because regression only captures correlations between variables that are observed in data and quantifies if the found correlation are statistically significant.
+            This is because regression only captures correlations between variables that are observed in data and quantifies if the found correlation is statistically significant.
             In order for proper interpretations regarding the regression results, several assumptions about the data and the model itself must hold.
 
     \section{Recurrent Neural Network}
@@ -97,7 +97,7 @@
             \caption{FNN vs. RNN}
             \label{fig:fnn-vs-rnn}
         \end{figure}
-        In an RNN, each unit in the network processes the input sequence one time step at a time, maintaining a hidden state that summarizes information from all previous time steps. At each time step, the hidden state is updated based on both the current input and the hidden state from the previous time step. The hidden state is then used to generate the output for that time step, and the process is repeated for each time step in the sequence.
+        In an RNN, each unit in the network processes the input sequence one-time step at a time, maintaining a hidden state that summarizes information from all previous time steps. At each time step, the hidden state is updated based on both the current input and the hidden state from the previous time step. The hidden state is then used to generate the output for that time step, and the process is repeated for each time step in the sequence.
         RNNs are used for a variety of tasks, including natural language processing, speech recognition, and video analysis. They can also be used to generate sequences, such as in text generation or music composition.
 
 
@@ -105,7 +105,7 @@
         \begin{quote}
             ... recurrent neural networks contain cycles that feed the network activations from a previous time step as inputs to the network to influence predictions at the current time step. These activations are stored in the internal states of the network which can in principle hold long-term temporal contextual information. This mechanism allows RNNs to exploit a dynamically changing contextual window over the input sequence history. \cite{sakLongShortTermMemory2014}
         \end{quote}
-        Yet, this also results in them being prone to \nameref{par:vanishing-gradients-background} and \nameref{par:exploding-gradients-background}, that make it cumbersome to train the network effectively. 
+        Yet, this also results in them being prone to \nameref{par:vanishing-gradients-background} and \nameref{par:exploding-gradients-background}, which make it cumbersome to train the network effectively. 
         To address these issues, several variants of RNNs have been developed, \nameref{sec:lstm-background} networks and Gated Recurrent Units (GRUs).
         
         
@@ -113,8 +113,8 @@
         \label{sec:recurrent-cell-architecture-background}
 
             A traditional feed-forward neural network (FNN) is unidirectional, meaning that they have a single direction and hence cannot persist information over a time step $t$.
-            Looping structures are added to a feed-forward neural network that enable the persistence of information about time-series or sequential data. 
-            This is the reason RNN's are known as "recurrent" neural networks.
+            Looping structures are added to a feed-forward neural network that enables the persistence of information about time-series or sequential data. 
+            This is the reason RNNs are known as "recurrent" neural networks.
 
             As can be seen in figure \ref{fig:fnn-vs-rnn}, the RNN has an additional loop inside it to persist time-series information. The loop structure enables the RNN to apply a \emph{recurrence relation} (see \ref{sec:recurrence-relation-background}) at every time step in order to process a sequence.
 
@@ -126,7 +126,7 @@
 
             The recurrence relation is applied at every time step to process a sequence.
 
-            The recurrent relation seen in figures \ref{fig:fnn-vs-rnn}, \ref{fig:single-rnn-cell} is denoted as $h_t$, and is defined as $h_t = f_w(h_{t - 1}, x_t)$, where $f_w$ is a function that is parametrized by the weights, $h_{t-1}$ is the previous state and $x_t$ is the input vector at time step $t$. With the addition of $h_{t-1}$, the model is now also taking the previous time step into account when updating the current time step. 
+            The recurrent relation seen in figures \ref{fig:fnn-vs-rnn}, \ref{fig:single-rnn-cell} is denoted as $h_t$ and is defined as $h_t = f_w(h_{t - 1}, x_t)$, where $f_w$ is a function that is parametrized by the weights, $h_{t-1}$ is the previous state and $x_t$ is the input vector at time step $t$. With the addition of $h_{t-1}$, the model is now also taking the previous time step into account when updating the current time step. 
             \begin{figure}[h!]
                 \centering
                 \includegraphics[scale=0.5]{figures/single_rnn_cell.drawio.png}
@@ -147,7 +147,7 @@
         \label{sec:rnn-loop-unfolding-background}
 
             The loop unfolding will provide a description about how RNN handle sequential data at every time step.
-            As can  be seen in figure \ref{fig:rnn-loop-unfolding}, the model is adding the input at every time step, and generating an output $\hat{y}_i$ for every time step.
+            As can be seen in figure \ref{fig:rnn-loop-unfolding}, the model is adding the input at every time step, and generates an output $\hat{y}_i$ for every time step.
             The weight matrices $W_{hh}$ that are used for every time step for updating the previous state are the same for every time step.
             The weight matrix $W_{xh}$ is applied to every $x_i$ and is also the same for every time step $i$.
 
@@ -178,12 +178,12 @@
                 \label{fig:loss-calculation-weight-update-rnn}
             \end{figure}
             Then the total loss $L$ is used to propagate backwards and calculate the \emph{back-propagation} in order to update the weights of the model.
-            This is shown in figure \ref{fig:loss-calculation-weight-update-rnn}, where the black arrows display the forward-propagation step that are accumulated as the total loss $L$, and then the back-propagation shown as the red arrows update the weights by using the partial derivative.
+            This is shown in figure \ref{fig:loss-calculation-weight-update-rnn}, where the black arrows display the forward-propagation step that is accumulated as the total loss $L$, and then the back-propagation shown as the red arrows update the weights by using the partial derivative.
 
             \begin{quote}
                 The central problem that back-propagation solves is the evaluation of the influence of a parameter on a function whose computation involves several elementary \emph{steps}. The solution to this problem is given by the chain rule, but back-propagation exploits the particular form of the functions used at each step (or layer) to provide an elegant and local procedure. \cite{lecunTheoreticalFrameworkBackpropagation1988}
             \end{quote}
-            Back-propagation is the practice of fine-tuning the weights of a neural network based on the error rate (i.e. loss) obtained in the previous epoch. Proper tuning of the weights ensures lower error rates, making the model reliable by increasing its generalization.
+            Backpropagation is the practice of fine-tuning the weights of a neural network based on the error rate (i.e. loss) obtained in the previous epoch. Proper tuning of the weights ensures lower error rates, making the model reliable by increasing its generalization.
 
 
         \subsection{Common Problems and Shortcomings of RNNs}
@@ -191,7 +191,7 @@
 
             Regularly experienced problems of RNNs are the exploding or vanishing gradient problems.
             \begin{quote}
-                The motivation behind why they happen is that it is hard to catch long haul conditions as a result of a multiplicative angle that can be dramatically diminishing/expanding regarding the number of layers. \cite{parikhDisadvantagesRNN2021}
+                The motivation behind why they happen is that it is hard to catch long-haul conditions as a result of a multiplicative angle that can be dramatically diminishing/expanding regarding the number of layers. \cite{parikhDisadvantagesRNN2021}
             \end{quote}
             While unfolding, the error gradient is calculated as the sum of all gradient errors across time steps. Therefore, the loss calculation in unfolded RNNs is also known as \emph{backpropagation through time (BPTT)}.
             Over time while calculating the error gradients the domination of the multiplicative term increases due to the chain rule application. And thus the gradients either explode or vanish.
@@ -202,31 +202,31 @@
 
                 The Exploding Gradients problem occurs when many of the values (i.e. weight matrices, or gradients themselves) involved in the repeated gradient computations are greater than 1. 
                 If this is the case, then gradients become extremely large and optimising them becomes computationally intensive.
-                To solve the Exploding Gradients problem, a process called \emph{Gradient Clipping} is applied, that scales the gradient values to smaller values less than 1.
+                To solve the Exploding Gradients problem, a process called \emph{Gradient Clipping} is applied, which scales the gradient values to smaller values less than 1.
 
 
             \paragraph{Vanishing Gradients}
             \label{par:vanishing-gradients-background}
 
                 The Vanishing Gradients problem occurs when many of the values (i.e. weight matrices or gradients themselves) that are involved in the repeated gradient computations are too small or less than 1. Opposed to the \nameref{par:exploding-gradients-background} problem, the gradients become smaller with each repeated computation of the gradients.
-                This results in the problem of \emph{long term dependency}, were smaller sequences can be remembered and the weights updated accordingly. But for longer sequences, the model will unlikely be able to yield a good prediction performance.
+                This results in the problem of \emph{long term dependency}, where smaller sequences can be remembered and the weights updated accordingly. But for longer sequences, the model will unlikely be able to yield a good prediction performance.
 
-                There are multiple solutions to the Vanishing Gradient problem, such as changing the activation function from $\tanh$ to \emph{Rectified Linear Unit (ReLU)}. Also initialising the weights of the model can solve this problem, though tailored heuristics (such as the \emph{Xavier Weight Initialisation}) should be used to result in omitting the Vanishing Gradients problem and also increase the efficiency of the training. Another solution is to change the architecture of the neural network and adding more complex recurrent units that are mentioned in section \ref{sec:lstm-background}.
+                There are multiple solutions to the Vanishing Gradient problem, such as changing the activation function from $\tanh$ to \emph{Rectified Linear Unit (ReLU)}. Also initialising the weights of the model can solve this problem, though tailored heuristics (such as the \emph{Xavier Weight Initialisation}) should be used to result in omitting the Vanishing Gradients problem and also increase the efficiency of the training. Another solution is to change the architecture of the neural network and add more complex recurrent units that are mentioned in section \ref{sec:lstm-background}.
 
             \paragraph{Slow and Complex Training}
 
-                Since RNNs are recurrent one of their fundamental problems is that they require a lot of time for training when compared to FNNs. Additionally, RNNs need to calibrate the previous outputs as well as current inputs into a state change function, which in turn make RNNs harder to implement and customize and more complex to train.
+                Since RNNs are recurrent one of their fundamental problems is that they require a lot of time for training when compared to FNNs. Additionally, RNNs need to calibrate the previous outputs as well as current inputs into a state change function, which in turn makes RNNs harder to implement and customize and more complex to train.
 
             \paragraph{Difficult to Process Longer Sequences}
 
-                As already mentioned earlier, training RNNs on too long sequences is difficult without taking any measures to improve the prediction performance. This is especially true while using the $tanh$ activation function. 
+                As already mentioned earlier, training RNNs on too-long sequences is difficult without taking any measures to improve the prediction performance. This is especially true while using the $tanh$ activation function. 
                 
     \section{Long-Short Term Memory}
     \label{sec:lstm-background}
 
         \emph{Long-Short Term Memory (LSTM)} \cite{hochreiterLongShortTermMemory1997} \cite{gravesLongShorttermMemory2012} are a type of \nameref{sec:rnn-background} architecture but are designed to improve upon the issues of regular RNN models as are mentioned in \nameref{par:vanishing-gradients-background} and \nameref{par:exploding-gradients-background}. 
         The main architectural improvement for LSTMs over traditional RNNs is that they have introduced \nameref{sec:lstm-memory-cell-architecture-background} to produce paths, which let gradients flow for a long duration, and thus gradients will not vanish.
-        Compared to RNNs, LSTMs are better suited for learning long term dependencies in sequential or time-series data that have temporal dependence such as natural language processing, speech recognition, music generation and financial prediction.
+        Compared to RNNs, LSTMs are better suited for learning long-term dependencies in sequential or time-series data that have temporal dependence such as natural language processing, speech recognition, music generation and financial prediction.
         \begin{quote}
             Hence standard RNNs fail to learn in the presence of time lags greater than 5 – 10 discrete time steps between relevant input events and target signals. The vanishing error problem casts doubt on whether standard RNNs can indeed exhibit significant practical advantages over time window-based feedforward networks. A recent model, “Long Short-Term Memory” (LSTM), is not affected by this problem. LSTM can learn to bridge minimal time lags in excess of 1000 discrete time steps by enforcing constant error flow through “constant error carousels” (CECs) within special units, called cells. \cite{gersLearningForgetContinual2000}
         \end{quote}
@@ -243,11 +243,11 @@
             \begin{figure}[h!]
                 \centering
                 \includegraphics[width=0.6\textwidth]{figures/lstm_memory_cell.png}
-                \caption{Architecture of a memory cell and it's gate units \cite{hochreiterLongShortTermMemory1997}}
+                \caption{Architecture of a memory cell and its gate units \cite{hochreiterLongShortTermMemory1997}}
                 \label{fig:architecture-of-a-memory-cell}
             \end{figure}
-            LSTM memory cells are able to store information for an extended period of time compared to regular RNNs and its \emph{cell state} functions as the memory of the network.
-            The architecture of a memory cell and it's gates can be seen in figure \ref{fig:architecture-of-a-memory-cell} that was taken directly from the paper \cite{hochreiterLongShortTermMemory1997}.
+            LSTM memory cells can store information for an extended period compared to regular RNNs and its \emph{cell state} functions as the memory of the network.
+            The architecture of a memory cell and its gates can be seen in figure \ref{fig:architecture-of-a-memory-cell} that was taken directly from the paper \cite{hochreiterLongShortTermMemory1997}.
 
 
             \subsubsection{LSTM Gate Structure}
@@ -297,7 +297,7 @@
             \subsubsection{Back-Propagation Through Time}
             \label{sec:back-propagation-through-time}
 
-                The LSTM architecture implements so called \emph{back-propagation through time (BPTT)}, a variant of back-propagation that allows the gradients to flow backwards through the entire sequence of inputs as can be seen in figure \ref{fig:loss-calculation-weight-update-rnn}.
+                The LSTM architecture implements so-called \emph{backpropagation through time (BPTT)}, a variant of back-propagation that allows the gradients to flow backwards through the entire sequence of inputs as can be seen in figure \ref{fig:loss-calculation-weight-update-rnn}.
 
             
     \subsection{LSTM Learning Process} % working title
@@ -309,7 +309,7 @@
 
         \paragraph{2. Perform Computations and Store Relevant Information}
 
-            The importance of sequential information is decided by the LSTM model, that either keeps information that is relevant to keep or will be discarded by the forget gates in order to be able to store new information.
+            The importance of sequential information is decided by the LSTM model, which either keeps information that is relevant to keep or will be discarded by the forget gates in order to be able to store new information.
             
             \begin{pabox}{Forget Gate}
 
@@ -317,7 +317,7 @@
 
                 $$g_i^{(t)} = \sigma \left(b_i^g + \sum_{j} U_{i, j}^f x_j^{(t)} + \sum_{j} W_{i, j}^g h_j^{(t - 1)}\right)$$
 
-                The computation of new information is done via the input gates. The internal cell state is updated by the previous hidden state $h^{(t - 1)}$, the current input $x^{(t)}$ and the bias $b^{(t)}$ that are passed to the Sigmoid activation function that weights the value by transforming it between $0$ and $1$ based on how relevant the information is.
+                The computation of new information is done via the input gates. The internal cell state is updated by the previous hidden state $h^{(t - 1)}$, the current input $x^{(t)}$ and the bias $b^{(t)}$ that is passed to the Sigmoid activation function that weights the value by transforming it between $0$ and $1$ based on how relevant the information is.
                 
             \end{pabox}
 
@@ -336,7 +336,7 @@
 
         \paragraph{4. Output Gate}
 
-            In the last step, the output is forwarded by the output gate. This output is also called \emph{hidden state}, that is sent to the next network component and also used for predictions.
+            In the last step, the output is forwarded by the output gate. This output is also called \emph{hidden state}, which is sent to the next network component and also used for predictions.
             This hidden state is denoted by $h_i^t$ and has the mathematical representation:
 
             \begin{pabox}{Output Gate}
@@ -347,9 +347,9 @@
     \subsection{Stacked LSTM}
     \label{sec:stacked-lstm}
 
-        The original LSTM model is comprised of a single hidden LSTM layer and it's output is consumed by a standard feedforward output layer.
-        A stacked LSTM is an extension to this model, and it can be defined as an LSTM model comprised of multiple LSTM layers.
-        An LSTM layer above another layer provides a sequence output rather than a single value output to the LSTM layer below. Each layer contains of multiple memory cells and those layers are stacked onto each other, giving the name to this variant.
+        The original LSTM model is comprised of a single hidden LSTM layer and its output is consumed by a standard feedforward output layer.
+        A stacked LSTM is an extension of this model, and it can be defined as an LSTM model comprised of multiple LSTM layers.
+        An LSTM layer above another layer provides a sequence output rather than a single value output to the LSTM layer below. Each layer contains multiple memory cells and those layers are stacked onto each other, giving the name to this variant.
         The usage of stacked LSTM hidden layers is responsible for making the model deeper.
         The success of neural networks is generally attributed to the increased depth of neural networks in recent years, resulting to be applicable for a wide range of challenging prediction and optimisation problems.
 
@@ -358,7 +358,7 @@
             Each layer processes some part of the task we wish to solve, and passes it on to the next.
             In this sense, the DNN can be seen as a processing pipeline, in which each layer solves a part of the task before passing it on to the next, until finally the last layer provides the output. \cite{hermansTrainingAnalysingDeep2013}
         \end{quote}
-        The additional hidden layers are understood to recombine the learned representation from prior layers and create new representations at high level of abstraction.
+        The additional hidden layers are understood to recombine the learned representation from prior layers and create new representations at a high level of abstraction.
         Thus, since LSTMs operate on sequential data, the addition of layers adds levels of abstraction of input observations over time.
 
         \begin{quote}

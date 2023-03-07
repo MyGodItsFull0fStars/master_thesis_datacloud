@@ -37,12 +37,18 @@
         These deviations from the actual values are also referred to as \emph{disturbances}.
         As is stated in \cite{stoopComplexitySchedulingPractice1996}, these disturbances can be divided into three categories:
         \begin{enumerate}
-            \item disturbances regarding the capacity,
-            \item disturbances related to orders,
-            \item disturbances related to the measurement of data.
+            \item Disturbances regarding the capacity,
+            \item Disturbances related to orders,
+            \item Disturbances related to the measurement of data.
         \end{enumerate}
         While the paper uses the disturbances on \emph{production scheduling}, i.e. finding a schedule for a real facility, the propositions can be translated into our domain of distributed systems that represent the machines/workers and big data pipelines filled with tasks that represent the tasks that are to be scheduled to the machines. After scheduling and deploying the tasks onto the machines, they need to be executed or finished by a worker.
         Capacity disturbances are caused by the machine's capacity and involve scenarios such as partial or complete failure of a hardware resource or trying to execute tasks on resources that are not capable of handling those tasks because the specific requirements are not met. 
+        
+        Order-related disturbances are aspects that delay the process of individual orders (tasks).
+        This could be the unavailability of required data that is calculated by a preceding task the current task depends on which has not finished its execution. 
+
+        The disturbance related to the measurement of data is that of processing times and hardware utilisation requirements that are estimated before deploying a task onto the distributed system. 
+        This type of disturbance is the aforementioned deviation of the predicted utilisation of heterogeneous resources that are investigated in this thesis. These cover the hardware utilisation requirements and the already existing estimations done by domain experts and users. While analysing the monitoring traces of popular cloud providers, it becomes apparent that hardware is not optimally used.
 
         % explain that a subset of the problem is np-hard/complete
 

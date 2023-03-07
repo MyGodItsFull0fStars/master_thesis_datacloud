@@ -323,6 +323,22 @@
   \subsection{Resource Prediction}
   % flow chart of resource prediction
   \subsection{DataFrame Scaler}
+  \label{sec:dataframe-scaler-architecture-and-implementation}
+
+    The \texttt{DataFrameScaler} is a custom class that handles the scaling of datasets that are in the form of a \emph{Pandas DataFrame} data type. 
+    The reason for implementing a custom class for this thesis instead of the popular approach of the \texttt{StandardScaler} and \texttt{MinMaxScaler} classes provided by \emph{scikit-learn} is that these third-party classes destroy valuable information about the dataset while scaling it to either be standardised (see \nameref{sec:data-standardisation-data-preprocessing-architecture}) or normalised (see \nameref{sec:data-normalisation-data-preprocessing-architecture}). 
+    Information that is not kept when scaling the DataFrames is data point timestamps, which are converted to ascending integer values. Similarly, the column description is also not kept after the scaling, so it is necessary to dynamically create a map of an integer to the column description.
+    Because of behaviour, a custom Python class was implemented that scales the DataFrame to a standardised or normalised DataFrame or if required to be fed to the LSTM model converted to a PyTorch Tensor.
+    This class ensures that the timestamps of each data point are kept and fed to the LSTM model and also keeps the column descriptions. Additionally, it is possible to define columns that should be ignored while scaling the DataFrame. This is useful for columns that were one-hot encoded (see \nameref{sec:one-hot-encoding-preprocessing-architecture}, \nameref{sec:adding-task-knowledge-evaluation-scenarios}, \nameref{sec:adding-instance-knowledge-evaluation-scenarios}) before the scaling process.
+    The \emph{DataFrame Scaler} class contains both the logic for standardising and normalising a DataFrame.
+
+    \lstinputlisting[
+      language=Python, 
+      caption=DataFrameScaler Constructor and Instance Variables, 
+      label={lst:dataframe-scaler-init},
+      style=codestyle
+      ]{code_samples/dataframe_scaler_init.py}
+
   \subsection{Penalty Mean Squared Error Loss Function}
   \label{sec:penalty-mse-loss-function-architecture-and-implementation}
 

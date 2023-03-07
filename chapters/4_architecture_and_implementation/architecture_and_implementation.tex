@@ -25,7 +25,7 @@
     Netdata is an open-source tool that collects real-time metrics, including CPU usage, disk activity, bandwidth usage and furthermore.
     The reason we chose Netdata for monitoring is that it is a lightweight tool mostly written in C, Python and Javascript and it requires minimal resources, which is necessary when monitoring edge devices.
     One of its major features is that it runs without interrupting any of the applications running on the same device. This is achieved by only using idle CPU cycles while running.
-    Netdata provides an in-browser dashboard to analyse each metric in real-time with help of visual representation. As an example, a screenshot was taken of a cloud resource in our system as can be seen in \ref{fig:netdata-dashboard}.
+    Netdata provides an in-browser dashboard to analyse each metric in real time with help of visual representation. As an example, a screenshot was taken of a cloud resource in our system as can be seen in \ref{fig:netdata-dashboard}.
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.95\textwidth]{figures/netdata.png}
@@ -64,13 +64,13 @@
   This received action $A_{t+1}$ is then used by the Resource components to reconfigure the resources if necessary.
   The adaptation uses monitoring of tasks and resources to retrieve the monitoring data $P_t$, $S_t$.
   
-  The monitoring component is necessary to obtain information about failures or performance fluctuations along with under-, over-utilisation of resources.
+  The monitoring component is necessary to obtain information about failures or performance fluctuations along with under-, and over-utilisation of resources.
   The monitoring data, therefore, provide feedback if a resource can handle the additional load, and thus, more tasks will potentially be mapped to it for execution. 
   In case the resource is not capable of handling the current load, less demanding tasks will be mapped to that resource in future scheduling cycles and it will be reconfigured accordingly.
 
   A monitored resource information consists of the CPU, memory and storage utilization, in addition to network bandwidth usage.
   The Big Data pipeline and resources send their monitoring data $P_t$, and $S_t$ respectively to the Monitoring and Analysis component.
-  Afterward, given those monitoring data, the analyser will determine the next action $A_{t+1}$ of the resources.
+  Afterwards, given those monitoring data, the analyser will determine the next action $A_{t+1}$ of the resources.
   The monitoring feedback will be periodically retrieved from all registered resources and provided to the analyser.
   In case of a resource side failure, the monitoring mechanism will be alerted of the occurred anomaly.  
   The analyser uses this monitoring data to decide if any actions $a \in A$ on the current scheduling plan have to be applied.
@@ -94,8 +94,9 @@ The following actions $A$ are considered in the adaptation approach:
       This is categorized as $S_3$ in the analyser, and the action set will be modified, so that resources grouped in $S_3$ will be less utilized with the upcoming updates of the action set. \cite{kimovskiBigDataPipeline2022}
 
 
-\section{Monitoring}
-\label{sec:monitoring-architecture}
+% TODO see if monitoring is even needed in architecture
+% \section{Monitoring}
+% \label{sec:monitoring-architecture}
 
 \section{Data Preprocessing and Analysis}
 \label{sec:data-preprocessing-and-analysis-architecture}
@@ -237,7 +238,7 @@ The following actions $A$ are considered in the adaptation approach:
 \section{LSTM Architecture}
 \label{sec:lstm-architecture-and-implementation}
 
-  In this section the architecture of the LSTM model is elaborated.
+  In this section, the architecture of the LSTM model is elaborated.
   This involves the description of the different layers that are used as well as some operations that are required to improve the prediction of the model.
   The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python. 
   \begin{figure}
@@ -272,7 +273,7 @@ The following actions $A$ are considered in the adaptation approach:
     The ReLU function can be mathematically described as $$g(z) = \max \left\{0, z\right\}.$$
 
   \end{pabox}
-  The advantages of ReLU are it's computational simplicity, the representational sparsity (being able to output true zero values opposed to $\tanh$ and $sigmoid$), the linear behaviour and the training of deep neural networks via backpropagation was heavily improved when using ReLU compared to more complex methods. The function is linear for values greater than zero which results in ReLU having many of the advantages of a linear activation function when using backpropagation. Yet, ReLU is a nonlinear function since negative values are always output as zero.
+  The advantages of ReLU are its computational simplicity, the representational sparsity (being able to output true zero values opposed to $\tanh$ and $sigmoid$), the linear behaviour and the training of deep neural networks via backpropagation was heavily improved when using ReLU compared to more complex methods. The function is linear for values greater than zero which results in ReLU having many of the advantages of a linear activation function when using backpropagation. Yet, ReLU is a nonlinear function since negative values are always output as zero.
 
   \begin{pabox}{Batch Normalisation}
   \label{def:batch-normalisation-definition}

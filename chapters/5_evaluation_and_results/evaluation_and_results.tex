@@ -191,7 +191,7 @@
       additional information regarding a task (see sections \ref{sec:adding-task-knowledge-evaluation-scenarios} and \ref{sec:adding-instance-knowledge-evaluation-scenarios}) will result in closer predictions to the actual value but also the LSTM model is more likely to predict values that are smaller than the actual value.
       % TODO explain why this is a bad thing
       
-      Therefore, a custom loss function was designed and implemented (see \nameref{sec:penalty-mse-loss-function-architecture-and-implementation}) to counter the prediction of values lower than the actual value.
+      Therefore, a custom loss function was designed and implemented (see \nameref{sec:penalty-mse-loss-function-architecture-and-implementation}) to counter the tendency of the LSTM model with an increasing number of feature columns to predict values lower than the actual value.
 
   \subsection*{5. Inference Time}
   \label{sec:inference-time-evaluation-scenarios}

@@ -7,7 +7,7 @@ class DataFrameScaler():
     def __init__(
         self, 
         df: DataFrame = None,   # the Pandas DataFrame to be scaled
-        filter_columns = None   # DataFrame columns to ignore
+        filter_columns: list[str] = None   # DataFrame columns to ignore
         ) -> None:
 
         self.filter_columns = filter_columns

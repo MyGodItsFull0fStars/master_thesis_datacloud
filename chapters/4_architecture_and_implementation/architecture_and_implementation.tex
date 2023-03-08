@@ -157,6 +157,7 @@
       In order to calculate a distribution of the data with a mean of $0$ and a variance of $1$, all the data points are first subtracted by their mean and the result of that is then divided by the variance of the distribution.
 
       \begin{pabox}{Mean - Standard Deviation - Standardisation}
+        \label{def:standardisation}
         In the following, the necessary definitions for the standardisation of data points are defined.
 
         The mean $\mu$ is calculated with the formula:
@@ -175,15 +176,21 @@
     \label{sec:data-normalisation-data-preprocessing-architecture}
 
       In data normalisation, all values in a data set are scaled in a specified range between $0$ and $1$ via normalisation and represented as floating-point numbers.
+      The normalisation of data does not influence the distribution of the features, but it does increase the effects of outliers due to the lower standard deviation after the modification. Because of this, it is necessary to deal with outliers before applying normalisation to a data set.
       
       \begin{pabox}{Normalisation}
+        \label{def:normalisation}
         The normalisation scaling formula and its parameters are defined as follows:
 
         The minimum value of a dataset is denoted as $x_{min}$ and the maximum value as $x_{max}$.
-        The value $x$ denotes a data point that will be scaled between $0$ and $1$ and it's new value is denoted as $x_{new}$.
+        The value $x$ denotes a data point that will be scaled between $0$ and $1$ and its new value is denoted as $x_{new}$.
         $$x_{new} = \frac{x - x_{min}}{x_{max} - x_{min}}$$
+
+        The de-normalisation is used to rescale the estimation done by the LSTM model into the range of the actual values. The formula for calculating the inverse of the normalisation is:
+
+        $$x = x_{new} * (x_{max} - x_{min}) + x_{min}$$
+        The old value $x$ is calculated by simply rearranging the normalisation formula and de-normalising the normalised value $x_{new}$.
       \end{pabox}
-      The normalisation of data does not influence the distribution of the features, but it does increase the effects of outliers due to the lower standard deviation after the modification. Because of this, it is necessary to deal with outliers before applying normalisation to a data set.
       The normalisation of data points is used for the label dataset that contains the labels that the ML model should predict (i.e. the hardware utilisation of resources). The normalisation is used for the label dataset because its values of it are transformed to a standard scale without distorting the difference between the values. This behaviour is useful when predicting the actual values in the label dataset.
 
     \subsubsection{Feature Selection}
@@ -330,7 +337,7 @@
     Information that is not kept when scaling the DataFrames is data point timestamps, which are converted to ascending integer values. Similarly, the column description is also not kept after the scaling, so it is necessary to dynamically create a map of an integer to the column description.
     Because of behaviour, a custom Python class was implemented that scales the DataFrame to a standardised or normalised DataFrame or if required to be fed to the LSTM model converted to a PyTorch Tensor.
     This class ensures that the timestamps of each data point are kept and fed to the LSTM model and also keeps the column descriptions. Additionally, it is possible to define columns that should be ignored while scaling the DataFrame. This is useful for columns that were one-hot encoded (see \nameref{sec:one-hot-encoding-preprocessing-architecture}, \nameref{sec:adding-task-knowledge-evaluation-scenarios}, \nameref{sec:adding-instance-knowledge-evaluation-scenarios}) before the scaling process.
-    The \emph{DataFrame Scaler} class contains both the logic for standardising and normalising a DataFrame.
+    The \emph{DataFrameScaler} class contains both the logic for standardising and normalising a DataFrame.
 
     \lstinputlisting[
       language=Python, 
@@ -338,6 +345,21 @@
       label={lst:dataframe-scaler-init},
       style=codestyle
       ]{code_samples/dataframe_scaler_init.py}
+
+    As shown in lines 2-5 listing \ref{lst:dataframe-scaler-init} the class contains different instance variables to hold the necessary information about a DataFrame such as the data types of each column.
+    The variables in lines 3-5 hold the standard deviation, normalisation DataFrames and the list of the columns that are to be scaled respectively. The DataFrame values for the standard deviation and normalisation are calculated in the \texttt{fit(...)} method (see listing \ref{lst:dataframe-scaler-fit}) that resides inside the class.
+    These DataFrames are necessary to later be able to scale other data points that share the same distribution as the DataFrame that was used to fit the scaler. 
+    This is used for estimations forwarded by the LSTM model that are within the range of normalised values.
+    In order to rescale the estimation into the actual range, the \texttt{norm\_dev\_df} is used to transform the data by using the formula for de-normalisation (see \nameref{def:normalisation}).
+
+    \lstinputlisting[
+      language=Python, 
+      caption=DataFrameScaler Fit Method, 
+      label={lst:dataframe-scaler-fit},
+      style=codestyle
+      ]{code_samples/dataframe_scaler_fit.py}
+    The \texttt{fit(...)} method of listing \ref{lst:dataframe-scaler-fit} is used to preserve the columns of the given DataFrame (line 3), the data types in each of its columns (line 4), the columns that need to be scaled, and a standard deviation and normalisation DataFrame based on the data points in the DataFrame given as a parameter. The execution \texttt{fit(...)} function is mandatory to be able to scale data points with the \texttt{DataFrameScaler} class even if it is not enforced to provide a DataFrame when instantiating the scaler instance.
+
 
   \subsection{Penalty Mean Squared Error Loss Function}
   \label{sec:penalty-mse-loss-function-architecture-and-implementation}

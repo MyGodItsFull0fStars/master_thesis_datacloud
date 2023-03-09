@@ -211,7 +211,16 @@ pdfauthor={Christian Bauer} % author
   numberstyle=\tiny\color{gray},
 }
 
+\usepackage{thmtools}
+\usepackage{tocbibind}
 
+\addto\captionsenglish{%
+  % \renewcommand{\}{List of Definitions}%
+  \renewcommand{\listtheoremname}{List of Definitions}%
+}
+
+\newcommand{\SAA}{\textsc{SAA }}
+% \declaretheorem[name=Definition]{definition}
 \begin{document}
 
   \maketitle
@@ -220,9 +229,12 @@ pdfauthor={Christian Bauer} % author
   \listoffigures
   % \listoftables
   \lstlistoflistings
-  
+  % \listoftheorems[ignoreall,show=pabox]
 
   \section*{Abstract}   
+
+
+
 
   \import{./chapters/1_introduction}{introduction.tex}
 

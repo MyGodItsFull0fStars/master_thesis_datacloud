@@ -36,6 +36,7 @@
     \section{Scheduling and Adaptation}
     \label{sec:scheduling-and-adaptation-background}
 
+        \subsection{Adaptation}
         The SAA adaptation approach is defined as a loop, that cyclically updates every component contained in the loop.
         The adaptation loop is shown in figure \ref{fig:adaptation-loop} and consists of the Big Data pipeline and the \emph{resources} containing all registered and monitored to the \emph{Monitoring and Analysis} component. 
         Both the Big Data pipeline and the resources send the gathered monitoring information at a time step $P_t$ or $S_t$ respectively to the \emph{Monitoring and Analysis} component, where $t$ denotes the current time step.
@@ -64,16 +65,35 @@
         \end{figure}
         The following actions $A$ are considered in the adaptation approach:
 
-        \paragraph*{Resource load within expected parameters $(S_1)$} 
+        \subsubsection*{Resource load within expected parameters $(S_1)$} 
         When tasks on resources are well mapped and no action has to be taken for these resources, this is denoted in the action set $A_{t+1}$ as the state $S_1$. This state is achieved when a resource is running within expected parameters, the estimated time of completing a task is not exceeded or other anomalies occur.
 
-        \paragraph*{Resource load under expected parameters $(S_2)$} 
+        \subsubsection*{Resource load under expected parameters $(S_2)$} 
         When the monitoring component detects under-utilization of a resource, tasks of the pipeline are mapped to it to be efficiently utilized. This state is categorized as $S_2$ in the analyser and the action set will be modified to improve the utilization of resources grouped into $S_2$. 
 
-        \paragraph*{Resource load over expected parameters $(S_3)$} 
+        \subsubsection*{Resource load over expected parameters $(S_3)$} 
         If a resource is over-utilized, there are multiple options. If it is detected that horizontal scaling solves the over-utilization and the resource instance is capable of being scaled up, it will be reconfigured to be within expected utilization levels. Furthermore, if an ill-defined task is detected and was mapped to a resource that isn't capable to fulfil the computation within a reasonable time frame, this task will be migrated to another resource. 
-        This is categorized as $S_3$ in the analyser, and the action set will be modified, so that resources grouped in $S_3$ will be less utilized with the upcoming updates of the action set. \cite{kimovskiBigDataPipeline2022}
+        This is categorized as $S_3$ in the analyser, and the action set will be modified, so that resources grouped in $S_3$ will be less utilized with the upcoming updates of the action set.
 
+    \subsection{Scheduling and Adaptation Functional Architecture}
+        The architecture of the integrated \SAA{} scheduling and adaptation tool consists of five components, displayed in Figure~\ref{fig:data-cloud-architecture}.
+
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\textwidth]{pdf/data_cloud_arch.pdf}
+            \caption{\SAA Architecture}
+            \label{fig:data-cloud-architecture}
+        \end{figure}
+
+        \paragraph{Dependency analysis } orders the candidate tasks scheduled on each resource in a preference list based on the aggregate pipeline communication time to each task.
+
+        \paragraph{Execution event detection } uses data from external monitoring system to identify SLO violations or anomalies during execution.
+
+        \paragraph{Scheduling } maps the pipeline tasks to the resources using a matching theory algorithm, applied on the task and resource preference lists in response to infrastructure drifts.
+
+        \paragraph{Adaptation } dynamical applies re-scheduling or migration of the tasks based on the analyzed monitoring received from the execution event detection. Both the scheduling and adaptation interact with deployment and orchestration system to perform deployment and adaptation of the tasks.
+
+        \paragraph{Public API } enables the integration of the \SAA{} scheduling and adaptation tool with deployment and orchestration systems. \cite{kimovskiBigDataPipeline2022}
 
     \section{Prediction of Load}
     \label{sec:prediction-of-load-background}

@@ -11,7 +11,7 @@
 
 
 
-    \section{Public Cloud Provider Traces in Available Data}
+    \section{Cloud Monitoring and Execution Traces}
     \label{sec:public-cloud-provider-traces-in-available-data-related-work}
 
         Cloud monitoring involves the tracking of Quality of Service (QoS) parameters of a heterogeneous environment (ie. VM, storage, network and appliances), as well as the physical resources those environments reside on. Additionally, the applications that are running in those environments and the data that is stored and hosted on them.
@@ -29,30 +29,4 @@
 
     % Cloud monitoring activity involves dynamically tracking the Quality of Service (QoS) parameters related to virtualized resources (e.g., VM, storage, network, appliances, etc.), the physical resources they share, the applications running on them and data hosted on them. Applications and resources configuration in cloud computing environment is quite challenging considering a large number of heterogeneous cloud resources. Further, considering the fact that at given point of time, there may be need to change cloud resource configuration (number of VMs, types of VMs, number of appliance instances, etc.) for meet application QoS requirements under uncertainties (resource failure, resource overload, workload spike, etc.). Hence, cloud monitoring tools can assist a cloud providers or application developers in: (i) keeping their resources and applications operating at peak efficiency, (ii) detecting variations in resource and application performance, (iii) accounting the service level agreement violations of certain QoS parameters, and (iv) tracking the leave and join operations of cloud resources due to failures and other dynamic configuration changes. In this paper, we identify and discuss the major research dimensions and design issues related to engineering cloud monitoring tools. We further discuss how the aforementioned research dimensions and design issues are handled by current academic research as well as by commercial monitoring tools.
     
-    \section{Resource Prediction based on Machine Learning}
-    \label{sec:resource-prediction-based-on-machine-learning-related-work}
     
-    % what are the works that focus on the processing and tracing of resource utilisation
-        Resource prediction based on machine learning involves the usage of forecasting machine learning algorithms that are capable of predicting future resource usage or the availability based on historical data.
-        This can be applied to a variety of resources, such as energy, hardware utilisation.
-        For example, in energy resource prediction, energy usage patterns may be used to train machine learning models that are capable of predicting energy consumption \cite{shapiEnergyConsumptionPrediction2021} \cite{richDeepMindAIReduces2016}.
-
-        There is a large variety of machine learning algorithms available that can be used for resource prediction, including linear regression \cite{weisbergAppliedLinearRegression2005}, decision trees \cite{kotsiantisDecisionTreesRecent2013}, random forests \cite{breimanRandomForests2001} and neural networks \cite{andersonIntroductionNeuralNetworks1995}.
-        Neural networks that are especially promising for forecast prediction are \nameref{sec:rnn-background} and \nameref{sec:lstm-background}.
-        Improving the resource utilisation is especially promising for large scale computational systems such as data centers and cloud-based infrastructures. In \cite{thonglekImprovingResourceUtilization2019} a prediction model based on a long-short term memory machine learning is used that is capable of improving the resource utilisation compared to predictions based on user input.
-        They analyse the CPU and memory allocation and utilisation separately and train the machine learning model to generate more accurate forecast predictions based on the provided sequential data and the allocated resource information.
-        The server load in a cloud computing environment is predicted in a hybrid Convolutional Neural Network - Long-Short Term Memory architecture in the paper \cite{patelHybridCNNLSTMModel2022}.
-        The paper \cite{orenSOLOSearchOnline2021} represents the resource utilisation as a combinatorial optimization problem and uses a set of Monte Carlo Decision Process (MDP) \cite{jamesMonteCarloTheory1980}, Deep Q-learning and Graph Neural Networks as heuristics to improve the resource utilisation.
-        The choice of algorithm highly depends on the specific problem and the type of data that is available.
-        Overall, resource prediction based on machine learning can provide valuable insights and support informed decision making by allowing organizations to better plan and allocate resources.
-        Tuli et al. \cite{tuliStartStragglerPrediction2021} proposed a novel prediction and mitigation method using an Encoder long-short term memory (LSTM) model for large-scale cloud computing infrastructure. This method aims at reducing the application response time while maintaining the service level agreement between the application owner and resource provider.
-        Ngo et al. \cite{ngoContextualbanditAnomalyDetection2020} considered multiple anomaly detection deep neural network (DNN) models with varying complexity. Afterward, the authors explored selecting one of the models to perform autonomous detection at the most IoT, Edge, or Cloud layer. For the evaluations, the authors considered the devices such as NVIDIA Jetson-TX2 and NVIDIA Devbox with four GPU TitanX, respectively, as the Edge and Cloud server machines.
-        Thonglek et al. \cite{thonglekImprovingResourceUtilization2019} designed a neural network model based on LSTM as a type of Recurrent Neural Network (RNN) to predict resource allocation based on historical data. This model has two LSTM layers each of which learns the relationship between: i) allocation and usage, and ii) CPU and memory. It aims to improve resource utilization in data centers by predicting the required resource for each data pipeline.
-        Chen et al.~\cite{chenIRAFDeepReinforcement2019,chenIntelligentTaskOffloading2020} proposed a learning-based method that generates resource allocation decisions with the goal of minimizing latency and power consumption. Intelligent resource allocation framework (iRAF) resource allocation action is predicted and obtained through self-supervised learning, where the training data is generated from the searching process of the Monte Carlo tree search (MCTS) algorithm.
-        Tan and Hu~\cite{huMobilityawareEdgeCaching2018} used deep reinforcement learning to formulate the resource allocation optimization problem, where the parameters of caching, computing, and communication are optimized jointly.
-
-
-    
-
-
-            

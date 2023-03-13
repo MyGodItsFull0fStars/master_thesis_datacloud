@@ -69,7 +69,7 @@
   It is a very important step in machine learning since the later prediction performance depends on the quality of the data.
   The accuracy of an ML model heavily relies on a well-composed and precise set of features to make reliable predictions. Regardless of the data or ML architecture, if a feature set is not well-suited, it does have a direct impact on the ML model.
   \begin{quote}
-    Feature engineering is a machine learning technique that leverages data to create new variables that aren't in the training set. \cite{patelWhatFeatureEngineering2021}
+    Feature engineering is a machine learning technique that leverages data to create new variables that aren't in the training set \cite{patelWhatFeatureEngineering2021}.
   \end{quote}
   Feature engineering involves the extraction and transformation of variables of a raw data source. This process is necessary to be able to use the data for the training of an ML model and successfully use its inference to make predictions.
   The steps required in feature engineering include \nameref{sec:feature-extraction-preprocessing-architecture} and \nameref{sec:feature-cleansing-preprocessing-architecture} followed by feature creation and analysis (see section \ref{sec:feature-creation-analysis-preprocessing-architecture}).
@@ -130,7 +130,7 @@
     \textbf{One-hot encoding} \cite{fawcettDataScienceMinutes} is used to represent categorical data of a finite set by an index in that set, where only one element has its index set to $1$, and all other values are assigned the value $0$.
     This technique is useful when categorical data should be fed to a machine learning model since many model architectures can only handle numerical values, making it necessary to transform strings or other data types to numbers.
   \begin{quote}
-    One hot encoding is a process of converting categorical data variables so they can be provided to machine learning algorithms to improve predictions. \emph{One hot encoding is a crucial part of feature engineering for machine learning.} \cite{fawcettDataScienceMinutes}
+    One hot encoding is a process of converting categorical data variables so they can be provided to machine learning algorithms to improve predictions. \emph{One hot encoding is a crucial part of feature engineering for machine learning} \cite{fawcettDataScienceMinutes}.
   \end{quote}
   The one-hot encoding technique is used for the categorical data of \emph{task type}, where each type of task is represented as an index in the task-type vector. Similarly, one-hot encoding is used to classify a different number of instances (or Kubernetes Replicas) into clusters, that are then mapped to an index of the encoded feature vector.
   
@@ -264,8 +264,7 @@
     \begin{quote}
       % https://machinelearningmastery.com/batch-normalization-for-training-of-deep-neural-networks/
       Batch normalization provides an elegant way of \emph{reparametrizing} almost any deep network. 
-      The reparametrization significantly reduces the problem of coordinating updates across many layers.
-      \cite{goodfellowDeepLearning2016}
+      The reparametrization significantly reduces the problem of coordinating updates across many layers \cite{goodfellowDeepLearning2016}.
     \end{quote}
     Assumptions that a subsequent layer makes during the weight update that regards the spread and distribution of inputs, will not change by a lot of the activations of the prior layer are standardised. 
   \end{pabox}
@@ -347,7 +346,7 @@
             The scheduler is \emph{capacity-aware algorithm} designed for asynchronous data processing workflows called $C^3$-MATCH.
 
             \begin{quote}
-                We model the asynchronous communication between microservices using data element queues, expressing temporary storage of communication data elements. \cite{mehranMatchingbasedSchedulingAsynchronous2022}
+                We model the asynchronous communication between microservices using data element queues, expressing temporary storage of communication data elements \cite{mehranMatchingbasedSchedulingAsynchronous2022}.
             \end{quote}
 
             $C^3$-MATCH defines a scheduling approach that is similar to a matching game, where both the tasks in the pipeline and the available resources participate in this game.

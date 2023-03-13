@@ -109,7 +109,7 @@
         \label{sec:classification-supervised-learning-background}
 
             A classification problem is when the output value is a categorical data type, such as ``cat'' and ``dog''.
-            This section is added for completeness but won't be discussed further since it serves no purpose for this masters thesis.
+            This section is added for completeness but won't be discussed further since it serves no purpose for this master's thesis.
 
         \subsection{Regression}
         \label{sec:regression-supervised-learning-background}
@@ -125,7 +125,7 @@
             In figure \ref{fig:regression-example} an example regression is shown by the orange line that is done by linear regression. As can be seen, the linear regression line is estimating the values of the data points by trying to fit closest to all data points that are shown as the blue dots.
             This is done by using the function $f(x)$ to find a best-fit line and see how much the data is dispersed around this line.
             \begin{quote}
-                Regression is a statistical method used in finance, investing, and other disciplines that attempt to determine the strength and character of the relationship between one dependent variable (usually denoted by Y) and a series of other variables (known as independent variables). \cite{beersWhatRegressionDefinition}
+                Regression is a statistical method used in finance, investing, and other disciplines that attempt to determine the strength and character of the relationship between one dependent variable (usually denoted by Y) and a series of other variables (known as independent variables) \cite{beersWhatRegressionDefinition}.
             \end{quote}
             Therefore, regression analysis is a useful tool for finding associations of variables that are observed in data. Yet, those associations do not indicate causation but merely correlation.
             This is because regression only captures correlations between variables that are observed in data and quantifies if the found correlation is statistically significant.
@@ -149,7 +149,7 @@
 
         The ability to maintain information across a sequence of inputs makes RNNs a fitting tool for modelling sequential data.
         \begin{quote}
-            ... recurrent neural networks contain cycles that feed the network activations from a previous time step as inputs to the network to influence predictions at the current time step. These activations are stored in the internal states of the network which can in principle hold long-term temporal contextual information. This mechanism allows RNNs to exploit a dynamically changing contextual window over the input sequence history. \cite{sakLongShortTermMemory2014}
+            ... recurrent neural networks contain cycles that feed the network activations from a previous time step as inputs to the network to influence predictions at the current time step. These activations are stored in the internal states of the network which can in principle hold long-term temporal contextual information. This mechanism allows RNNs to exploit a dynamically changing contextual window over the input sequence history \cite{sakLongShortTermMemory2014}.
         \end{quote}
         Yet, this also results in them being prone to \nameref{par:vanishing-gradients-background} and \nameref{par:exploding-gradients-background}, which make it cumbersome to train the network effectively. 
         To address these issues, several variants of RNNs have been developed, \nameref{sec:lstm-background} networks and Gated Recurrent Units (GRUs).
@@ -194,7 +194,7 @@
 
             The loop unfolding will provide a description about how RNN handles sequential data at every time step.
             As can be seen in figure \ref{fig:rnn-loop-unfolding}, the model is adding the input at every time step, and generates an output $\hat{y}_i$ for every time step.
-            The weight matrices $W_{hh}$ that are used for every time step for updating the previous state are the same for every time step.
+            The weight matrix $W_{hh}$ that is used for every time step for updating the previous state is the same for every time step.
             The weight matrix $W_{xh}$ is applied to every $x_i$ and is also the same for every time step $i$.
 
             \begin{figure}[h!]
@@ -237,7 +237,7 @@
 
             Regularly experienced problems of RNNs are the exploding or vanishing gradient problems.
             \begin{quote}
-                The motivation behind why they happen is that it is hard to catch long-haul conditions as a result of a multiplicative angle that can be dramatically diminishing/expanding regarding the number of layers. \cite{parikhDisadvantagesRNN2021}
+                The motivation behind why they happen is that it is hard to catch long-haul conditions as a result of a multiplicative angle that can be dramatically diminishing/expanding regarding the number of layers \cite{parikhDisadvantagesRNN2021}.
             \end{quote}
             While unfolding, the error gradient is calculated as the sum of all gradient errors across time steps. Therefore, the loss calculation in unfolded RNNs is also known as \emph{backpropagation through time (BPTT)}.
             Over time while calculating the error gradients the domination of the multiplicative term increases due to the chain rule application. And thus the gradients either explode or vanish.
@@ -274,7 +274,7 @@
         The main architectural improvement for LSTMs over traditional RNNs is that they have introduced \nameref{sec:lstm-memory-cell-architecture-background} to produce paths, which let gradients flow for a long duration, and thus gradients will not vanish.
         Compared to RNNs, LSTMs are better suited for learning long-term dependencies in sequential or time-series data that have temporal dependence such as natural language processing, speech recognition, music generation and financial prediction.
         \begin{quote}
-            Hence standard RNNs fail to learn in the presence of time lags greater than 5 – 10 discrete time steps between relevant input events and target signals. The vanishing error problem casts doubt on whether standard RNNs can indeed exhibit significant practical advantages over time window-based feedforward networks. A recent model, “Long Short-Term Memory” (LSTM), is not affected by this problem. LSTM can learn to bridge minimal time lags in excess of 1000 discrete time steps by enforcing constant error flow through “constant error carousels” (CECs) within special units, called cells. \cite{gersLearningForgetContinual2000}
+            Hence standard RNNs fail to learn in the presence of time lags greater than 5 – 10 discrete time steps between relevant input events and target signals. The vanishing error problem casts doubt on whether standard RNNs can indeed exhibit significant practical advantages over time window-based feedforward networks. A recent model, “Long Short-Term Memory” (LSTM), is not affected by this problem. LSTM can learn to bridge minimal time lags in excess of 1000 discrete time steps by enforcing constant error flow through “constant error carousels” (CECs) within special units, called cells \cite{gersLearningForgetContinual2000}.
         \end{quote}
         LSTMs are a type of deep learning algorithm that can be trained end-to-end, making them highly flexible and suitable for complex problems where the underlying relationships between input and output are not well understood.
 
@@ -402,13 +402,13 @@
         \begin{quote}
             [The success of deep neural networks] is commonly attributed to the hierarchy that is introduced due to the several layers.
             Each layer processes some part of the task we wish to solve, and passes it on to the next.
-            In this sense, the DNN can be seen as a processing pipeline, in which each layer solves a part of the task before passing it on to the next, until finally the last layer provides the output. \cite{hermansTrainingAnalysingDeep2013}
+            In this sense, the DNN can be seen as a processing pipeline, in which each layer solves a part of the task before passing it on to the next, until finally the last layer provides the output \cite{hermansTrainingAnalysingDeep2013}.
         \end{quote}
         The additional hidden layers are understood to recombine the learned representation from prior layers and create new representations at a high level of abstraction.
         Thus, since LSTMs operate on sequential data, the addition of layers adds levels of abstraction of input observations over time.
 
         \begin{quote}
-            While it is not theoretically clear what is the additional power gained by the deeper architecture, it was observed empirically that deep RNNs work better than shallower ones on some tasks. \cite{goldbergPrimerNeuralNetwork2016}
+            While it is not theoretically clear what is the additional power gained by the deeper architecture, it was observed empirically that deep RNNs work better than shallower ones on some tasks \cite{goldbergPrimerNeuralNetwork2016}.
             
             % In particular, Sutskever et al (2014) report that a 4-layer deep architecture was crucial in achieving good machine-translation performance in an encoder-decoder framework. Irsoy and Cardie (2014) also report improved results from moving from a one-layer-BI-RNN to an architecture with several layers. Many other works report results using layered RNN architectures, but do not explicitly compare to 1-layer RNNs. 
         \end{quote}

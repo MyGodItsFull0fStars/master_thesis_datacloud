@@ -51,76 +51,16 @@
             Edge computing helps to minimise the processing time by removing the need for data transfer to a central cloud processing system and back to the endpoint afterwards.
 
 
+    
 
     \section{Scheduling and Adaptation}
     \label{sec:scheduling-and-adaptation-background}
 
-        \subsection{Scheduling}
-        \label{sec:scheduling-saa-background}
+       \subsection{Scheduling}
 
-            The scheduler is designed similarly to a matching game where both the tasks in the pipeline and the available resources participate in this game.
-            On the task side, each task ranks the available resources based on its resource preferences.
-            On the resource side, each resource also ranks the deployable tasks based on its task preferences.
+       \subsection{Adaptation}
 
-        \subsection{Adaptation}
-        \label{sec:adaptation-saa-background}
-
-            The adaptation process consists of multiple components:
-
-            \paragraph{Monitoring Component } is responsible for monitoring the resources and tasks and storing traces of the behaviour of the system on the disk.
-            This is necessary to be able to analyse the correlations of the tasks and resources and train the LSTM model to generate accurate predictions for future task deployments.
-
-            \paragraph{Analysis Component } 
             
-            \paragraph{Adapt Component } uses a trained LSTM model to adapt the hardware requirements of the current tasks that reside in the task pipeline.
-            Tasks are provided with initial hardware utilisation limits that are not to be exceeded. As already stated in \ref{sec:public-cloud-provider-traces-in-available-data-related-work}, the majority of tasks utilise more hardware resources than they actually require.
-
-        \begin{figure}[h!]
-            \centering
-            \includegraphics[width=0.7\textwidth]{figures/monitoring_with_inner_resources.drawio.pdf}
-            \caption{Adaptation Loop}
-            \label{fig:adaptation-loop}
-        \end{figure}
-
-        \subsection{Scheduling and Adaptation Approach}
-        \label{sec:scheduling-adaptation-approach-saa-background}
-
-            The SAA adaptation approach is defined as a loop, that cyclically updates every component contained in the loop.
-            The adaptation loop is shown in figure \ref{fig:adaptation-loop} and consists of the Big Data pipeline and the \emph{resources} containing all registered and monitored to the \emph{Monitoring and Analysis} component. 
-            Both the Big Data pipeline and the resources send the gathered monitoring information at a time step $P_t$ or $S_t$ respectively to the \emph{Monitoring and Analysis} component, where $t$ denotes the current time step.
-
-            The Monitoring and Analysis component then uses the monitoring data $P_t$ and $S_t$ and calculates an action $A_{t+1}$ as an update for the resources, where $t+1$ denotes the next time step.
-    
-            This received action $A_{t+1}$ is then used by the Resource components to reconfigure the resources if necessary.
-            The adaptation uses monitoring of tasks and resources to retrieve the monitoring data $P_t$, $S_t$.
-            
-            The monitoring component is necessary to obtain information about failures or performance fluctuations along with under-, and over-utilisation of resources.
-            The monitoring data, therefore, provide feedback if a resource can handle the additional load, and thus, more tasks will potentially be mapped to it for execution. 
-            In case the resource is not capable of handling the current load, less demanding tasks will be mapped to that resource in future scheduling cycles and it will be reconfigured accordingly.
-
-            A monitored resource information consists of the CPU, memory and storage utilization, in addition to network bandwidth usage.
-            The Big Data pipeline and resources send their monitoring data $P_t$, and $S_t$ respectively to the Monitoring and Analysis component.
-            Afterwards, given those monitoring data, the analyser will determine the next action $A_{t+1}$ of the resources.
-            The monitoring feedback will be periodically retrieved from all registered resources and provided to the analyser.
-            In case of a resource side failure, the monitoring mechanism will be alerted of the occurred anomaly.  
-            The analyser uses this monitoring data to decide if any actions $a \in A$ on the current scheduling plan have to be applied.
-  
-            The following actions $A$ are considered in the adaptation approach:
-
-            \subsubsection*{Resource load within expected parameters $(S_1)$} 
-
-            When tasks on resources are well mapped and no action has to be taken for these resources, this is denoted in the action set $A_{t+1}$ as the state $S_1$. This state is achieved when a resource is running within expected parameters, the estimated time of completing a task is not exceeded or other anomalies occur.
-
-            \subsubsection*{Resource load under expected parameters $(S_2)$}
-
-            When the monitoring component detects under-utilization of a resource, tasks of the pipeline are mapped to it to be efficiently utilized. This state is categorized as $S_2$ in the analyser and the action set will be modified to improve the utilization of resources grouped into $S_2$. 
-
-            \subsubsection*{Resource load over expected parameters $(S_3)$} 
-
-            If a resource is over-utilized, there are multiple options. If it is detected that horizontal scaling solves the over-utilization and the resource instance is capable of being scaled up, it will be reconfigured to be within expected utilization levels. Furthermore, if an ill-defined task is detected and was mapped to a resource that isn't capable to fulfil the computation within a reasonable time frame, this task will be migrated to another resource. 
-            This is categorized as $S_3$ in the analyser, and the action set will be modified, so that resources grouped in $S_3$ will be less utilized with the upcoming updates of the action set. \cite{kimovskiBigDataPipeline2022}
-
-
 
     \section{Prediction of Load}
     \label{sec:prediction-of-load-background}

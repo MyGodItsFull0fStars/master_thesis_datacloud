@@ -96,7 +96,7 @@
         This training dataset includes inputs and correct outputs, which allow the model to learn over time. The algorithm measures its accuracy through a loss function, adjusting until the error rate has been sufficiently minimized.
         A training dataset with $n$ are of the form $\left\{(x_1, y_1), \dots , (x_n, y_n)\right\}$ such that $x_i$ is defined as the \emph{feature vector} of the $i$-th data point and $y_i$ is defined as its label.
         A supervised learning algorithm will train to learn a function $g$ such that $g: X \rightarrow Y$, where $X$ is the input space and $Y$ is the output space.
-        The function $g$ is often represented as a scoring function $f: X \times Y \rightarrow \mathcal{R}$ such that $g$ is defined as $g(x) = \arg \max f(x, y)$ such that $g$ returns the $y$ value with the highest score.
+        The function $g$ is often represented as a scoring function $f: X \times Y \rightarrow \mathbb{R}$ such that $g$ is defined as $g(x) = \arg \max f(x, y)$ such that $g$ returns the $y$ value with the highest score.
         Supervised learning can be separated into \nameref{sec:classification-supervised-learning-background} and \nameref{sec:regression-supervised-learning-background} problems.
 
         In supervised learning for scheduling the objective is to learn parameters of the neural network such that the trained networks can replicate the behaviour of pre-existing scheduling methods, such as mathematical optimisations, and search methods, for example \emph{Priority Dispatching Rule (PDR)}, a heuristic rule that assigns jobs to machines based on their priorities while considering the current status of the system.
@@ -227,7 +227,7 @@
             This is shown in figure \ref{fig:loss-calculation-weight-update-rnn}, where the black arrows display the forward-propagation step that is accumulated as the total loss $L$, and then the back-propagation shown as the red arrows update the weights by using the partial derivative.
 
             \begin{quote}
-                The central problem that back-propagation solves is the evaluation of the influence of a parameter on a function whose computation involves several elementary \emph{steps}. The solution to this problem is given by the chain rule, but back-propagation exploits the particular form of the functions used at each step (or layer) to provide an elegant and local procedure. \cite{lecunTheoreticalFrameworkBackpropagation1988}
+                The central problem that back-propagation solves is the evaluation of the influence of a parameter on a function whose computation involves several elementary \emph{steps}. The solution to this problem is given by the chain rule, but back-propagation exploits the particular form of the functions used at each step (or layer) to provide an elegant and local procedure \cite{lecunTheoreticalFrameworkBackpropagation1988}.
             \end{quote}
             Backpropagation is the practice of fine-tuning the weights of a neural network based on the error rate (i.e. loss) obtained in the previous epoch. Proper tuning of the weights ensures lower error rates, making the model reliable by increasing its generalization.
 
@@ -243,27 +243,27 @@
             Over time while calculating the error gradients the domination of the multiplicative term increases due to the chain rule application. And thus the gradients either explode or vanish.
             These problems occur when the sequence is too long and this may result in the model training with either null weights (i.e. the model won't learn while training) or exploding weights.
             
-            \paragraph{Exploding Gradients}
+            \paragraph{Exploding Gradients }
             \label{par:exploding-gradients-background}
 
-                The Exploding Gradients problem occurs when many of the values (i.e. weight matrices, or gradients themselves) involved in the repeated gradient computations are greater than 1. 
+                 problem occurs when many of the values (i.e. weight matrices, or gradients themselves) involved in the repeated gradient computations are greater than 1. 
                 If this is the case, then gradients become extremely large and optimising them becomes computationally intensive.
                 To solve the Exploding Gradients problem, a process called \emph{Gradient Clipping} is applied, which scales the gradient values to smaller values less than 1.
 
 
-            \paragraph{Vanishing Gradients}
+            \paragraph{Vanishing Gradients }
             \label{par:vanishing-gradients-background}
 
-                The Vanishing Gradients problem occurs when many of the values (i.e. weight matrices or gradients themselves) that are involved in the repeated gradient computations are too small or less than 1. Opposed to the \nameref{par:exploding-gradients-background} problem, the gradients become smaller with each repeated computation of the gradients.
+                 problem occurs when many of the values (i.e. weight matrices or gradients themselves) that are involved in the repeated gradient computations are too small or less than 1. Opposed to the \nameref{par:exploding-gradients-background} problem, the gradients become smaller with each repeated computation of the gradients.
                 This results in the problem of \emph{long term dependency}, where smaller sequences can be remembered and the weights updated accordingly. But for longer sequences, the model will unlikely be able to yield a good prediction performance.
 
                 There are multiple solutions to the Vanishing Gradient problem, such as changing the activation function from $\tanh$ to \emph{Rectified Linear Unit (ReLU)}. Also initialising the weights of the model can solve this problem, though tailored heuristics (such as the \emph{Xavier Weight Initialisation}) should be used to result in omitting the Vanishing Gradients problem and also increase the efficiency of the training. Another solution is to change the architecture of the neural network and add more complex recurrent units that are mentioned in section \ref{sec:lstm-background}.
 
-            \paragraph{Slow and Complex Training}
+            \paragraph{Slow and Complex Training }
 
                 Since RNNs are recurrent one of their fundamental problems is that they require a lot of time for training when compared to FNNs. Additionally, RNNs need to calibrate the previous outputs as well as current inputs into a state change function, which in turn makes RNNs harder to implement and customize and more complex to train.
 
-            \paragraph{Difficult to Process Longer Sequences}
+            \paragraph{Difficult to Process Longer Sequences }
 
                 As already mentioned earlier, training RNNs on too-long sequences is difficult without taking any measures to improve the prediction performance. This is especially true while using the $tanh$ activation function. 
                 

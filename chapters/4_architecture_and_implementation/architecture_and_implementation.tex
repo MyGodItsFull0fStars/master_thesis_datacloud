@@ -127,7 +127,7 @@
   \subsection{One-hot Encoding}
   \label{sec:one-hot-encoding-preprocessing-architecture}
 
-    \textbf{One-hot encoding} \cite{fawcettDataScienceMinutes} is a type of encoding that is used to represent categorical data of a finite set by an index in that set, where only one element has its index set to $1$, and all other values are assigned the value $0$.
+    \textbf{One-hot encoding} \cite{fawcettDataScienceMinutes} is used to represent categorical data of a finite set by an index in that set, where only one element has its index set to $1$, and all other values are assigned the value $0$.
     This technique is useful when categorical data should be fed to a machine learning model since many model architectures can only handle numerical values, making it necessary to transform strings or other data types to numbers.
   \begin{quote}
     One hot encoding is a process of converting categorical data variables so they can be provided to machine learning algorithms to improve predictions. \emph{One hot encoding is a crucial part of feature engineering for machine learning.} \cite{fawcettDataScienceMinutes}
@@ -150,6 +150,7 @@
   Finally, the one-hot encoded feature vector \texttt{dummies} is joined with the training DataFrame called \texttt{training\_df} and the result is stored in the variable \texttt{inst\_df}. An example one-hot encoding of the first few values of the training DataFrame is shown in table \ref{tab:one-hot-encoding-instances}, where $task_0$ is categorised to be part of instance cluster $0$ and the following two tasks $task_1, task_2$ are part of instance cluster $3$.
   \begin{table}
     \centering
+    \caption{Example of One-Hot Encoding the Instances}
     \begin{tabular}{|l|rrrr|}
       \toprule
       index &  inst\_clust\_0 &  inst\_clust\_1 &  inst\_clust\_2 &  inst\_clust\_3 \\
@@ -159,7 +160,6 @@
       2 &             0 &             0 &             0 &             1 \\
       \bottomrule
     \end{tabular}
-    \caption{Example of One-Hot Encoding the Instances}
     \label{tab:one-hot-encoding-instances}
   \end{table}
 
@@ -240,7 +240,7 @@
   The reason why an estimation that is then fed back to the model is returned is to be able to analyse the hidden states of the intermediate model layers.
   \lstinputlisting[
     language=Python, 
-    caption=LSTM Init Function, 
+    caption=LSTM Constructor, 
     label={lst:lstm-init-function},
     style=codestyle
     ]{code_samples/lstm_init.py}
@@ -269,6 +269,7 @@
     \end{quote}
     Assumptions that a subsequent layer makes during the weight update that regards the spread and distribution of inputs, will not change by a lot if the activations of the prior layer are standardised. 
   \end{pabox}
+  \raggedbottom
   Normalising the input batch also has a regularising effect, which leads to a reduction of generalisation errors, similar to the usage of activation regularisation.
   Batch normalisation was proposed to mitigate internal covariate shift. This internal covariate shift occurs because inputs that are forwarded to the neural network and also from each layer have a corresponding distribution that affects the training process because of the randomness of the parameter initialisation and input data.
   Because of the resulting internal covariate shift, the succeeding network layers need to readjust their weights in order to update their state from the data that was forwarded from the proceeding layer with a bias in terms of the distribution of activated nodes. This requirement to readjust to new distributions is even more severe in deep neural networks that have many layers and the increased number of layers amplifies this effect. Batch normalisation reduces unwanted shifts that are propagated by layers and speeds up the training and also produces more reliable and general models.
@@ -368,7 +369,7 @@
 
         \begin{figure}[h!]
             \centering
-            \includegraphics[width=0.7\textwidth]{figures/monitoring_with_inner_resources.drawio.pdf}
+            \includegraphics[width=0.95\textwidth]{figures/monitoring_with_inner_resources.drawio.pdf}
             \caption{Adaptation Loop}
             \label{fig:adaptation-loop}
         \end{figure}

@@ -337,41 +337,43 @@
 
   
 
-\section{Scheduling and Adaptation Approach (SAA)}
+\section{Scheduling and Adaptation Approach}
 \label{sec:scheduling-and-adaptation-approach-architecture}
 
-   \subsection{Scheduling}
-        \label{sec:scheduling-saa-background}
+  \subsection{Scheduling}
+  \label{sec:scheduling-saa-background}
 
-            The scheduler is \emph{capacity-aware algorithm} designed for asynchronous data processing workflows called $C^3$-MATCH.
+    The scheduler is \emph{capacity-aware algorithm} designed for asynchronous data processing workflows called $C^3$-MATCH.
 
-            \begin{quote}
-                We model the asynchronous communication between microservices using data element queues, expressing temporary storage of communication data elements \cite{mehranMatchingbasedSchedulingAsynchronous2022}.
-            \end{quote}
+    \begin{quote}
+        We model the asynchronous communication between microservices using data element queues, expressing temporary storage of communication data elements \cite{mehranMatchingbasedSchedulingAsynchronous2022}.
+    \end{quote}
 
-            $C^3$-MATCH defines a scheduling approach that is similar to a matching game, where both the tasks in the pipeline and the available resources participate in this game.
-            On the task side, each task ranks the available resources based on its resource preferences.
-            On the resource side, each resource also ranks the deployable tasks based on its task preferences.
+    $C^3$-MATCH defines a scheduling approach that is similar to a matching game, where both the tasks in the pipeline and the available resources participate in this game.
+    On the task side, each task ranks the available resources based on its resource preferences.
+    On the resource side, each resource also ranks the deployable tasks based on its task preferences.
 
-        \subsection{Adaptation}
-        \label{sec:adaptation-saa-background}
+  \subsection{Adaptation}
+  \label{sec:adaptation-saa-background}
 
-            The adaptation process consists of multiple components:
+      The adaptation process consists of multiple components:
 
-            \paragraph{Monitoring Component } is responsible for monitoring the resources and tasks and storing traces of the behaviour of the system on the disk.
-            This is necessary to be able to analyse the correlations of the tasks and resources and train the LSTM model to generate accurate predictions for future task deployments.
+      \paragraph{Monitoring Component } is responsible for monitoring the resources and tasks and storing traces of the behaviour of the system on the disk.
+      This is necessary to be able to analyse the correlations of the tasks and resources and train the LSTM model to generate accurate predictions for future task deployments.
 
-            \paragraph{Analysis Component } 
-            
-            \paragraph{Adapt Component } uses a trained LSTM model to adapt the hardware requirements of the current tasks that reside in the task pipeline.
-            Tasks are provided with initial hardware utilisation limits that are not to be exceeded. As already stated in \ref{sec:public-cloud-provider-traces-in-available-data-related-work}, the majority of tasks utilise more hardware resources than they require.
+      \paragraph{Analysis Component } 
+      
+      \paragraph{Adapt Component } uses a trained LSTM model to adapt the hardware requirements of the current tasks that reside in the task pipeline.
+      Tasks are provided with initial hardware utilisation limits that are not to be exceeded. As already stated in \ref{sec:public-cloud-provider-traces-in-available-data-related-work}, the majority of tasks utilise more hardware resources than they require.
 
-        \begin{figure}[h!]
-            \centering
-            \includegraphics[width=0.95\textwidth]{figures/monitoring_with_inner_resources.drawio.pdf}
-            \caption{Adaptation Loop}
-            \label{fig:adaptation-loop}
-        \end{figure}
+  \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.95\textwidth]{figures/monitoring_with_inner_resources.drawio.pdf}
+      \caption{Adaptation Loop}
+      \label{fig:adaptation-loop}
+  \end{figure}
+
+  \subsection{The Approach}
 
   The SAA adaptation approach is defined as a loop, that cyclically updates every component contained in the loop.
   The adaptation loop is shown in figure \ref{fig:adaptation-loop} and consists of the Big Data pipeline and the \emph{resources} containing all registered and monitored to the \emph{Monitoring and Analysis} component. 

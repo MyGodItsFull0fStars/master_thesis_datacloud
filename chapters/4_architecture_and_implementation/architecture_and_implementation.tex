@@ -121,6 +121,9 @@
 
 \section{Data Preprocessing Techniques}
 \label{sec:data-preprocessing-techniques}
+
+  In this section, the data preprocessing techniques that are used on the datasets used in this thesis are further elaborated.
+
   \subsection{One-hot Encoding}
   \label{sec:one-hot-encoding-preprocessing-architecture}
 
@@ -205,8 +208,6 @@
       The old value $x$ is calculated by simply rearranging the normalisation formula and de-normalising the normalised value $x_{new}$.
     \end{pabox}
     The normalisation of data points is used for the label dataset that contains the labels that the ML model should predict (i.e. the hardware utilisation of resources). The normalisation is used for the label dataset because its values of it are transformed to a standard scale without distorting the difference between the values. This behaviour is useful when predicting the actual values in the label dataset.
-
-
 
 
 \section{Data Analysis}
@@ -363,7 +364,7 @@
             \paragraph{Analysis Component } 
             
             \paragraph{Adapt Component } uses a trained LSTM model to adapt the hardware requirements of the current tasks that reside in the task pipeline.
-            Tasks are provided with initial hardware utilisation limits that are not to be exceeded. As already stated in \ref{sec:public-cloud-provider-traces-in-available-data-related-work}, the majority of tasks utilise more hardware resources than they actually require.
+            Tasks are provided with initial hardware utilisation limits that are not to be exceeded. As already stated in \ref{sec:public-cloud-provider-traces-in-available-data-related-work}, the majority of tasks utilise more hardware resources than they require.
 
         \begin{figure}[h!]
             \centering

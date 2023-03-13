@@ -88,7 +88,7 @@
 
     \textbf{Feature cleansing} is the process of cleaning a dataset. 
     A major part is to add missing values or to remove data points that are not beneficial for the training of an ML model. 
-    In the Alibaba dataset, all tasks were removed that did not successfully finish their execution. The reason why the cluster of failed tasks was excluded from the training was that the ML model should be trained on successfully finished tasks since it was not stated what the reason for the failure of the tasks was and adding failed tasks could in this case lead to unwanted behaviour when predicting incoming tasks. And therefore, it was deemed a better approach to not include those tasks. 
+    In the Alibaba dataset, all tasks were removed that did not successfully finish their execution. The reason why the cluster of failed tasks was excluded from the training was that the ML model should be trained on successfully finished tasks since it was not stated what the reason for the failure of the tasks was and adding failed tasks could, in this case, lead to unwanted behaviour when predicting incoming tasks. And therefore, it was deemed a better approach to not include those tasks. 
     This process is shown in listing \ref{lst:drop-failed-tasks}, where only tasks will be kept that had their feature column set to \texttt{'terminated'}, which states that they did successfully terminate their execution.
     \lstinputlisting[
       language=Python, 
@@ -103,7 +103,7 @@
   \label{sec:feature-creation-analysis-preprocessing-architecture}
 
     \textbf{Feature creation} involves the process of data labelling.
-    Data labelling identifies data such as images, and text files and adds meaningful and informative labels to it by creating new variables which will be the most helpful to the ML model. This is done to provide the data labels as context to the ML model so it is able to learn from it. Data labelling is required for various use cases in \nameref{sec:supervised-learning} since ML models of that category require labels to train on. Features that were created for the datasets that later are fed into the LSTM model are one-hot encoded feature columns. These were either generated from the task type, which is used to differentiate between the various tasks and is used to enable the model to comprehend categorical data for training and inference. Similarly, the \emph{number of instances} is one-hot encoded to provide additional information about a task by providing categorical data as encoded feature columns. The one-hot encoding method and how it is applied is described in more detail in section \nameref{sec:one-hot-encoding-preprocessing-architecture}.
+    Data labelling identifies data such as images, and text files and adds meaningful and informative labels to it by creating new variables which will be the most helpful to the ML model. This is done to provide the data labels as context to the ML model so it can learn from it. Data labelling is required for various use cases in \nameref{sec:supervised-learning} since ML models of that category require labels to train on. Features that were created for the datasets that later are fed into the LSTM model are one-hot encoded feature columns. These were either generated from the task type, which is used to differentiate between the various tasks and is used to enable the model to comprehend categorical data for training and inference. Similarly, the \emph{number of instances} is one-hot encoded to provide additional information about a task by providing categorical data as encoded feature columns. The one-hot encoding method and how it is applied is described in more detail in section \nameref{sec:one-hot-encoding-preprocessing-architecture}.
 
     \subsection{Feature Analysis}
     \label{sec:feature-analysis-preprocessing-architecture}
@@ -224,7 +224,7 @@
   The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python. 
   \begin{figure}
     \centering
-    \includegraphics[scale=0.5]{figures/current_lstm_model.png}
+    \includegraphics[scale=0.45]{figures/current_lstm_model.png}
     \caption{LSTM Model Architecture}
     \label{fig:lstm-model-architecture}
   \end{figure}
@@ -263,11 +263,11 @@
 
     \begin{quote}
       % https://machinelearningmastery.com/batch-normalization-for-training-of-deep-neural-networks/
-      Batch normalization provides an elegant way of reparametrizing almost any deep network. 
+      Batch normalization provides an elegant way of \emph{reparametrizing} almost any deep network. 
       The reparametrization significantly reduces the problem of coordinating updates across many layers.
       \cite{goodfellowDeepLearning2016}
     \end{quote}
-    Assumptions that a subsequent layer makes during the weight update that regards the spread and distribution of inputs, will not change by a lot if the activations of the prior layer are standardised. 
+    Assumptions that a subsequent layer makes during the weight update that regards the spread and distribution of inputs, will not change by a lot of the activations of the prior layer are standardised. 
   \end{pabox}
   Normalising the input batch also has a regularising effect, which leads to a reduction of generalisation errors, similar to the usage of activation regularisation.
   Batch normalisation was proposed to mitigate internal covariate shift. This internal covariate shift occurs because inputs that are forwarded to the neural network and also from each layer have a corresponding distribution that affects the training process because of the randomness of the parameter initialisation and input data.
@@ -421,9 +421,9 @@
 
     \paragraph{Dependency analysis } orders the candidate tasks scheduled on each resource in a preference list based on the aggregate pipeline communication time to each task.
 
-    \paragraph{Execution event detection } uses data from external monitoring system to identify SLO violations or anomalies during execution.
+    \paragraph{Execution event detection } uses data from an external monitoring system to identify SLO violations or anomalies during execution.
 
-    \paragraph{Scheduling } maps the pipeline tasks to the resources using a matching theory algorithm, applied on the task and resource preference lists in response to infrastructure drifts.
+    \paragraph{Scheduling } maps the pipeline tasks to the resources using a matching theory algorithm, applied to the task and resource preference lists in response to infrastructure drifts.
 
     \paragraph{Adaptation } dynamical applies re-scheduling or migration of the tasks based on the analyzed monitoring received from the execution event detection. Both the scheduling and adaptation interact with deployment and orchestration system to perform deployment and adaptation of the tasks.
 
@@ -502,7 +502,7 @@
 
     \begin{pabox}{Penalty Mean Squared Error}
       \label{def:penalty-mean-squared-error-definition}
-      The \emph{Penalty Mean Squared Error (PMSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of errors similar to \emph{mean squared error} but also applies a penalty to estimated values $\hat{y}_i$ that are lower than the actual value $y_i$ (see \ref{def:calculation-of-the-penalty-value}). 
+      The \emph{Penalty Mean Squared Error (PMSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of errors similar to \emph{mean squared error} but also applies a penalty to an estimated value $\hat{y}_i$ that is lower than the actual value $y_i$ (see \ref{def:calculation-of-the-penalty-value}). 
       The mathematical representation of PMSE is:
       $$PMSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y'}_i\right)^2$$
       As can be seen, it is similar to the representation of MSE (see \ref{def:mean-squared-error-definition}), but uses a modified estimated value $\hat{y'}_i$ that was penalised before the calculation.

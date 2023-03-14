@@ -4,23 +4,27 @@
 \section{Third-Party Tools}
 \label{sec:third-party-tools-architecture}
 
+  In this section, the third-party tools that were used in this master's thesis are briefly described and also where they were used.
+
 \subsection{Docker}
-\label{sec:docker-evaluation-setup}
+\label{sec:docker-third-party}
 
   Docker is an open-source platform for automating the deployment of applications inside containers. A container is a standalone executable package that includes everything needed to run a piece of software, including the code, runtime, libraries, environment variables, and system tools.
   Abstracting applications as containers provide a consistent and reproducible environment, which makes it easier to move applications between development, testing and production environments.
   Containers are often used to package an entire application with all its dependencies into a single container image that can easily be moved and run on any device with a Docker runtime.
   The docker toolbox provides tools for building, shipping and running containers, including a runtime environment for containers called Docker Engine, Docker Hub (a repository for storing and sharing images) and the Docker CLI to be able to interact with Docker via a command-line interface.
+  In the master's thesis, Docker is used for containerising the monitoring tool mentioned in section \ref{sec:kubernetes-third-party} as well as the LSTM model described in section \ref{sec:lstm-architecture-and-implementation}.
+  This is done to easily deploy them inside the distributed system in a scalable manner. 
 
 \subsection{Kubernetes}
-\label{sec:kubernetes-evaluation-setup}
+\label{sec:kubernetes-third-party}
   Kubernetes is an open-source platform for automating the deployment, scaling, and management of containerized applications. It was originally developed by Google and is now maintained by the Cloud Native Computing Foundation (CNCF).
-  Kubernetes provides a way to manage and organize containers (such as \nameref{sec:docker-evaluation-setup} containers) at scale, making it easier to deploy, update, and maintain applications. It does this by abstracting the underlying infrastructure and providing a unified API for managing containers.
+  Kubernetes provides a way to manage and organize containers (such as \nameref{sec:docker-third-party} containers) at scale, making it easier to deploy, update, and maintain applications. It does this by abstracting the underlying infrastructure and providing a unified API for managing containers.
   Kubernetes helps to automate many of the manual tasks involved in deploying and managing containers, such as scaling up or down the number of replicas of an application, rolling out updates, and managing network and storage resources. It also provides features for scaling and self-healing, allowing your applications to be more robust and resilient.
   Kubernetes has become a popular platform for deploying cloud-native applications and is widely used by organizations of all sizes across various industries.
 
   \subsection{NetData}
-  \label{sec:netdata-evaluation-setup}
+  \label{sec:netdata-third-party}
 
     Netdata is an open-source tool that collects real-time metrics, including CPU usage, disk activity, bandwidth usage and furthermore.
     The reason we chose Netdata for monitoring is that it is a lightweight tool mostly written in C, Python and Javascript and it requires minimal resources, which is necessary when monitoring edge devices.
@@ -33,19 +37,21 @@
         \label{fig:netdata-dashboard}
     \end{figure}
     Netdata has a vast amount of support for other tools to gather data. 
-    One of the supported tools is \nameref{sec:prometheus-evaluation-setup}, which is used to scrape the monitored data from all resources that have Netdata installed.
+    One of the supported tools is \nameref{sec:prometheus-third-party}, which is used to scrape the monitored data from all resources that have Netdata installed.
 
   \subsection{Prometheus}
-  \label{sec:prometheus-evaluation-setup}
+  \label{sec:prometheus-third-party}
   
     Prometheus\footnote{https://prometheus.io/} is an open-source application used for monitoring and alerting of events and is designed to run across various platforms in a scalable and easily deployable manner.
     Same as Netdata it records in real-time, and stores the gathered metrics in a time series database by using a \emph{HTTP pull model}. It also allows real-time alerting via a rule-defining configuration and also has a flexible query language called \emph{PromQL}, that enables the retrieval and processing of the gathered data. Prometheus has great integration with other tools such as Netdata.
     In the project, it is used inside a monitoring master node that is continuously scraping all resources that have Netdata installed for monitoring data. In case a predefined rule is broken at a monitored resource, such as CPU over-allocation, Prometheus triggers an event that notifies ADA-PIPE to be able to take measurements.
 
 
+  \subsection{Pandas}
+  \label{sec:pandas-third-party}
 
   \subsection{PyTorch}
-  \label{sec:pytorch-evaluation-setup}
+  \label{sec:pytorch-third-party}
     PyTorch\footnote{https://pytorch.org/} is an open-source machine learning library for Python, developed by Facebook's AI Research lab (FAIR) but is now part of the \emph{Linux Foundation umbrella}. It provides tensor computation (similar to NumPy) with strong support for deep neural networks built on a tape-based autograd system. PyTorch is designed to provide flexibility and ease of use, with a focus on deep learning and neural networks. It can be used for various tasks such as natural language processing, computer vision, and speech recognition.
     PyTorch also supports deployment on various platforms, including CPUs, GPUs, and TPUs, and has an active community of users and contributors that continue to improve and expand its capabilities.
   

@@ -26,7 +26,7 @@
   \subsection{NetData}
   \label{sec:netdata-third-party}
 
-    Netdata is an open-source tool that collects real-time metrics, including CPU usage, disk activity, bandwidth usage and furthermore.
+    Netdata \cite{netdatainc.GettingStartedLearn2023} is an open-source tool that collects real-time metrics, including CPU usage, disk activity, bandwidth usage and furthermore.
     The reason we chose Netdata for monitoring is that it is a lightweight tool mostly written in C, Python and Javascript and it requires minimal resources, which is necessary when monitoring edge devices.
     One of its major features is that it runs without interrupting any of the applications running on the same device. This is achieved by only using idle CPU cycles while running.
     Netdata provides an in-browser dashboard to analyse each metric in real time with help of visual representation. As an example, a screenshot was taken of a cloud resource in our system as can be seen in \ref{fig:netdata-dashboard}.
@@ -42,7 +42,7 @@
   \subsection{Prometheus}
   \label{sec:prometheus-third-party}
   
-    Prometheus\footnote{https://prometheus.io/} is an open-source application used for monitoring and alerting of events and is designed to run across various platforms in a scalable and easily deployable manner.
+    Prometheus \cite{prometheusOverviewPrometheus} is an open-source application used for monitoring and alerting of events and is designed to run across various platforms in a scalable and easily deployable manner.
     Same as Netdata it records in real-time, and stores the gathered metrics in a time series database by using a \emph{HTTP pull model}. It also allows real-time alerting via a rule-defining configuration and also has a flexible query language called \emph{PromQL}, that enables the retrieval and processing of the gathered data. Prometheus has great integration with other tools such as Netdata.
     In the project, it is used inside a monitoring master node that is continuously scraping all resources that have Netdata installed for monitoring data. In case a predefined rule is broken at a monitored resource, such as CPU over-allocation, Prometheus triggers an event that notifies ADA-PIPE to be able to take measurements.
 
@@ -50,10 +50,15 @@
   \subsection{Pandas}
   \label{sec:pandas-third-party}
 
+    Pandas \cite{pandasinc.PandasDocumentationPandas} is an open-source library created for Python and its main purpose is to provide tools for data analysis and manipulation as well as data structures for large-scale numerical tables and time series data.
+    Pandas allow importing data from various file formats such as \emph{comma-separated values (CSVs)}, which is the file format that Alibaba chose to store the monitoring traces.
+    These CSV files are imported into \emph{Pandas DataFrames}, which is the main data structure used for data manipulation with Pandas. DataFrames are used to merge the different datasets to create the training and test datasets for the LSTM model, and additionally, most of the data analysis is also done with the help of the functions that are built into the DataFrame class.
+
   \subsection{PyTorch}
   \label{sec:pytorch-third-party}
-    PyTorch\footnote{https://pytorch.org/} is an open-source machine learning library for Python, developed by Facebook's AI Research lab (FAIR) but is now part of the \emph{Linux Foundation umbrella}. It provides tensor computation (similar to NumPy) with strong support for deep neural networks built on a tape-based autograd system. PyTorch is designed to provide flexibility and ease of use, with a focus on deep learning and neural networks. It can be used for various tasks such as natural language processing, computer vision, and speech recognition.
+    PyTorch is an open-source machine learning library for Python, developed by Facebook's AI Research lab (FAIR) but is now part of the \emph{Linux Foundation umbrella}. It provides tensor computation (similar to NumPy) with strong support for deep neural networks built on a tape-based autograd system. PyTorch is designed to provide flexibility and ease of use, with a focus on deep learning and neural networks. It can be used for various tasks such as natural language processing, computer vision, and speech recognition.
     PyTorch also supports deployment on various platforms, including CPUs, GPUs, and TPUs, and has an active community of users and contributors that continue to improve and expand its capabilities.
+    PyTorch is used to build the LSTM model (see section \ref{sec:lstm-architecture-and-implementation}) and the loss function to train the estimator.
   
 
 % \section{Architecture of the Software}

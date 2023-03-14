@@ -89,7 +89,7 @@
   \subsection{Feature Extraction}
   \label{sec:feature-extraction-preprocessing-architecture}
 
-    \textbf{Feature extraction} is the process of collecting and assembling all the data that is required for the ML training into a feature set.
+    Feature extraction is the process of collecting and assembling all the data that is required for the ML training into a feature set.
     Data often resides in multiple data sources, therefore collecting training data is a challenging process since those different data sources need to be connected for it to be usable. Furthermore, data sources often have vastly different formats and types, which also needs to be taken into account. 
     Feature extraction also faces the challenge of not distorting the original relationships or significant information of the raw data and also compressing the amount of data into manageable quantities for the ML models to process and train on.
     The Alibaba cluster traces consist of a multitude of datasets, each with its respective focus. Because of the distributed nature of the data, first, the common key features were required to be analysed to be able to later join the data based on these common key features to an actual training and test dataset.
@@ -97,7 +97,7 @@
   \subsection{Feature Cleansing}
   \label{sec:feature-cleansing-preprocessing-architecture}
 
-    \textbf{Feature cleansing} is the process of cleaning a dataset. 
+    Feature cleansing is the process of cleaning a dataset. 
     A major part is to add missing values or to remove data points that are not beneficial for the training of an ML model. 
     In the Alibaba dataset, all tasks were removed that did not successfully finish their execution. The reason why the cluster of failed tasks was excluded from the training was that the ML model should be trained on successfully finished tasks since it was not stated what the reason for the failure of the tasks was and adding failed tasks could, in this case, lead to unwanted behaviour when predicting incoming tasks. And therefore, it was deemed a better approach to not include those tasks. 
     This process is shown in listing \ref{lst:drop-failed-tasks}, where only tasks will be kept that had their feature column set to \texttt{'terminated'}, which states that they did successfully terminate their execution.
@@ -113,18 +113,18 @@
   \subsection{Feature Creation and Analysis}
   \label{sec:feature-creation-analysis-preprocessing-architecture}
 
-    \textbf{Feature creation} involves the process of data labelling.
+    Feature creation involves the process of data labelling.
     Data labelling identifies data such as images, and text files and adds meaningful and informative labels to it by creating new variables which will be the most helpful to the ML model. This is done to provide the data labels as context to the ML model so it can learn from it. Data labelling is required for various use cases in \nameref{sec:supervised-learning} since ML models of that category require labels to train on. Features that were created for the datasets that later are fed into the LSTM model are one-hot encoded feature columns. These were either generated from the task type, which is used to differentiate between the various tasks and is used to enable the model to comprehend categorical data for training and inference. Similarly, the \emph{number of instances} is one-hot encoded to provide additional information about a task by providing categorical data as encoded feature columns. The one-hot encoding method and how it is applied is described in more detail in section \nameref{sec:one-hot-encoding-preprocessing-architecture}.
 
     \subsection{Feature Analysis}
     \label{sec:feature-analysis-preprocessing-architecture}
     
-      \textbf{Feature analysis} often uses visualisation like histograms, scatter, box and line plots to analyse if the created feature data set is correct. Feature analysis is also used to discover patterns, spot anomalies, check assumptions or test a hypothesis.
+      Feature analysis often uses visualisation like histograms, scatter, box and line plots to analyse if the created feature data set is correct. Feature analysis is also used to discover patterns, spot anomalies, check assumptions or test a hypothesis.
 
     \subsection{Feature Selection}
     \label{sec:feature-selection-data-preprocessing-architecture}
   
-      \textbf{Feature selection} is the process of reducing the number of input variables of a feature set when developing a predictive model.
+      Feature selection is the process of reducing the number of input variables of a feature set when developing a predictive model.
       Feature selection is simply the process of selecting and excluding given features without changing them as is done with \emph{dimensionality reduction}.
       A reduction of the number of input variables is desirable to both reduce the computational cost of training a model and in some cases, it also increases the prediction performance of the model.
   
@@ -138,8 +138,8 @@
   \subsection{One-hot Encoding}
   \label{sec:one-hot-encoding-preprocessing-architecture}
 
-    \textbf{One-hot encoding} \cite{fawcettDataScienceMinutes} is used to represent categorical data of a finite set by an index in that set, where only one element has its index set to $1$, and all other values are assigned the value $0$.
-    This technique is useful when categorical data should be fed to a machine learning model since many model architectures can only handle numerical values, making it necessary to transform strings or other data types to numbers.
+  One-hot encoding \cite{fawcettDataScienceMinutes} is used to represent categorical data of a finite set by an index in that set, where only one element has its index set to $1$, and all other values are assigned the value $0$.
+  This technique is useful when categorical data should be fed to a machine learning model since many model architectures can only handle numerical values, making it necessary to transform strings or other data types to numbers.
   \begin{quote}
     One hot encoding is a process of converting categorical data variables so they can be provided to machine learning algorithms to improve predictions. \emph{One hot encoding is a crucial part of feature engineering for machine learning} \cite{fawcettDataScienceMinutes}.
   \end{quote}
@@ -174,7 +174,7 @@
     \label{tab:one-hot-encoding-instances}
   \end{table}
 
-  Using one-hot encoding enables the LSTM model to additionally learn from categorical features such as the type of task (see evaluation scenario \nameref{sec:adding-task-knowledge-evaluation-scenarios}) and also to learn and infer from the number of instances (or \nameref{sec:kubernetes-evaluation-setup} replicas). 
+  Using one-hot encoding enables the LSTM model to additionally learn from categorical features such as the type of task (see evaluation scenario \nameref{sec:adding-task-knowledge-evaluation-scenarios}) and also to learn and infer from the number of instances (or \nameref{sec:kubernetes-third-party} replicas). 
   These further details about each task enable the ML model to better and more accurately react to the given sequence of tasks.
 
   \subsection{Standardisation}
@@ -220,19 +220,13 @@
     \end{pabox}
     The normalisation of data points is used for the label dataset that contains the labels that the ML model should predict (i.e. the hardware utilisation of resources). The normalisation is used for the label dataset because its values of it are transformed to a standard scale without distorting the difference between the values. This behaviour is useful when predicting the actual values in the label dataset.
 
-
-\section{Data Analysis}
-\label{sec:data-preprocessing-and-analysis-architecture}
-      
-  % \subsection{Preparing the Data}
-  % \label{sec:preparing-the-data-preprocessing-architecture}
   
 \section{LSTM Architecture}
 \label{sec:lstm-architecture-and-implementation}
 
   In this section, the architecture of the LSTM model is elaborated.
   This involves the description of the different layers that are used as well as some operations that are required to improve the prediction of the model.
-  The LSTM model was implemented with \nameref{sec:pytorch-evaluation-setup}, an open-source machine learning library for Python. 
+  The LSTM model was implemented with \nameref{sec:pytorch-third-party}, an open-source machine-learning library for Python. 
   \begin{figure}
     \centering
     \includegraphics[scale=0.45]{figures/current_lstm_model.png}
@@ -326,9 +320,6 @@
   In line 25 the absolute values of the output are calculated. This is done to ensure that negative values are not included in the prediction since the hardware utilisation can't be less than zero.
   
   % TODO Explain ReLU and other layers
-  
-
-
 
   \lstinputlisting[
     language=Python, 
@@ -438,106 +429,104 @@
 
     \paragraph{Scheduling } maps the pipeline tasks to the resources using a matching theory algorithm, applied to the task and resource preference lists in response to infrastructure drifts.
 
-    \paragraph{Adaptation } dynamical applies re-scheduling or migration of the tasks based on the analyzed monitoring received from the execution event detection. Both the scheduling and adaptation interact with deployment and orchestration system to perform deployment and adaptation of the tasks.
+    \paragraph{Adaptation } dynamically applies re-scheduling or migration of the tasks based on the analyzed monitoring received from the execution event detection. Both the scheduling and adaptation interact with the deployment and orchestration system to perform the deployment and adaptation of the tasks.
 
     \paragraph{Public API } enables the integration of the \SAA{} scheduling and adaptation tool with deployment and orchestration systems. \cite{kimovskiBigDataPipeline2022}
-  \subsection{Resource Prediction}
-  % flow chart of resource prediction
-  \subsection{DataFrame Scaler}
-  \label{sec:dataframe-scaler-architecture-and-implementation}
+\section{DataFrame Scaler}
+\label{sec:dataframe-scaler-architecture-and-implementation}
 
-    The \texttt{DataFrameScaler} is a custom class that handles the scaling of datasets that are in the form of a \emph{Pandas DataFrame} data type. 
-    The reason for implementing a custom class for this thesis instead of the popular approach of the \texttt{StandardScaler} and \texttt{MinMaxScaler} classes provided by \emph{scikit-learn} is that these third-party classes destroy valuable information about the dataset while scaling it to either be standardised (see \nameref{sec:data-standardisation-data-preprocessing-architecture}) or normalised (see \nameref{sec:data-normalisation-data-preprocessing-architecture}). 
-    Information that is not kept when scaling the DataFrames is data point timestamps, which are converted to ascending integer values. Similarly, the column description is also not kept after the scaling, so it is necessary to dynamically create a map of an integer to the column description.
-    Because of behaviour, a custom Python class was implemented that scales the DataFrame to a standardised or normalised DataFrame or if required to be fed to the LSTM model converted to a PyTorch Tensor.
-    This class ensures that the timestamps of each data point are kept and fed to the LSTM model and also keeps the column descriptions. Additionally, it is possible to define columns that should be ignored while scaling the DataFrame. This is useful for columns that were one-hot encoded (see \nameref{sec:one-hot-encoding-preprocessing-architecture}, \nameref{sec:adding-task-knowledge-evaluation-scenarios}, \nameref{sec:adding-instance-knowledge-evaluation-scenarios}) before the scaling process.
-    The \emph{DataFrameScaler} class contains both the logic for standardising and normalising a DataFrame.
+  The \texttt{DataFrameScaler} is a custom class that handles the scaling of datasets that are in the form of a \emph{Pandas DataFrame} data type. 
+  The reason for implementing a custom class for this thesis instead of the popular approach of the \texttt{StandardScaler} and \texttt{MinMaxScaler} classes provided by \emph{scikit-learn} is that these third-party classes destroy valuable information about the dataset while scaling it to either be standardised (see \nameref{sec:data-standardisation-data-preprocessing-architecture}) or normalised (see \nameref{sec:data-normalisation-data-preprocessing-architecture}). 
+  Information that is not kept when scaling the DataFrames is data point timestamps, which are converted to ascending integer values. Similarly, the column description is also not kept after the scaling, so it is necessary to dynamically create a map of an integer to the column description.
+  Because of behaviour, a custom Python class was implemented that scales the DataFrame to a standardised or normalised DataFrame or if required to be fed to the LSTM model converted to a PyTorch Tensor.
+  This class ensures that the timestamps of each data point are kept and fed to the LSTM model and also keeps the column descriptions. Additionally, it is possible to define columns that should be ignored while scaling the DataFrame. This is useful for columns that were one-hot encoded (see \nameref{sec:one-hot-encoding-preprocessing-architecture}, \nameref{sec:adding-task-knowledge-evaluation-scenarios}, \nameref{sec:adding-instance-knowledge-evaluation-scenarios}) before the scaling process.
+  The \emph{DataFrameScaler} class contains both the logic for standardising and normalising a DataFrame.
 
-    \lstinputlisting[
-      language=Python, 
-      caption=DataFrameScaler Constructor and Instance Variables, 
-      label={lst:dataframe-scaler-init},
-      style=codestyle
-      ]{code_samples/dataframe_scaler_init.py}
+  \lstinputlisting[
+    language=Python, 
+    caption=DataFrameScaler Constructor and Instance Variables, 
+    label={lst:dataframe-scaler-init},
+    style=codestyle
+    ]{code_samples/dataframe_scaler_init.py}
 
-    As shown in lines 2-5 listing \ref{lst:dataframe-scaler-init} the class contains different instance variables to hold the necessary information about a DataFrame such as the data types of each column.
-    The variables in lines 3-5 hold the standard deviation, normalisation DataFrames and the list of the columns that are to be scaled respectively. The DataFrame values for the standard deviation and normalisation are calculated in the \texttt{fit()} method (see listing \ref{lst:dataframe-scaler-fit}) that resides inside the class.
-    These DataFrames are necessary to later be able to scale other data points that share the same distribution as the DataFrame that was used to fit the scaler. 
-    This is used for estimations forwarded by the LSTM model that are within the range of normalised values.
-    In order to rescale the estimation into the actual range, the \texttt{norm\_dev\_df} is used to transform the data by using the formula for de-normalisation (see \nameref{def:normalisation}).
+  As shown in lines 2-5 listing \ref{lst:dataframe-scaler-init} the class contains different instance variables to hold the necessary information about a DataFrame such as the data types of each column.
+  The variables in lines 3-5 hold the standard deviation, normalisation DataFrames and the list of the columns that are to be scaled respectively. The DataFrame values for the standard deviation and normalisation are calculated in the \texttt{fit()} method (see listing \ref{lst:dataframe-scaler-fit}) that resides inside the class.
+  These DataFrames are necessary to later be able to scale other data points that share the same distribution as the DataFrame that was used to fit the scaler. 
+  This is used for estimations forwarded by the LSTM model that are within the range of normalised values.
+  In order to rescale the estimation into the actual range, the \texttt{norm\_dev\_df} is used to transform the data by using the formula for de-normalisation (see \nameref{def:normalisation}).
 
-    \lstinputlisting[
-      language=Python, 
-      caption=DataFrameScaler Fit Method, 
-      label={lst:dataframe-scaler-fit},
-      style=codestyle
-      ]{code_samples/dataframe_scaler_fit.py}
-    The \texttt{fit()} method of listing \ref{lst:dataframe-scaler-fit} is used to preserve the columns of the given DataFrame (line 3), the data types in each of its columns (line 4), the columns that need to be scaled, and a standard deviation and normalisation DataFrame based on the data points in the DataFrame given as a parameter. The execution \texttt{fit()} function is mandatory to be able to scale data points with the \texttt{DataFrameScaler} class even if it is not enforced to provide a DataFrame when instantiating the scaler instance.
-    After fitting the DataFrame with the \texttt{fit()} method, data points can be (de-)standardised or (de-)normalised based on the variables calculated in this function.
-    The calculations for the scaling are done with the internal operations provided by Pandas to ensure a performant execution independent of the number of data points.
+  \lstinputlisting[
+    language=Python, 
+    caption=DataFrameScaler Fit Method, 
+    label={lst:dataframe-scaler-fit},
+    style=codestyle
+    ]{code_samples/dataframe_scaler_fit.py}
+  The \texttt{fit()} method of listing \ref{lst:dataframe-scaler-fit} is used to preserve the columns of the given DataFrame (line 3), the data types in each of its columns (line 4), the columns that need to be scaled, and a standard deviation and normalisation DataFrame based on the data points in the DataFrame given as a parameter. The execution \texttt{fit()} function is mandatory to be able to scale data points with the \texttt{DataFrameScaler} class even if it is not enforced to provide a DataFrame when instantiating the scaler instance.
+  After fitting the DataFrame with the \texttt{fit()} method, data points can be (de-)standardised or (de-)normalised based on the variables calculated in this function.
+  The calculations for the scaling are done with the internal operations provided by Pandas to ensure a performant execution independent of the number of data points.
 
 
-  \subsection{Penalty Mean Squared Error Loss Function}
-  \label{sec:penalty-mse-loss-function-architecture-and-implementation}
+\section{Penalty Mean Squared Error Loss Function}
+\label{sec:penalty-mse-loss-function-architecture-and-implementation}
 
-    The \emph{Penalty Mean Squared Error (PMSE) loss function} is a custom loss function based on the commonly used \emph{Mean Squared Error (MSE) loss function} \cite{koksoyMultiresponseRobustDesign2006} (see \ref{def:mean-squared-error-definition}). 
-    
-    The Mean Squared Error metric measures how close a \nameref{sec:regression-supervised-learning-background} line is to a set of data points. It is a risk function that corresponds to the expected value $y_i$ of the squared error loss (see \ref{fig:regression-example}). A larger MSE indicates that the data points are widely dispersed around its mean, whereas a smaller MSE indicates the opposite.
+  The \emph{Penalty Mean Squared Error (PMSE) loss function} is a custom loss function based on the commonly used \emph{Mean Squared Error (MSE) loss function} \cite{koksoyMultiresponseRobustDesign2006} (see \ref{def:mean-squared-error-definition}). 
+  
+  The Mean Squared Error metric measures how close a \nameref{sec:regression-supervised-learning-background} line is to a set of data points. It is a risk function that corresponds to the expected value $y_i$ of the squared error loss (see \ref{fig:regression-example}). A larger MSE indicates that the data points are widely dispersed around its mean, whereas a smaller MSE indicates the opposite.
 
-    \begin{pabox}{Mean Squared Error}
-    \label{def:mean-squared-error-definition}
-      The \emph{Mean Squared Error (MSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of the errors, which is the average squared difference between the actual value $y$ and the estimated values $\hat{y}$.
+  \begin{pabox}{Mean Squared Error}
+  \label{def:mean-squared-error-definition}
+    The \emph{Mean Squared Error (MSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of the errors, which is the average squared difference between the actual value $y$ and the estimated values $\hat{y}$.
 
-      $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
+    $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
 
-      The squaring is critical to reducing the complexity with negative signs. If used as a loss function (criterion), the machine learning algorithm will update its weights in order to reduce the calculated loss value produced by the MSE loss function.
-    \end{pabox}
+    The squaring is critical to reducing the complexity with negative signs. If used as a loss function (criterion), the machine learning algorithm will update its weights in order to reduce the calculated loss value produced by the MSE loss function.
+  \end{pabox}
 
-    Penalty in this loss function refers to increasing the loss of predicted values $\hat{y}_i$ that are lower than the actual value $y_i$.
+  Penalty in this loss function refers to increasing the loss of predicted values $\hat{y}_i$ that are lower than the actual value $y_i$.
 
-    \begin{pabox}{Calculation of the Penalised Prediction Value $\hat{y'}_i$}
-    \label{def:calculation-of-the-penalty-value}
+  \begin{pabox}{Calculation of the Penalised Prediction Value $\hat{y'}_i$}
+  \label{def:calculation-of-the-penalty-value}
 
-      The penalty is defined as a positive real number ranging from zero to infinity and its mathematical representation is $Penalty = [0, \infty]$.
-      The penalty value denoted as $Penalty$ is subtracted from a predicted value $\hat{y}_i$ if it is smaller than the actual value $y_i$. A subtraction is required to further increase the distance between the actual value and the (under-allocated) predicted value.
-      The result of this calculation is the updated penalised prediction value $\hat{y'}_i$.
-      This conditional mathematical representation is shown in the following:
-      $$\hat{y'}_i = 
-      \begin{cases}
-        \hat{y}_i - Penalty, & \quad \textrm{if } \hat{y}_i < y_i \\
-        \hat{y}_i,  & \quad \textrm{otherwise}
-      \end{cases}$$
-      Therefore, the more the prediction values are below the actual values, the more the penalty value is applied, and thus the error of a predicted data batch increases.
+    The penalty is defined as a positive real number ranging from zero to infinity and its mathematical representation is $Penalty = [0, \infty]$.
+    The penalty value denoted as $Penalty$ is subtracted from a predicted value $\hat{y}_i$ if it is smaller than the actual value $y_i$. A subtraction is required to further increase the distance between the actual value and the (under-allocated) predicted value.
+    The result of this calculation is the updated penalised prediction value $\hat{y'}_i$.
+    This conditional mathematical representation is shown in the following:
+    $$\hat{y'}_i = 
+    \begin{cases}
+      \hat{y}_i - Penalty, & \quad \textrm{if } \hat{y}_i < y_i \\
+      \hat{y}_i,  & \quad \textrm{otherwise}
+    \end{cases}$$
+    Therefore, the more the prediction values are below the actual values, the more the penalty value is applied, and thus the error of a predicted data batch increases.
 
-    \end{pabox}
+  \end{pabox}
 
-    The custom PMSE was implemented because the more information was included in the feature set while training, the more likely the LSTM model is to predict values that are lower than the actual value (see \nameref{sec:evaluation-scenarios}). Since an estimation lower than the actual value could lead to problems such as a task not finishing in the required time frame, or an \emph{out of memory} exception, that not only interrupts the system to terminate the task but could also lead to system failure. This is the reason why a penalty is added to the predicted value in case of being lower than the actual value. With this measure in place, the LSTM model is more likely to predict values that are higher than the actual value. While this might introduce resource wastage, it is still preferable to introduce some resource wastage than provide an unstable system configuration.
+  The custom PMSE was implemented because the more information was included in the feature set while training, the more likely the LSTM model is to predict values that are lower than the actual value (see \nameref{sec:evaluation-scenarios}). Since an estimation lower than the actual value could lead to problems such as a task not finishing in the required time frame, or an \emph{out of memory} exception, that not only interrupts the system to terminate the task but could also lead to system failure. This is the reason why a penalty is added to the predicted value in case of being lower than the actual value. With this measure in place, the LSTM model is more likely to predict values that are higher than the actual value. While this might introduce resource wastage, it is still preferable to introduce some resource wastage than provide an unstable system configuration.
 
-    \begin{pabox}{Penalty Mean Squared Error}
-      \label{def:penalty-mean-squared-error-definition}
-      The \emph{Penalty Mean Squared Error (PMSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of errors similar to \emph{mean squared error} but also applies a penalty to an estimated value $\hat{y}_i$ that is lower than the actual value $y_i$ (see \ref{def:calculation-of-the-penalty-value}). 
-      The mathematical representation of PMSE is:
-      $$PMSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y'}_i\right)^2$$
-      As can be seen, it is similar to the representation of MSE (see \ref{def:mean-squared-error-definition}), but uses a modified estimated value $\hat{y'}_i$ that was penalised before the calculation.
-    \end{pabox}
+  \begin{pabox}{Penalty Mean Squared Error}
+    \label{def:penalty-mean-squared-error-definition}
+    The \emph{Penalty Mean Squared Error (PMSE)} of an estimator (i.e. trained LSTM model) measures the average of the squares of errors similar to \emph{mean squared error} but also applies a penalty to an estimated value $\hat{y}_i$ that is lower than the actual value $y_i$ (see \ref{def:calculation-of-the-penalty-value}). 
+    The mathematical representation of PMSE is:
+    $$PMSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y'}_i\right)^2$$
+    As can be seen, it is similar to the representation of MSE (see \ref{def:mean-squared-error-definition}), but uses a modified estimated value $\hat{y'}_i$ that was penalised before the calculation.
+  \end{pabox}
 
-    The \texttt{PenaltyMSELoss} class inherits from the PyTorch Module package in order to be able to use it as the loss function for the error calculation of the predicted and actual values.
-    The \texttt{PenaltyMSELoss} class constructor (see listing \ref{lst:pmse-python-class} line 4) has two parameters, the \texttt{self} keyword that is used to access instance parameters, and the \texttt{penalty} parameter, that is expected to be of type \texttt{float}.
-    Inside the class constructor, a \texttt{MSELoss} instance (line 6) will be created in order to calculate the final loss values based on the mean square error calculation.
+  The \texttt{PenaltyMSELoss} class inherits from the PyTorch Module package in order to be able to use it as the loss function for the error calculation of the predicted and actual values.
+  The \texttt{PenaltyMSELoss} class constructor (see listing \ref{lst:pmse-python-class} line 4) has two parameters, the \texttt{self} keyword that is used to access instance parameters, and the \texttt{penalty} parameter, that is expected to be of type \texttt{float}.
+  Inside the class constructor, a \texttt{MSELoss} instance (line 6) will be created in order to calculate the final loss values based on the mean square error calculation.
 
-    \lstinputlisting[
-      language=Python, 
-      caption=Penalty Mean Squared Error Python Class, 
-      label={lst:pmse-python-class},
-      style=codestyle
-      ]{code_samples/pmse.py}
+  \lstinputlisting[
+    language=Python, 
+    caption=Penalty Mean Squared Error Python Class, 
+    label={lst:pmse-python-class},
+    style=codestyle
+    ]{code_samples/pmse.py}
 
-    The \texttt{forward} function (see \ref{lst:pmse-python-class} line 9) is used to calculate the loss between the estimation (denoted as \texttt{pred}) and actual values (denoted as \texttt{actual}). Both the estimation and actual values are represented as PyTorch tensors, a multi-dimensional matrix that contains the elements of a single data type, in this case floating point numbers.
-    The function also expects its calculated output to be of type \texttt{float}, which is a common data type for loss functions.
-    In line 10 the indices of all predictions smaller than the actual values that would result in an under-allocation of resources are stored in a \texttt{boolean} array.
-    This array is then used in line 11 to update all values that match the indices stored in the array by subtracting the penalty value.
-    After updating all predicted values both tensors are then forwarded to the mean squared error function in line 13, which does the final calculation of the loss.
-    The MSE function then returns the value to the calling function \texttt{forward} and this returns the loss value as type \texttt{float}.
+  The \texttt{forward} function (see \ref{lst:pmse-python-class} line 9) is used to calculate the loss between the estimation (denoted as \texttt{pred}) and actual values (denoted as \texttt{actual}). Both the estimation and actual values are represented as PyTorch tensors, a multi-dimensional matrix that contains the elements of a single data type, in this case floating point numbers.
+  The function also expects its calculated output to be of type \texttt{float}, which is a common data type for loss functions.
+  In line 10 the indices of all predictions smaller than the actual values that would result in an under-allocation of resources are stored in a \texttt{boolean} array.
+  This array is then used in line 11 to update all values that match the indices stored in the array by subtracting the penalty value.
+  After updating all predicted values both tensors are then forwarded to the mean squared error function in line 13, which does the final calculation of the loss.
+  The MSE function then returns the value to the calling function \texttt{forward} and this returns the loss value as type \texttt{float}.
 
 
 

@@ -116,18 +116,19 @@
     Feature creation involves the process of data labelling.
     Data labelling identifies data such as images, and text files and adds meaningful and informative labels to it by creating new variables which will be the most helpful to the ML model. This is done to provide the data labels as context to the ML model so it can learn from it. Data labelling is required for various use cases in \nameref{sec:supervised-learning} since ML models of that category require labels to train on. Features that were created for the datasets that later are fed into the LSTM model are one-hot encoded feature columns. These were either generated from the task type, which is used to differentiate between the various tasks and is used to enable the model to comprehend categorical data for training and inference. Similarly, the \emph{number of instances} is one-hot encoded to provide additional information about a task by providing categorical data as encoded feature columns. The one-hot encoding method and how it is applied is described in more detail in section \nameref{sec:one-hot-encoding-preprocessing-architecture}.
 
-    \subsection{Feature Analysis}
-    \label{sec:feature-analysis-preprocessing-architecture}
-    
-      Feature analysis often uses visualisation like histograms, scatter, box and line plots to analyse if the created feature data set is correct. Feature analysis is also used to discover patterns, spot anomalies, check assumptions or test a hypothesis.
+  \subsection{Feature Analysis}
+  \label{sec:feature-analysis-preprocessing-architecture}
+  
+    Feature analysis often uses visualisation like histograms, scatter, box and line plots to analyse if the created feature data set is correct. Feature analysis is also used to discover patterns, spot anomalies, check assumptions or test a hypothesis.
+    The analysis of features and results is done in chapter \nameref{ch:evaluation-and-results}.
 
-    \subsection{Feature Selection}
-    \label{sec:feature-selection-data-preprocessing-architecture}
-  
-      Feature selection is the process of reducing the number of input variables of a feature set when developing a predictive model.
-      Feature selection is simply the process of selecting and excluding given features without changing them as is done with \emph{dimensionality reduction}.
-      A reduction of the number of input variables is desirable to both reduce the computational cost of training a model and in some cases, it also increases the prediction performance of the model.
-  
+  \subsection{Feature Selection}
+  \label{sec:feature-selection-data-preprocessing-architecture}
+
+    Feature selection is the process of reducing the number of input variables of a feature set when developing a predictive model.
+    Feature selection is simply the process of selecting and excluding given features without changing them as is done with \emph{dimensionality reduction}.
+    A reduction of the number of input variables is desirable to both reduce the computational cost of training a model and in some cases, it also increases the prediction performance of the model.
+
       % mention the iterations and the inclusion of more features
 
 \section{Data Preprocessing Techniques}
@@ -183,20 +184,24 @@
     Standardisation (also referred to as \emph{z-score normalisation}) is a process of scaling values of a dataset by first calculating its standard deviation and accounting for it. In case the standard deviation of features is different, then the range of those features will likewise differ. As a result, the outliers in the characteristics are reduced.
     In order to calculate a distribution of the data with a mean of $0$ and a variance of $1$, all the data points are first subtracted by their mean and the result of that is then divided by the variance of the distribution.
 
-    \begin{pabox}{Mean - Standard Deviation - Standardisation}
-      \label{def:standardisation}
-      In the following, the necessary definitions for the standardisation of data points are defined.
-
+    \begin{pabox}{Mean}
+      \label{def:mean}
       The mean $\mu$ is calculated with the formula:
       $$\mu = \frac{1}{N}\sum_{i = 1}^{N}\left(x_i\right)$$
       where $N$ denotes the number of elements in the dataset and $x_i$ the $i$-th element in that dataset.
+    \end{pabox}
 
+    \begin{pabox}{Standard Deviation}
+    \label{def:standard-deviation}
       The standard deviation is calculated with:
       $$\sigma = \sqrt{\frac{1}{N} \sum_{i = 1}^{N}\left(x_i - \mu\right)^2}$$
-    
-      Finally, the standardisation is calculated by the formula $$Z = \frac{x - \mu}{\sigma}.$$
-
     \end{pabox}
+
+    \begin{pabox}{Standardisation}
+    \label{def:standardisation}
+      The standardisation is calculated by the formula $$Z = \frac{x - \mu}{\sigma}$$
+    \end{pabox}
+
     The standardisation of data points is used to preprocess the feature dataset that is fed to the LSTM model while training or inferring tasks. Standardising the feature dataset is preferred to normalisation (see section \ref{sec:data-normalisation-data-preprocessing-architecture}) since the impact of outliers is reduced compared to the normalisation scaling method.
 
   \subsection{Normalisation}

@@ -164,7 +164,7 @@
 
             As can be seen in figure \ref{fig:fnn-vs-rnn}, the RNN has an additional loop inside it to persist time-series information. The loop structure enables the RNN to apply a \emph{recurrence relation} (see \ref{sec:recurrence-relation-background}) at every time step in order to process a sequence.
 
-            The rectangle containing the "RNN" label is defined as a "recurrent cell".
+            The rectangle containing the RNN label is defined as a ``recurrent cell''.
             This workflow of a single RNN cell can be seen in more detail in figure \ref{fig:single-rnn-cell}, where the previous cell state $h_{t-1}$ and the current input $x_t$ are used as the input of the recurrent cell, get combined and forwarded to the $tanh$ \emph{activation function}, which returns the output vector $\hat{y}_t$ and $h_t$ (the recurrence relation).
 
         \subsection{Recurrence Relation}

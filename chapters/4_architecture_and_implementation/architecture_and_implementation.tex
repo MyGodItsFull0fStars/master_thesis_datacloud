@@ -355,8 +355,7 @@
 
     \begin{quote}
         We model the asynchronous communication between microservices using data element queues, expressing temporary storage of communication data elements \cite{mehranMatchingbasedSchedulingAsynchronous2022}.
-    \end{quote}
-
+    \end{quote} 
     $C^3$-MATCH defines a scheduling approach that is similar to a matching game, where both the tasks in the pipeline and the available resources participate in this game.
     On the task side, each task ranks the available resources based on its resource preferences.
     On the resource side, each resource also ranks the deployable tasks based on its task preferences.
@@ -369,10 +368,12 @@
       \paragraph{Monitoring Component } is responsible for monitoring the resources and tasks and storing traces of the behaviour of the system on the disk.
       This is necessary to be able to analyse the correlations of the tasks and resources and train the LSTM model to generate accurate predictions for future task deployments.
 
-      \paragraph{Analysis Component } 
+      \paragraph{Analysis Component } is used to analyse the current state of the distributed system and its resources.
+      Included in this component is a rule-based approach that triggers events in case a defined rule is broken by a resource.
+      In this context, rules denote the expected limits of a resource such as a CPU utilisation that does not exceed a specific percentage value.
       
       \paragraph{Adapt Component } uses a trained LSTM model to adapt the hardware requirements of the current tasks that reside in the task pipeline.
-      Tasks are provided with initial hardware utilisation limits that are not to be exceeded. As already stated in \ref{sec:public-cloud-provider-traces-in-available-data-related-work}, the majority of tasks utilise more hardware resources than they require.
+      Tasks are provided with initial hardware utilisation limits that are not to be exceeded. As already stated in \ref{sec:public-cloud-provider-traces-in-available-data-related-work}, the majority of tasks utilise more hardware resources than they require. The Adapt Component analyses the tasks, their properties and their ordering and adapts the hardware utilisation based on the estimations done by the LSTM model.
 
   \begin{figure}[h!]
       \centering
@@ -388,10 +389,8 @@
   Both the Big Data pipeline and the resources send the gathered monitoring information at a time step $P_t$ or $S_t$ respectively to the \emph{Monitoring and Analysis} component, where $t$ denotes the current time step.
 
   The Monitoring and Analysis component then uses the monitoring data $P_t$ and $S_t$ and calculates an action $A_{t+1}$ as an update for the resources, where $t+1$ denotes the next time step.
-    
   This received action $A_{t+1}$ is then used by the Resource components to reconfigure the resources if necessary.
   The adaptation uses monitoring of tasks and resources to retrieve the monitoring data $P_t$, $S_t$.
-            
   The monitoring component is necessary to obtain information about failures or performance fluctuations along with under-, and over-utilisation of resources.
   The monitoring data, therefore, provide feedback if a resource can handle the additional load, and thus, more tasks will potentially be mapped to it for execution. 
   In case the resource is not capable of handling the current load, less demanding tasks will be mapped to that resource in future scheduling cycles and it will be reconfigured accordingly.
@@ -402,7 +401,6 @@
   The monitoring feedback will be periodically retrieved from all registered resources and provided to the analyser.
   In case of a resource side failure, the monitoring mechanism will be alerted of the occurred anomaly.  
   The analyser uses this monitoring data to decide if any actions $a \in A$ on the current scheduling plan have to be applied.
-
   The following actions $A$ are considered in the adaptation approach:
 
   \subsubsection*{Resource load within expected parameters $(S_1)$} 

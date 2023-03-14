@@ -44,7 +44,7 @@
   
     Prometheus \cite{prometheusOverviewPrometheus} is an open-source application used for monitoring and alerting of events and is designed to run across various platforms in a scalable and easily deployable manner.
     Same as Netdata it records in real-time, and stores the gathered metrics in a time series database by using a \emph{HTTP pull model}. It also allows real-time alerting via a rule-defining configuration and also has a flexible query language called \emph{PromQL}, that enables the retrieval and processing of the gathered data. Prometheus has great integration with other tools such as Netdata.
-    In the project, it is used inside a monitoring master node that is continuously scraping all resources that have Netdata installed for monitoring data. In case a predefined rule is broken at a monitored resource, such as CPU over-allocation, Prometheus triggers an event that notifies ADA-PIPE to be able to take measurements.
+    In the project, it is used inside a monitoring master node that is continuously scraping all resources that have Netdata installed for monitoring data. In case a predefined rule is broken at a monitored resource, such as CPU over-allocation, Prometheus triggers an event that notifies the Adaptation Component (see section \ref{sec:scheduling-and-adaptation-approach-architecture}) to be able to take measurements.
 
 
   \subsection{Pandas}

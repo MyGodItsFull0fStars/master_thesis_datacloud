@@ -37,7 +37,7 @@
         \label{fig:netdata-dashboard}
     \end{figure}
     Netdata has a vast amount of support for other tools to gather data. 
-    One of the supported tools is \nameref{sec:prometheus-third-party}, which is used to scrape the monitored data from all resources that have Netdata installed.
+    One of the supported tools is \nameref{sec:prometheus-third-party}, which is used to scrape the monitored data from all resources that have Netdata installed. 
 
   \subsection{Prometheus}
   \label{sec:prometheus-third-party}
@@ -58,19 +58,7 @@
   \label{sec:pytorch-third-party}
     PyTorch \cite{thelinuxfoundationPyTorch} is an open-source machine learning library for Python, developed by Facebook's AI Research lab (FAIR) but is now part of the \emph{Linux Foundation umbrella}. It provides tensor computation (similar to NumPy) with strong support for deep neural networks built on a tape-based autograd system. PyTorch is designed to provide flexibility and ease of use, with a focus on deep learning and neural networks. It can be used for various tasks such as natural language processing, computer vision, and speech recognition.
     PyTorch also supports deployment on various platforms, including CPUs, GPUs, and TPUs, and has an active community of users and contributors that continue to improve and expand its capabilities.
-    PyTorch is used to build the LSTM model (see section \ref{sec:lstm-architecture-and-implementation}) and the loss function to train the estimator.
-  
-
-% \section{Architecture of the Software}
-
-  % \subsection{Adaptation Loop}
-
-
-  
-
-% TODO see if monitoring is even needed in architecture
-% \section{Monitoring}
-% \label{sec:monitoring-architecture}
+    PyTorch is used to build the LSTM model (see section \ref{sec:lstm-architecture-and-implementation}) and the loss function (see section \ref{sec:penalty-mse-loss-function-architecture-and-implementation}) to train the estimator.
 
 
 \section{Feature Engineering}
@@ -306,8 +294,6 @@
   \end{pabox}
   These LSTM and sequential layers are the core of the machine learning architecture inside the \texttt{UtilizationLSTM} class and are responsible for the estimation of the CPU and memory utilisation and are used by forwarding inputs through each layer until the estimation is calculated.
   The received input is sent to the \texttt{forward} function of the class that expects a PyTorch tensor as the input type.
-
-   
   
   \lstinputlisting[
     language=Python, 
@@ -320,12 +306,10 @@
   As can be seen in figure \ref{fig:lstm-model-architecture} the input vector consisting of a pipeline task batch is forwarded to the \emph{initial lstm layers}. This step is implemented in the LSTM \texttt{forward} function (see \ref{lst:lstm-forward-function}) in lines 8 and 9. The \texttt{get\_hidden\_internal\_state} (see \ref{lst:lstm-init-internal-hidden-state}) function seen on the right side of lines 8 and 9 is used to create the initial internal and hidden state based on the time series batch provided as the \texttt{input} for the model. The input vector is a PyTorch tensor that is then sent to a function that generates the initial hidden and internal state based on the shape of the input vector.
   The general LSTM prediction model is split into two smaller LSTM components that each predict the utilisation of one resource unit. A resource unit is either the CPU usage or the allocated memory. At creation these LSTM components use the length of the input as the expected input size and the quality of the prediction performance heavily depends on the chosen hidden layer size as well as the number of \nameref{sec:stacked-lstm} layers.
   The final LSTM output of either resource unit is then sent to traditional sequential layers that use batch normalisation as the generalisation strategy.
-  % TODO describe batch normalization
+  
   Afterwards, the output of those sequential layers is concatenated column-wise as a label vector of the form $\left[(cpu_1, mem_1), \dots, (cpu_{bs}, mem_{bs})\right]$ where $bs$ denotes the batch size or the number of data points in the batch.
   At line 22 the calculated output is then sliced in order to only include the same amount of elements as the elements of the input vector. This has to be done since using multiple LSTM layers also increases the number of output elements by the simple formula $elements_{input} \times \#layers$. For the estimation of the resource utilisation, only the last estimation section of the output is required since this is the section that contains the prediction of the last LSTM layer.
   In line 25 the absolute values of the output are calculated. This is done to ensure that negative values are not included in the prediction since the hardware utilisation can't be less than zero.
-  
-  % TODO Explain ReLU and other layers
 
   \lstinputlisting[
     language=Python, 
@@ -340,10 +324,6 @@
     label={lst:lstm-init-internal-hidden-state},
     style=codestyle
     ]{code_samples/lstm_get_hidden_int_state.py}
-
-
-
-  
 
 \section{Scheduling and Adaptation Approach}
 \label{sec:scheduling-and-adaptation-approach-architecture}
@@ -363,16 +343,30 @@
   \subsection{Adaptation}
   \label{sec:adaptation-saa-background}
 
-      The adaptation process consists of multiple components:
-
-      \paragraph{Monitoring Component } is responsible for monitoring the resources and tasks and storing traces of the behaviour of the system on the disk.
-      This is necessary to be able to analyse the correlations of the tasks and resources and train the LSTM model to generate accurate predictions for future task deployments.
-
-      \paragraph{Analysis Component } is used to analyse the current state of the distributed system and its resources.
-      Included in this component is a rule-based approach that triggers events in case a defined rule is broken by a resource.
-      In this context, rules denote the expected limits of a resource such as a CPU utilisation that does not exceed a specific percentage value.
+      The adaptation process consists of multiple components that communicate with each other via API.
+      The usual execution order is represented by the order the components are mentioned in this section.
       
-      \paragraph{Adapt Component } uses a trained LSTM model to adapt the hardware requirements of the current tasks that reside in the task pipeline.
+
+      \paragraph{Monitoring Component }
+      \label{par:monitoring-component-saa-background}
+      
+      is responsible for monitoring the resources and tasks and storing traces of the behaviour of the system on the disk.
+      This is necessary to be able to analyse the correlations of the tasks and resources and train the LSTM model to generate accurate predictions for future task deployments. Each available resource will run a \ref{sec:netdata-third-party} container in the background that monitors its current state of it. 
+      This component runs a \nameref{sec:prometheus-third-party} instance that periodically scrapes all resources with a Netdata endpoint and checks each of them for rule violations. Prometheus includes a rule-based approach that triggers events in case a defined rule is broken by a resource.
+      In this context, rules denote the expected limits of a resource such as a CPU utilisation that must not exceed a specific percentage value.
+      Otherwise, an event is triggered that is sent to the Analysis component (see \ref{par:analysis-component-saa-background}) that will adapt the affected resource to function in expected limits again.
+
+      \paragraph{Analysis Component }
+      \label{par:analysis-component-saa-background}
+      
+      is used to analyse the current state of the distributed system and its resources.
+      
+      
+      
+      \paragraph{Adapt Component }
+      \label{par:adapt-component-saa-background}
+      
+      uses a trained LSTM model to adapt the hardware requirements of the current tasks that reside in the task pipeline.
       Tasks are provided with initial hardware utilisation limits that are not to be exceeded. As already stated in \ref{sec:public-cloud-provider-traces-in-available-data-related-work}, the majority of tasks utilise more hardware resources than they require. The Adapt Component analyses the tasks, their properties and their ordering and adapts the hardware utilisation based on the estimations done by the LSTM model.
 
   \begin{figure}[h!]

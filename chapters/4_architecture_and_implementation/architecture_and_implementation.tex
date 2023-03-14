@@ -218,13 +218,18 @@
       The value $x$ denotes a data point that will be scaled between $0$ and $1$ and its new value is denoted as $x_{new}$.
       $$x_{new} = \frac{x - x_{min}}{x_{max} - x_{min}}$$
 
+      
+    \end{pabox}
+    The normalisation of data points is used for the label dataset that contains the labels that the ML model should predict (i.e. the hardware utilisation of resources). The normalisation is used for the label dataset because its values of it are transformed to a standard scale without distorting the difference between the values. This behaviour is useful when predicting the actual values in the label dataset.
+
+    \begin{pabox}{De-Normalisation}
       The de-normalisation is used to rescale the estimation done by the LSTM model into the range of the actual values. The formula for calculating the inverse of the normalisation is:
 
       $$x = x_{new} * (x_{max} - x_{min}) + x_{min}$$
       The old value $x$ is calculated by simply rearranging the normalisation formula and de-normalising the normalised value $x_{new}$.
     \end{pabox}
-    The normalisation of data points is used for the label dataset that contains the labels that the ML model should predict (i.e. the hardware utilisation of resources). The normalisation is used for the label dataset because its values of it are transformed to a standard scale without distorting the difference between the values. This behaviour is useful when predicting the actual values in the label dataset.
-
+    The de-normalisation is used to rescale the predicted values forwarded by the LSTM model to the actual data range.
+    This is required since the LSTM model is trained to predict normalised values since this commonly results in more accurate predictions.
   
 \section{LSTM Architecture}
 \label{sec:lstm-architecture-and-implementation}

@@ -66,10 +66,16 @@
             Similarly, the definition of a task also varies and common task types to be scheduled are threads and processes.
             The scheduling activity is done by a process called \emph{scheduler}.
             Schedulers are designed to aim to fulfil one or multiple goals while keeping the computer resources busy.
+            Tasks that are to be scheduled that have dependencies to other tasks can be represented as a \emph{Directed Acyclic Graph (DAG)}.
+            The DAG scheduling problem is known to be $NP$-complete for homogenous and heterogeneous processing resources \cite{topcuogluPerformanceeffectiveLowcomplexityTask2002}.
+
 
 
             \subsubsection{Static Scheduling}
             \label{sec:static-scheduling-background}
+
+                Static schedules are fixed before execution based on the information that is available to the scheduler at that time.
+                The schedule is therefore also said to be compiled (done in compile time).
 
             \subsubsection{Dynamic Scheduling}
             \label{sec:dynamic-scheduling-background}
@@ -81,10 +87,10 @@
 
             
 
-    \section{Prediction of Load}
-    \label{sec:prediction-of-load-background}
+    % \section{Prediction of Load}
+    % \label{sec:prediction-of-load-background}
 
-        User-based prediction via domain expertise
+    %     User-based prediction via domain expertise
 
     \section{Supervised Learning}
     \label{sec:supervised-learning}

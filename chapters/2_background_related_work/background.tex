@@ -76,9 +76,16 @@
 
                 Static schedules are fixed before execution based on the information that is available to the scheduler at that time.
                 The schedule is therefore also said to be compiled (done in compile time).
+                Static scheduling has the advantage of being able to make better use of the data if its properties are sufficiently accurate.
+                Since most static schedulers are rather simple, additional advantages are their predictability and low complexity.
+                A major disadvantage of these schedulers is that they are not flexible, meaning that a created schedule can't be simply changed by adding, removing or modifying tasks, but the scheduling algorithm has to be executed offline again after each modification.
 
             \subsubsection{Dynamic Scheduling}
             \label{sec:dynamic-scheduling-background}
+
+                Dynamic schedules are determined during the runtime and might change while executing.
+                In this scheduling type, the scheduler rearranges the tasks to reduce stalls of the resources while maintaining data flow and exception behaviour.
+                The advantages of dynamic scheduling are that it can handle dependencies that are unknown at compile time, it allows code compiled for one pipeline to run efficiently on a different pipeline and it simplifies the compiler.
 
         
 

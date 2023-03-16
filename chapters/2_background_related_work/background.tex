@@ -61,14 +61,13 @@
         \subsection{Scheduling}
         \label{sec:scheduling-background}
 
-            Scheduling is the action of assigning tasks to resources. 
+            The goal of scheduling is to allocate resources effectively to tasks in order to achieve one or multiple objectives at the same time while working within processing and resource constraints.
             The definition of a resource varies depending on the context and may be processors, network components etc.
             Similarly, the definition of a task also varies and common task types to be scheduled are threads and processes.
             The scheduling activity is done by a process called \emph{scheduler}.
             Schedulers are designed to aim to fulfil one or multiple goals while keeping the computer resources busy.
             Tasks that are to be scheduled that have dependencies to other tasks can be represented as a \emph{Directed Acyclic Graph (DAG)}.
             The DAG scheduling problem is known to be $NP$-complete for homogenous and heterogeneous processing resources \cite{topcuogluPerformanceeffectiveLowcomplexityTask2002}.
-
 
 
             \subsubsection{Static Scheduling}
@@ -80,6 +79,8 @@
                 Since most static schedulers are rather simple, additional advantages are their predictability and low complexity.
                 A major disadvantage of these schedulers is that they are not flexible, meaning that a created schedule can't be simply changed by adding, removing or modifying tasks, but the scheduling algorithm has to be executed offline again after each modification.
 
+                % todo add examples of static scheduling algorithms
+
             \subsubsection{Dynamic Scheduling}
             \label{sec:dynamic-scheduling-background}
 
@@ -87,10 +88,23 @@
                 In this scheduling type, the scheduler rearranges the tasks to reduce stalls of the resources while maintaining data flow and exception behaviour.
                 The advantages of dynamic scheduling are that it can handle dependencies that are unknown at compile time, it allows code compiled for one pipeline to run efficiently on a different pipeline and it simplifies the compiler.
 
+                % TODO add examples of dynamic scheduling algorithms
         
 
-       \subsection{Adaptation}
-       \label{sec:adaptation-background}
+            \subsubsection{Adaptation}
+            \label{sec:adaptation-background}
+
+                % Adaptive scheduling algorithms are a subset of dynamic scheduling algorithms.
+                % Adaptive algorithms do use system-state information to a further degree.
+                % In an adaptive system, the scheduling policy reflects changes in its environment (i.e. the running system).
+
+                Adaptation in the context of this master's thesis is the process of modifying the given information of tasks to a more accurate representation of their behaviour before providing the tasks to a scheduler.
+
+
+                \begin{quote}
+                    In summary, \emph{adaptability} can be defined as an aggregate measure of key software characteristics that support customization of software functionality after initial development \cite{doerrAdaptiveSchedulingRealtime1999}.
+                \end{quote}
+                A more accurate representation of task properties improves the resulting scheduling plan of static schedulers as they rely on accurate task descriptions to calculate a task order that fulfils the schedule goals.
 
             
 

@@ -16,13 +16,13 @@
 \label{sec:evaluation-setup}
 % How everything was set up (kubernetes, ml,...)
 
-  In this section the evaluation setup will be described in detail. 
+  In this section, the evaluation setup will be described in detail. 
   This involves what tools and technologies were used and how they were combined in order to evaluate our test cases. Additionally, the \nameref{sec:forecasting-metrics-evaluation-setup} that are used are briefly described since they are crucial for the forecast prediction performance comparisons.
   
   \subsection{Hardware}
   \label{sec:hardware}
 
-    The training of the \nameref{sec:lstm-background} model was done on a GPU server provided by ITEC, University Klagenfurt. The server specifications are as follows:
+    The training of the \nameref{sec:lstm-background} model was done on a GPU server provided by ITEC, University of Klagenfurt. The server specifications are as follows:
 
     \begin{center}
       \begin{tabular}{| l | l |}
@@ -174,9 +174,9 @@
     \paragraph{Memory Prediction Evaluation}
     \label{par:memory-prediction-evaluation-task-knowledge}
 
-      Similar to the prediction of CPU utilization, memory utilization was improved if the ML model was trained with additional information about the task type. This enabled the model to achieve more a accurate prediction of the actual memory usage compared to the NT-model.
+      Similar to the prediction of CPU utilization, memory utilization was improved if the ML model was trained with additional information about the task type. This enabled the model to achieve a more accurate prediction of the actual memory usage compared to the NT-model.
 
-      This improvement is even more apparent compared to the allocated memory data which heavily over-allocated the required amount of memory. Compared to the NT-model and allocated memory the WT-models predictions are able to reduce the gap between predicted memory utilization and actual memory utilization the furthest.
+      This improvement is even more apparent compared to the allocated memory data, which heavily over-allocates the required amount of memory. Compared to the NT-model and allocated memory the WT-models predictions are able to reduce the gap between predicted memory utilization and actual memory utilization the furthest.
 
   \subsection*{3. Adding Instance Knowledge}
   \label{sec:adding-instance-knowledge-evaluation-scenarios}

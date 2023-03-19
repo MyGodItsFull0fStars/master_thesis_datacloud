@@ -61,6 +61,8 @@
         \subsection{Scheduling}
         \label{sec:scheduling-background}
 
+        % Static and dynamic scheduling are two different approaches to scheduling tasks in a computer system.
+
             The goal of scheduling is to allocate resources effectively to tasks in order to achieve one or multiple objectives at the same time while working within processing and resource constraints.
             The definition of a resource varies depending on the context and may be processors, network components etc.
             Similarly, the definition of a task also varies and common task types to be scheduled are threads and processes.
@@ -73,40 +75,60 @@
             \subsubsection{Static Scheduling}
             \label{sec:static-scheduling-background}
 
-                Static schedules are fixed before execution based on the information that is available to the scheduler at that time.
-                The schedule is therefore also said to be compiled (done in compile time).
+                Static scheduling refers to scheduling tasks in advance, based on a predetermined set of rules or algorithms.
+                The generated schedule remains fixed, hence the name static scheduling, regardless of changing system conditions or task requirements.
                 Static scheduling has the advantage of being able to make better use of the data if its properties are sufficiently accurate.
-                Since most static schedulers are rather simple, additional advantages are their predictability and low complexity.
+                Since most static schedulers are rather simple to implement, additional advantages are their predictability and low complexity.
                 A major disadvantage of these schedulers is that they are not flexible, meaning that a created schedule can't be simply changed by adding, removing or modifying tasks, but the scheduling algorithm has to be executed offline again after each modification.
+                This scheduling approach is often used in systems where the tasks have a fixed duration and the workload is predictable.
+
 
                 % todo add examples of static scheduling algorithms
+
+
 
             \subsubsection{Dynamic Scheduling}
             \label{sec:dynamic-scheduling-background}
 
-                Dynamic schedules are determined during the runtime and might change while executing.
-                In this scheduling type, the scheduler rearranges the tasks to reduce stalls of the resources while maintaining data flow and exception behaviour.
+                Dynamic schedules are determined during the runtime (real-time) and might change while executing based on the current system conditions and task requirements.
+                The schedule is frequently updated, and tasks are assigned to resources based on their priority and availability.
+                Additionally, the scheduler rearranges the tasks to reduce stalls of the resources while maintaining data flow and exception behaviour.
                 The advantages of dynamic scheduling are that it can handle dependencies that are unknown at compile time, it allows code compiled for one pipeline to run efficiently on a different pipeline and it simplifies the compiler.
+                Therefore, this approach is often used in systems where tasks have varying durations and the workload is unpredictable.
+                Dynamic scheduling is more flexible compared to static scheduling and can respond to changes regarding the system conditions and task requirements but this also requires more complex algorithms and also might need more computational resources to do so.
+
 
                 % TODO add examples of dynamic scheduling algorithms
         
 
-            \subsubsection{Adaptation}
+            \subsubsection{Adaptation of Static Schedules}
             \label{sec:adaptation-background}
 
-                % Adaptive scheduling algorithms are a subset of dynamic scheduling algorithms.
-                % Adaptive algorithms do use system-state information to a further degree.
-                % In an adaptive system, the scheduling policy reflects changes in its environment (i.e. the running system).
+                Adaptation of static schedules (now referred to as adaptive scheduling) refers to the approach where a static schedule is generated in advance but also uses an adaptive component that enables flexible adaptation based on changing conditions or unforeseen events.
 
-                Adaptation in the context of this master's thesis is the process of modifying the given information of tasks to a more accurate representation of their behaviour before providing the tasks to a scheduler.
-
+                % find a bridge between the text above and the quote
 
                 \begin{quote}
                     In summary, \emph{adaptability} can be defined as an aggregate measure of key software characteristics that support customization of software functionality after initial development \cite{doerrAdaptiveSchedulingRealtime1999}.
                 \end{quote}
                 A more accurate representation of task properties improves the resulting scheduling plan of static schedulers as they rely on accurate task descriptions to calculate a task order that fulfils the schedule goals.
+                
+                % For example, a static schedule with adaptation could be used in a manufacturing plant where the production line is designed to operate at a certain pace. The schedule could be created in advance, based on the expected demand and the capacity of the production line. However, if there are unexpected changes in demand or if a machine breaks down, the schedule can be adjusted to accommodate these changes while still maintaining the overall production goals.
 
-            
+                In adaptive scheduling, a schedule is generated based on algorithms or a set of rules that take expected and known parameters such as workload and resource availability into account. However, the schedule is also designed to be adjusted, and therefore, the schedule is adaptive, if there are changes in the system conditions or task requirements.
+
+                
+                % find a better suiting example
+                For example, an adaptive schedule could be used in a manufacturing plant where the production line is designed to operate at a certain pace. The schedule could be created in advance, based on the expected demand and capacity of the production line.
+                However, if there are any unexpected changes in demand or if a machine breaks down, the schedule can be adjusted to accommodate these changes while still maintaining the overall production goals.
+                
+                % maybe rewrite this section
+                This approach combines the advantages of static scheduling, which is predictable and easy to implement, with the flexibility of dynamic scheduling, which can respond to changing conditions. Static scheduling with adaptation can provide a more efficient and reliable schedule than pure dynamic scheduling, which can be more computationally intensive and prone to errors.
+
+
+                % Adaptation in the context of this master's thesis is the process of modifying the given information of tasks to a more accurate representation of their behaviour before providing the tasks to a scheduler.
+
+
 
     % \section{Prediction of Load}
     % \label{sec:prediction-of-load-background}

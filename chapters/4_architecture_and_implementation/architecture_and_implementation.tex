@@ -43,7 +43,7 @@
   \label{sec:prometheus-third-party}
   
     Prometheus \cite{prometheusOverviewPrometheus} is an open-source application used for monitoring and alerting of events and is designed to run across various platforms in a scalable and easily deployable manner.
-    Same as Netdata it records in real-time, and stores the gathered metrics in a time series database by using a \emph{HTTP pull model}. It also allows real-time alerting via a rule-defining configuration and also has a flexible query language called \emph{PromQL}, that enables the retrieval and processing of the gathered data. Prometheus has great integration with other tools such as Netdata.
+    Same as Netdata it records in real-time, and stores the gathered metrics in a time series database by using an \emph{HTTP pull model}. It also allows real-time alerting via a rule-defining configuration and also has a flexible query language called \emph{PromQL}, that enables the retrieval and processing of the gathered data. Prometheus has great integration with other tools such as Netdata.
     In the project, it is used inside a monitoring master node that is continuously scraping all resources that have Netdata installed for monitoring data. In case a predefined rule is broken at a monitored resource, such as CPU over-allocation, Prometheus triggers an event that notifies the Adaptation Component (see section \ref{sec:scheduling-and-adaptation-approach-architecture}) to be able to take measurements.
 
 
@@ -274,7 +274,7 @@
   \raggedbottom
   Normalising the input batch also has a regularising effect, which leads to a reduction of generalisation errors, similar to the usage of activation regularisation.
   Batch normalisation was proposed to mitigate internal covariate shift. This internal covariate shift occurs because inputs that are forwarded to the neural network and also from each layer have a corresponding distribution that affects the training process because of the randomness of the parameter initialisation and input data.
-  Because of the resulting internal covariate shift, the succeeding network layers need to readjust their weights in order to update their state from the data that was forwarded from the proceeding layer with a bias in terms of the distribution of activated nodes. This requirement to readjust to new distributions is even more severe in deep neural networks that have many layers and the increased number of layers amplifies this effect. Batch normalisation reduces unwanted shifts that are propagated by layers and speeds up the training and also produces more reliable and general models.
+  Because of the resulting internal covariate shift, the succeeding network layers need to readjust their weights in order to update their state from the data that was forwarded from the proceeding layer with a bias in terms of the distribution of activated nodes. This requirement to readjust to new distributions is even more severe in deep neural networks that have many layers and the increased number of layers amplifies this effect. Batch normalisation reduces unwanted shifts propagated by layers, speeds up the training, and also produces more reliable and general models.
   
 
 
@@ -441,8 +441,8 @@
     style=codestyle
     ]{code_samples/dataframe_scaler_init.py}
 
-  As shown in lines 2-5 listing \ref{lst:dataframe-scaler-init} the class contains different instance variables to hold the necessary information about a DataFrame such as the data types of each column.
-  The variables in lines 3-5 hold the standard deviation, normalisation DataFrames and the list of the columns that are to be scaled respectively. The DataFrame values for the standard deviation and normalisation are calculated in the \texttt{fit()} method (see listing \ref{lst:dataframe-scaler-fit}) that resides inside the class.
+  As shown in lines 2-5 listing \ref{lst:dataframe-scaler-init} the class contains different instance variables to hold the necessary information about a DataFrame, such as the data types of each column.
+  The variables in lines 3-5 hold the standard deviation, normalisation DataFrames and the list of the columns that are to be scaled, respectively. The DataFrame values for the standard deviation and normalisation are calculated in the \texttt{fit()} method (see listing \ref{lst:dataframe-scaler-fit}) that resides inside the class.
   These DataFrames are necessary to later be able to scale other data points that share the same distribution as the DataFrame that was used to fit the scaler. 
   This is used for estimations forwarded by the LSTM model that are within the range of normalised values.
   In order to rescale the estimation into the actual range, the \texttt{norm\_dev\_df} is used to transform the data by using the formula for de-normalisation (see \nameref{def:normalisation}).
@@ -492,7 +492,7 @@
 
   \end{pabox}
 
-  The custom PMSE was implemented because the more information was included in the feature set while training, the more likely the LSTM model is to predict values that are lower than the actual value (see \nameref{sec:evaluation-scenarios}). Since an estimation lower than the actual value could lead to problems such as a task not finishing in the required time frame, or an \emph{out of memory} exception, that not only interrupts the system to terminate the task but could also lead to system failure. This is the reason why a penalty is added to the predicted value in case of being lower than the actual value. With this measure in place, the LSTM model is more likely to predict values that are higher than the actual value. While this might introduce resource wastage, it is still preferable to introduce some resource wastage than provide an unstable system configuration.
+  The custom PMSE was implemented because the more information was included in the feature set while training, the more likely the LSTM model is to predict values that are lower than the actual value (see \nameref{sec:evaluation-scenarios}). Since an estimation lower than the actual value could lead to problems such as a task not finishing in the required time frame, or an \emph{out of memory} exception, that not only interrupts the system to terminate the task but could also lead to system failure. The reason is that a penalty is added to the predicted value in case of being lower than the actual value. With this measure in place, the LSTM model is more likely to predict values that are higher than the actual value. While this might introduce resource wastage, it is still preferable to introduce some resource wastage than provide an unstable system configuration.
 
   \begin{pabox}{Penalty Mean Squared Error}
     \label{def:penalty-mean-squared-error-definition}
@@ -504,7 +504,7 @@
 
   The \texttt{PenaltyMSELoss} class inherits from the PyTorch Module package in order to be able to use it as the loss function for the error calculation of the predicted and actual values.
   The \texttt{PenaltyMSELoss} class constructor (see listing \ref{lst:pmse-python-class} line 4) has two parameters, the \texttt{self} keyword that is used to access instance parameters, and the \texttt{penalty} parameter, that is expected to be of type \texttt{float}.
-  Inside the class constructor, a \texttt{MSELoss} instance (line 6) will be created in order to calculate the final loss values based on the mean square error calculation.
+  Inside the class constructor, an \texttt{MSELoss} instance (line 6) will be created in order to calculate the final loss values based on the mean square error calculation.
 
   \lstinputlisting[
     language=Python, 

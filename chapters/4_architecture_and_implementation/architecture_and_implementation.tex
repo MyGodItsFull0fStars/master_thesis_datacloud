@@ -9,7 +9,7 @@
 \subsection{Docker}
 \label{sec:docker-third-party}
 
-  Docker is an open-source platform for automating the deployment of applications inside containers. A container is a standalone executable package that includes everything needed to run a piece of software, including the code, runtime, libraries, environment variables, and system tools.
+  Docker \cite{dockerDockerDocumentationOverview2023} is an open-source platform for automating the deployment of applications inside containers. A container is a standalone executable package that includes everything needed to run a piece of software, including the code, runtime, libraries, environment variables, and system tools.
   Abstracting applications as containers provide a consistent and reproducible environment, which makes it easier to move applications between development, testing and production environments.
   Containers are often used to package an entire application with all its dependencies into a single container image that can easily be moved and run on any device with a Docker runtime.
   The docker toolbox provides tools for building, shipping and running containers, including a runtime environment for containers called Docker Engine, Docker Hub (a repository for storing and sharing images) and the Docker CLI to be able to interact with Docker via a command-line interface.
@@ -18,7 +18,7 @@
 
 \subsection{Kubernetes}
 \label{sec:kubernetes-third-party}
-  Kubernetes is an open-source platform for automating the deployment, scaling, and management of containerized applications. It was originally developed by Google and is now maintained by the Cloud Native Computing Foundation (CNCF).
+  Kubernetes \cite{the-linux-foundationKubernetesDocumentationGetting} is an open-source platform for automating the deployment, scaling, and management of containerized applications. It was originally developed by Google and is now maintained by the Cloud Native Computing Foundation (CNCF).
   Kubernetes provides a way to manage and organize containers (such as \nameref{sec:docker-third-party} containers) at scale, making it easier to deploy, update, and maintain applications. It does this by abstracting the underlying infrastructure and providing a unified API for managing containers.
   Kubernetes helps to automate many of the manual tasks involved in deploying and managing containers, such as scaling up or down the number of replicas of an application, rolling out updates, and managing network and storage resources. It also provides features for scaling and self-healing, allowing your applications to be more robust and resilient.
   Kubernetes has become a popular platform for deploying cloud-native applications and is widely used by organizations of all sizes across various industries.
@@ -26,7 +26,7 @@
   \subsection{NetData}
   \label{sec:netdata-third-party}
 
-    Netdata \cite{netdatainc.GettingStartedLearn2023} is an open-source tool that collects real-time metrics, including CPU usage, disk activity, bandwidth usage and furthermore.
+    Netdata \cite{netdataGettingStartedLearn2023} is an open-source tool that collects real-time metrics, including CPU usage, disk activity, bandwidth usage and furthermore.
     The reason we chose Netdata for monitoring is that it is a lightweight tool mostly written in C, Python and Javascript and it requires minimal resources, which is necessary when monitoring edge devices.
     One of its major features is that it runs without interrupting any of the applications running on the same device. This is achieved by only using idle CPU cycles while running.
     Netdata provides an in-browser dashboard to analyse each metric in real time with help of visual representation. As an example, a screenshot was taken of a cloud resource in our system as can be seen in \ref{fig:netdata-dashboard}.
@@ -50,13 +50,13 @@
   \subsection{Pandas}
   \label{sec:pandas-third-party}
 
-    Pandas \cite{pandasinc.PandasDocumentationPandas} is an open-source library created for Python and its main purpose is to provide tools for data analysis and manipulation as well as data structures for large-scale numerical tables and time series data.
+    Pandas \cite{pandasPandasDocumentationPandas} is an open-source library created for Python and its main purpose is to provide tools for data analysis and manipulation as well as data structures for large-scale numerical tables and time series data.
     Pandas allow importing data from various file formats such as \emph{comma-separated values (CSVs)}, which is the file format that Alibaba chose to store the monitoring traces.
     These CSV files are imported into \emph{Pandas DataFrames}, which is the main data structure used for data manipulation with Pandas. DataFrames are used to merge the different datasets to create the training and test datasets for the LSTM model, and additionally, most of the data analysis is also done with the help of the functions that are built into the DataFrame class.
 
   \subsection{PyTorch}
   \label{sec:pytorch-third-party}
-    PyTorch \cite{thelinuxfoundationPyTorch} is an open-source machine learning library for Python, developed by Facebook's AI Research lab (FAIR) but is now part of the \emph{Linux Foundation umbrella}. It provides tensor computation (similar to NumPy) with strong support for deep neural networks built on a tape-based autograd system. PyTorch is designed to provide flexibility and ease of use, with a focus on deep learning and neural networks. It can be used for various tasks such as natural language processing, computer vision, and speech recognition.
+    PyTorch \cite{the-linux-foundationPyTorch} is an open-source machine learning library for Python, developed by Facebook's AI Research lab (FAIR) but is now part of the \emph{Linux Foundation umbrella}. It provides tensor computation (similar to NumPy) with strong support for deep neural networks built on a tape-based autograd system. PyTorch is designed to provide flexibility and ease of use, with a focus on deep learning and neural networks. It can be used for various tasks such as natural language processing, computer vision, and speech recognition.
     PyTorch also supports deployment on various platforms, including CPUs, GPUs, and TPUs, and has an active community of users and contributors that continue to improve and expand its capabilities.
     PyTorch is used to build the LSTM model (see section \ref{sec:lstm-architecture-and-implementation}) and the loss function (see section \ref{sec:penalty-mse-loss-function-architecture-and-implementation}) to train the estimator.
 

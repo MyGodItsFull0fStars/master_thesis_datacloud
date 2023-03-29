@@ -193,7 +193,14 @@
       
       Therefore, a custom loss function was designed and implemented (see \nameref{sec:penalty-mse-loss-function-architecture-and-implementation}) to counter the tendency of the LSTM model with an increasing number of feature columns to predict values lower than the actual value.
 
-  \subsection*{5. Inference Time}
+  \subsection*{5. Training Time}
+  \label{sec:training-time-evaluation-scenarios}
+
+    The evaluation scenario regarding the training time measures the time that is required for the LSTM model to train for one epoch. The number of data points is fixed and the same for all evaluation scenarios and LSTM models, so ...
+    % TODO explain that only the difference between the models is calculated
+    % plus I take the average of the training time per epoch
+
+  \subsection*{6. Inference Time}
   \label{sec:inference-time-evaluation-scenarios}
 
     The evaluation scenario regarding the inference time measures the time that is required for the LSTM model to forward a prediction.
@@ -204,7 +211,7 @@
     Finally, the hardware the LSTM model resides on has a major influence on the time that is required to infer a prediction from input data. Deep learning nowadays heavily relies on the usage of modern GPUs that use so-called \emph{tensor cores} specifically build for machine learning tasks to accelerate both the training and the inference times.
 
 
-  \subsection*{6. Prediction Performance depending on Batch Size}
+  \subsection*{7. Prediction Performance depending on Batch Size}
   \label{sec:prediction-performance-depending-on-batch-size-evaluation-scenarios}
 
 
@@ -253,12 +260,16 @@
   % \ref{fig:comparison-of-500-1000-batch-size-mem}, 
   the prediction of the memory utilization is shown.
   Opposed to the CPU utilization prediction, in the model trained with the smaller batch size is biased to predict lower values in general, and the model trained with a batch size of 1000 predicted higher utilization values. Also, it was able to produce accurate predictions of the memory utilization of tasks.
-  \subsection*{7. Machine-Sorted vs. Time-Stamp-Sorted Data}
-  \label{sec:machine-sorted-vs-time-stamp-sorted-data-evaluation-scenarios}
+  
 
-    All of the above evaluation scenarios were done with time-stamp sorted data. Such datasets simply refer to an ordering of the data points that were sorted by the earliest arrival time first, followed by the machine those tasks were deployed to.
-    In the machine-sorted dataset the priority of sorting is reversed, meaning that the data points were first sorted by each machine and then all elements were sorted by the earliest arrival time for each machine. 
-    This was done to see if there are any improvements in the prediction performance if the data set is sorted by the machine parameter first and only then sorted by the time-stamp.
+  % TODO find out if I should keep this section
+  
+  % \subsection*{8. Machine-Sorted vs. Time-Stamp-Sorted Data}
+  % \label{sec:machine-sorted-vs-time-stamp-sorted-data-evaluation-scenarios}
+
+  %   All of the above evaluation scenarios were done with time-stamp sorted data. Such datasets simply refer to an ordering of the data points that were sorted by the earliest arrival time first, followed by the machine those tasks were deployed to.
+  %   In the machine-sorted dataset the priority of sorting is reversed, meaning that the data points were first sorted by each machine and then all elements were sorted by the earliest arrival time for each machine. 
+  %   This was done to see if there are any improvements in the prediction performance if the data set is sorted by the machine parameter first and only then sorted by the time-stamp.
 
     
 % \section{Monitoring}

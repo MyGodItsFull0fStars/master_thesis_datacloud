@@ -41,15 +41,15 @@
         $\DATARecvMATH = (\NETBYTESRecvMATH, \NETPACKETSRecvMATH)$ denotes the number of packets (in bytes) received by the system from other resources.
 
 
-    % In research, a network model refers to a conceptual or mathematical representation of a network, which is a collection of nodes and edges that are connected to each other in some way. A network model can be used to describe the structure, behavior, and interactions of the network, and to analyze its properties and performance.
+        % In research, a network model refers to a conceptual or mathematical representation of a network, which is a collection of nodes and edges that are connected to each other in some way. A network model can be used to describe the structure, behaviour, and interactions of the network, and to analyze its properties and performance.
 
-    % Network models are widely used in various fields of research, such as computer science, mathematics, engineering, and social sciences. They can be used to study a wide range of networked systems, such as communication networks, transportation networks, social networks, and biological networks.
+        % Network models are widely used in various fields of research, such as computer science, mathematics, engineering, and social sciences. They can be used to study a wide range of networked systems, such as communication networks, transportation networks, social networks, and biological networks.
 
-    % One common type of network model is a graph model, which represents a network as a graph consisting of nodes and edges. Graph models can be used to analyze the connectivity of the network, to identify important nodes or edges, and to evaluate the resilience and robustness of the network to failures or attacks.
+        % One common type of network model is a graph model, which represents a network as a graph consisting of nodes and edges. Graph models can be used to analyze the connectivity of the network, identify important nodes or edges, and evaluate the resilience and robustness of the network to failures or attacks.
 
-    % Another type of network model is a stochastic model, which incorporates randomness or uncertainty into the behavior of the network. Stochastic models can be used to study the performance of the network under different conditions, such as varying traffic loads or node failures.
+        % Another type of network model is a stochastic model, which incorporates randomness or uncertainty into the behaviour of the network. Stochastic models can be used to study the performance of the network under different conditions, such as varying traffic loads or node failures.
 
-    % Overall, network models are an important tool in research for understanding and designing networked systems, and they can help researchers to develop more effective and efficient networks.
+        % Overall, network models are an important tool in research for understanding and designing networked systems, and they can help researchers to develop more effective and efficient networks.
 
     \section{Monitoring Model}
     \label{sec:monitoring-model}
@@ -62,4 +62,11 @@
     \label{sec:resource-prediction-model}
 
         The monitoring system on the computing continuum records the performance metrics, such as CPU, GPU, memory utilisation and network usage, along with the runtime execution of tasks. We train an LSTM-based machine learning model on the monitored and historical data. Then, the output is obtained from the LSTM prediction model. In the case that the difference between the prediction and monitored data is less than a threshold value (e.g., 0.1), we obtain the predicted under-utilized resources for task scheduling. Otherwise, we tune the training model parameters or add more historical data to improve the prediction accuracy.
+
+        \begin{figure}
+            \centering
+            \includegraphics{figures/resource_prediction_flow_chart.pdf}
+            \caption{Flow chart of resource prediction}
+            \label{fig:flow-chart-of-resource-prediction}
+        \end{figure}
 

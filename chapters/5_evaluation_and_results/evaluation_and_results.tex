@@ -4,7 +4,49 @@
 \section{Trace Data}
 \label{sec:data-analysis-evaluation}
 
-  \subsection{Structure of the Trace Data}
+  % \subsection{Structure of the Trace Data}
+
+  \subsection{CPU Data Analysis}
+
+  \begin{table}
+    \centering
+    \caption{Actual CPU Utilisation}
+    \begin{tabular}{|l|r|}
+      \toprule
+      {} &  CPU Utilisation (in \%) \\
+      \midrule
+      mean  &           364.386 \\
+      std   &           559.695 \\
+      min   &             0.000 \\
+      25\%   &            89.336 \\
+      50\%   &           165.370 \\
+      75\%   &           455.047 \\
+      max   &          7133.872 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  
+
+  \subsection{Memory Data Analysis}
+
+  \begin{figure}
+    \centering
+    \caption{Actual Memory Utilisation}
+    \begin{tabular}{|l|r|}
+      \toprule
+      {} &  Memory Utilisation (in GB) \\
+      \midrule
+      mean  &             8.835 \\
+      std   &            10.552 \\
+      min   &             0.023 \\
+      25\%   &             3.013 \\
+      50\%   &             4.680 \\
+      75\%   &            11.855 \\
+      max   &           251.584 \\
+      \bottomrule
+    \end{tabular}
+  \end{figure}
 
   \subsection{Alibaba Resource Analysis}
   \label{sec:alibaba-resource-analysis-data-analysis}
@@ -150,6 +192,20 @@
   \label{sec:simple-feature-set-evaluation-scenarios}
     
     The simple feature set denotes a \nameref{sec:lstm-background} model that was trained with a feature set that only contains the allocated CPU and memory a user provided for the submitted task as well as the capacity of the worker pool resource the task should be deployed to. Additionally, since LSTMs are designed to handle sequential data, the order of the incoming tasks is also a piece of important information for the model, and thus cannot be randomized as is common for other machine learning algorithms.
+
+    \begin{tabular}{|lrr|}
+    \toprule
+    {} &  Actual CPU Usage &  Predicted CPU Usage \\
+    \midrule
+    mean  &        218.992136 &           597.048348 \\
+    std   &        397.247882 &           774.300155 \\
+    min   &          1.022901 &            58.950184 \\
+    25\%   &         54.799999 &            97.586464 \\
+    50\%   &        103.868813 &           243.593903 \\
+    75\%   &        189.713745 &           627.078918 \\
+    max   &       5068.459473 &          5793.996094 \\
+    \bottomrule
+    \end{tabular}
 
   \subsection*{2. Adding Task Knowledge}
   \label{sec:adding-task-knowledge-evaluation-scenarios}

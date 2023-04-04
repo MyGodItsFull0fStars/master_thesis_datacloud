@@ -7,46 +7,64 @@
   % \subsection{Structure of the Trace Data}
 
   \subsection{CPU Data Analysis}
+  \label{sec:cpu-data-analysis}
 
-  \begin{table}
-    \centering
-    \caption{Actual CPU Utilisation}
-    \begin{tabular}{|l|r|}
-      \toprule
-      {} &  CPU Utilisation (in \%) \\
-      \midrule
-      mean  &           364.386 \\
-      std   &           559.695 \\
-      min   &             0.000 \\
-      25\%   &            89.336 \\
-      50\%   &           165.370 \\
-      75\%   &           455.047 \\
-      max   &          7133.872 \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
+    In table \ref{tab:actual-cpu-utilisation} the actual CPU utilisation of all tasks is shown.
+    The dataset contains $5000$ elements and the CPU utilisation is represented in percentage, 
+    thus a CPU utilisation of $200$ states that a task utilised two full CPU cores on average.
 
+    \begin{table}
+      \centering
+      \caption{Actual CPU Utilisation}
+      \label{tab:actual-cpu-utilisation}
+      \begin{tabular}{|l|r|}
+        \toprule
+        {} &  CPU Utilisation (in \%) \\
+        \midrule
+        mean  &           364.386 \\
+        std   &           559.695 \\
+        min   &             0.000 \\
+        25\%   &            89.336 \\
+        50\%   &           165.370 \\
+        75\%   &           455.047 \\
+        max   &          7133.872 \\
+        \bottomrule
+      \end{tabular}
+    \end{table}
+    
+    The mean of the CPU utilisation in this dataset is $364.386$, 
+    so on average, a task required $559.695$ CPU cores in percentage for its execution.
+    The standard deviation is approximately $5.6$ CPU cores per task, therefore the \emph{average} distance from the mean value is $5.6$ CPU core utilisation.
+    In at least one case, no CPU cores were utilised, as can be seen in the minimum value of zero in the table.
+    The first quartile shows that not even a full CPU core is used, and the second quartile that $1.6$ CPU cores are utilised.
+    Next, the third quartile shows a CPU utilisation of $4.55$ CPU cores and finally, the maximum CPU utilisation used is approximately $71$ CPU cores. This high CPU utilisation as the maximum value is due to a task being deployed as many instances on multiple devices and the CPU utilisation being summed up for the task.
   
 
   \subsection{Memory Data Analysis}
+  \label{sec:memory-data-analysis}
 
-  \begin{figure}
-    \centering
-    \caption{Actual Memory Utilisation}
-    \begin{tabular}{|l|r|}
-      \toprule
-      {} &  Memory Utilisation (in GB) \\
-      \midrule
-      mean  &             8.835 \\
-      std   &            10.552 \\
-      min   &             0.023 \\
-      25\%   &             3.013 \\
-      50\%   &             4.680 \\
-      75\%   &            11.855 \\
-      max   &           251.584 \\
-      \bottomrule
-    \end{tabular}
-  \end{figure}
+    In table \ref{tab:actual-memory-utilisation} the actual memory utilisation of all tasks is shown.
+    This is the same dataset as is used for the CPU data analysis in section \ref{sec:cpu-data-analysis} and contains the corresponding memory utilisation of the tasks. Memory utilisation is represented in gigabytes (GB). 
+    Therefore, a memory utilisation of $10$ means that a task required $10$ GB at maximum for finishing its execution.
+
+    \begin{figure}
+      \centering
+      \caption{Actual Memory Utilisation}
+      \label{tab:actual-memory-utilisation}
+      \begin{tabular}{|l|r|}
+        \toprule
+        {} &  Memory Utilisation (in GB) \\
+        \midrule
+        mean  &             8.835 \\
+        std   &            10.552 \\
+        min   &             0.023 \\
+        25\%   &             3.013 \\
+        50\%   &             4.680 \\
+        75\%   &            11.855 \\
+        max   &           251.584 \\
+        \bottomrule
+      \end{tabular}
+    \end{figure}
 
   \subsection{Alibaba Resource Analysis}
   \label{sec:alibaba-resource-analysis-data-analysis}
@@ -135,7 +153,7 @@
     \label{sec:smape-metrics-evaluation}
     
       Symmetric Mean Absolute Percentage Error (sMAPE) \cite{kreinovichHowEstimateForecasting2014} is a metric used for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values and is symmetrical in that it treats positive and negative errors equally.
-      In our evaluation of the prediction performance, this is especially useful since both over-, and under-utilisation are present in all prediction variants.
+      In our evaluation of the prediction performance, this is especially useful since both over and under-utilisation are present in all prediction variants.
       The formula for SMAPE is:
 
       \begin{pabox}{Symmetric Mean Absolute Percentage Error}
@@ -267,7 +285,7 @@
     Finally, the hardware the LSTM model resides on has a major influence on the time that is required to infer a prediction from input data. Deep learning nowadays heavily relies on the usage of modern GPUs that use so-called \emph{tensor cores} specifically build for machine learning tasks to accelerate both the training and the inference times.
 
 
-  \subsection*{7. Prediction Performance depending on Batch Size}
+  \subsection*{7. Prediction Performance Depending on Batch Size}
   \label{sec:prediction-performance-depending-on-batch-size-evaluation-scenarios}
 
 

@@ -131,7 +131,6 @@
 
     % Maybe add those metrics? 
 
-    % Mean Absolute Error (MAE): measures the average magnitude of the error between the predicted values and the actual values.
 
     % Theil's U-Statistic: measures the accuracy of a forecast relative to the accuracy of a naive forecast.
 
@@ -169,6 +168,22 @@
       where $n$ denotes the number of data points and $Actual$ and $Predicted$ are the actual and predicted values, respectively.
       sMAPE provides a percentage error similar to \nameref{sec:mape-metrics-evaluation}, which makes it easy to interpret and compare the accuracy of forecasting models. Unlike MAPE, sMAPE is symmetrical, since it doesn't become undefined when the actual value is zero, and another difference is that it is less sensitive to outliers.
       Overall, sMAPE is a useful metric for evaluating the accuracy of forecasting models and can provide valuable information for understanding the relative magnitude of the errors in the predictions.
+
+
+    % Mean Absolute Error (MAE): measures the average magnitude of the error between the predicted values and the actual values.
+
+    \subsubsection{Mean Square Error (MSE)}
+    \label{sec:mse-metric-evaluation}
+
+      Mean squared error (MSE) was used as the loss function for all trained models except for the model in evaluation scenario \ref{sec:training-with-custom-loss-function-evaluation-scenarios}.
+      As already stated in section \ref{sec:penalty-mse-loss-function-architecture-and-implementation}, the MSE measures the average of the squares of the errors compared to ground truths (the actual values), which is the average squared difference between the actual value $y$ and the estimated value $\hat{y}$.
+
+      \begin{pabox}{Mean Squared Error}
+      \label{def:mean-squared-error-evaluation}
+        $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
+      \end{pabox}
+      As this metric is also used in the training loop of each LSTM model and also is widely used, it is also included in the metrics of each evaluation scenario.
+    
 
     \subsubsection{Root Mean Square Error (RMSE)}
     \label{sec:rmse-metrics-evaluation}
@@ -219,6 +234,34 @@
       This evaluation scenario analysis the user-defined hardware utilisation. 
       In this variant, users are required to estimate the hardware utilisation of their tasks when providing those tasks to the GPU clusters.
       This user-defined prediction is the comparison base for improvement in the evaluation scenarios that will follow.
+
+      \subsubsection{CPU Prediction Analysis}
+      \label{sec:user-defined-cpu-prediction-analysis}
+
+      \begin{table}
+        \centering
+
+        \begin{tabular}{|l|rr|}
+          \toprule
+          {} &  User Predicted CPU &  Actual CPU Usage \\
+          \midrule
+          mean       &         569.86 &            364.39 \\
+          std        &         300.24 &            559.70 \\
+          min        &           5.00 &              0.00 \\
+          25\%        &         400.00 &             89.34 \\
+          50\%        &         600.00 &            165.37 \\
+          75\%        &         600.00 &            455.05 \\
+          max        &        3200.00 &           7133.87 \\
+          OA percentage &         78.60 &             \\
+          UA percentage &          21.40 &             \\
+          \bottomrule
+          \end{tabular}
+      \end{table}
+
+    \subsubsection{Memory Prediction Analysis}
+    \label{sec:user-defined-memory-prediction-analysis}
+
+
 
   \subsection*{1. Simple Feature Set}
   \label{sec:simple-feature-set-evaluation-scenarios}

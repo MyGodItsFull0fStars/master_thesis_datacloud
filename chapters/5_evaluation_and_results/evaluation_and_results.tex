@@ -5,6 +5,7 @@
 \label{sec:data-analysis-evaluation}
 
   % \subsection{Structure of the Trace Data}
+  This section contains the analysis of the Alibaba datasets that are used in section \ref{sec:evaluation-setup}. This data analysis builds on top of data analysis done in \cite{fengcunDeepJSJobScheduling2023}.
 
   \subsection{CPU Data Analysis}
   \label{sec:cpu-data-analysis}
@@ -65,11 +66,17 @@
         \bottomrule
       \end{tabular}
     \end{figure}
+    The mean memory utilisation in this dataset is approximately $8.8$ GB for an average task.
+    % TODO does this actually make sense from a statistical standpoint?
+    The standard deviation is $10.552$, thus the distribution of memory utilisation compared to the mean is rather high if the quartiles are taken into account, especially the third quartile, which has a value of $11.855$ and only closely peaks the standard deviation.
+    The minimum is shown as being about $23$ megabytes for a task in the dataset.
+    The maximum memory utilisation is approximately $250$ gigabytes, and same as for the CPU utilisation, a task might consist of multiple instances, and their memory utilisation is summed up similarly.
+    
 
-  \subsection{Alibaba Resource Analysis}
-  \label{sec:alibaba-resource-analysis-data-analysis}
+  % \subsection{Alibaba Resource Analysis}
+  % \label{sec:alibaba-resource-analysis-data-analysis}
 
-    This section contains the analysis of the Alibaba datasets that are used in section \ref{sec:evaluation-setup}. This data analysis builds on top of data analysis done in other research \cite{fengcunDeepJSJobScheduling2023}.
+
 
 % \section{Introduction}
 \section{Evaluation Setup}
@@ -205,6 +212,13 @@
 % the different evaluations I did like task type or batch size
 % what is common in the scenarios (or some of them)
     In evaluation scenarios 1-4, the forecast performance of different machine learning training scenarios is evaluated and compared with each other. Each of them builds on top of the previous evaluation scenario to compare the improvement.
+
+  \subsection*{0. User-Defined Hardware Utilisation}
+  \label{sec:user-defined-hardware-utilisation}
+
+      This evaluation scenario analysis the user-defined hardware utilisation. 
+      In this variant, users are required to estimate the hardware utilisation of their tasks when providing those tasks to the GPU clusters.
+      This user-defined prediction is the comparison base for improvement in the evaluation scenarios that will follow.
 
   \subsection*{1. Simple Feature Set}
   \label{sec:simple-feature-set-evaluation-scenarios}

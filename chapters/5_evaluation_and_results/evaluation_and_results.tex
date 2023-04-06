@@ -240,6 +240,8 @@
 
       \begin{table}
         \centering
+        \caption{User Predicted CPU - Actual CPU Comparison}
+        \label{tab:user-predicted-cpu-comparison}
 
         \begin{tabular}{|l|rr|}
           \toprule
@@ -252,24 +254,58 @@
           50\%        &         600.00 &            165.37 \\
           75\%        &         600.00 &            455.05 \\
           max        &        3200.00 &           7133.87 \\
-          OA percentage &         78.60 &             \\
-          UA percentage &          21.40 &             \\
           \bottomrule
           \end{tabular}
       \end{table}
 
-      \begin{tabular}{lrrrr}
-        \toprule
-        {} &        MSE &     RMSE &     MAPE &   SMAPE \\
-        \midrule
-        User CPU &  356923.33 &  597.431 &  944.986 &  99.682 \\
-        \bottomrule
-        \end{tabular}
+      \begin{table}
+        \centering
+        \caption{Metrics for User Predicted CPU Allocation}
+        \label{tab:metric-cpu-user-predicted}
+        \begin{tabular}{|l|rrrrr|}
+          \toprule
+          {} &     RMSE &     MAPE &   SMAPE &    OA &    UA \\
+          \midrule
+          User CPU &  597.431 &  944.986 &  99.682 &  78.60 \% &  21.40 \% \\
+          \bottomrule
+          \end{tabular}
+      \end{table}
 
     \subsubsection{Memory Prediction Analysis}
     \label{sec:user-defined-memory-prediction-analysis}
 
+      \begin{table}
+        \centering
+        \caption{User Predicted Memory - Actual Memory Comparison}
+        \label{tab:user-predicted-memory-comparison}
+        \begin{tabular}{|l|rr|}
+          \toprule
+          {} &  Allocated Memory &  Actual Memory Usage \\
+          \midrule
+          mean       &          20.53 &              8.84 \\
+          std        &          12.72 &             10.55 \\
+          min        &           1.95 &              0.02 \\
+          25\%        &           7.81 &              3.01 \\
+          50\%        &          29.30 &              4.68 \\
+          75\%        &          29.30 &             11.85 \\
+          max        &         117.19 &            251.58 \\
+          \bottomrule
+          \end{tabular}
+      \end{table}
 
+
+      \begin{table}
+        \centering
+        \caption{Metric for User Predicted Memory Allocation}
+        \label{tab:metric-mem-user-predicted}
+        \begin{tabular}{|l|rrrrr|}
+          \toprule
+          {} &    RMSE &     MAPE &   SMAPE &     OA &     UA \\
+          \midrule
+          User Memory &  18.654 &  545.366 &  90.441 &  75.46 &  24.54 \\
+          \bottomrule
+          \end{tabular}
+      \end{table}
 
   \subsection*{1. Simple Feature Set}
   \label{sec:simple-feature-set-evaluation-scenarios}

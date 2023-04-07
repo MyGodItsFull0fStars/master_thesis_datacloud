@@ -36,7 +36,7 @@
         \label{par:cloud-layer-continuum}
 
             is a high-performance computing layer used for big data processing and analysis.
-            Cloud computing allows scaling without investing in physical hardware and servers and it entails the delivery of a variety of computing services over the internet. Physically, cloud computing resides in large data centres. These data centres are responsible for managing physical resources such as servers, routers, switches, etc.
+            Cloud computing allows scaling without investing in physical hardware and servers and it entails the delivery of a variety of computing services over the Internet. Physically, cloud computing resides in large data centres. These data centres are responsible for managing physical resources such as servers, routers, switches, etc.
 
         \paragraph{Fog Layer }
         \label{par:fog-layer-continuum}
@@ -106,7 +106,7 @@
 
                 Adaptation of static schedules (now referred to as adaptive scheduling) refers to the approach where a static schedule is generated in advance but also uses an adaptive component that enables flexible adaptation based on changing conditions or unforeseen events.
                 In adaptive scheduling, a schedule is generated based on algorithms or a set of rules that take expected and known parameters such as workload and resource availability into account. However, the schedule is also designed to be adjusted, and therefore, the schedule is adaptive, if there are changes in the system conditions or task requirements.
-                % maybe rewrite this section
+                % Maybe rewrite this section
                 This approach combines the advantages of static scheduling, which is predictable and easy to implement, with the flexibility of dynamic scheduling, which can respond to changing conditions. Static scheduling with adaptation can provide a more efficient and reliable schedule than pure dynamic scheduling, which can be more computationally intensive and prone to errors.
 
                 
@@ -238,8 +238,8 @@
         \subsection{RNN Loop Unfolding}
         \label{sec:rnn-loop-unfolding-background}
 
-            The loop unfolding will provide a description about how RNN handles sequential data at every time step.
-            As can be seen in figure \ref{fig:rnn-loop-unfolding}, the model is adding the input at every time step, and generates an output $\hat{y}_i$ for every time step.
+            The loop unfolding will describe how RNN handles sequential data at every time step.
+            As can be seen in figure \ref{fig:rnn-loop-unfolding}, the model is adding the input at every time step and generates an output $\hat{y}_i$ for every time step.
             The weight matrix $W_{hh}$ that is used for every time step for updating the previous state is the same for every time step.
             The weight matrix $W_{xh}$ is applied to every $x_i$ and is also the same for every time step $i$.
 
@@ -292,7 +292,7 @@
             \paragraph{Exploding Gradients }
             \label{par:exploding-gradients-background}
 
-                 problem occurs when many of the values (i.e. weight matrices, or gradients themselves) involved in the repeated gradient computations are greater than 1. 
+                problem occurs when many of the values (i.e. weight matrices, or gradients themselves) involved in the repeated gradient computations are greater than 1. 
                 If this is the case, then gradients become extremely large and optimising them becomes computationally intensive.
                 To solve the Exploding Gradients problem, a process called \emph{Gradient Clipping} is applied, which scales the gradient values to smaller values less than 1.
 
@@ -376,7 +376,7 @@
             \subsubsection{Sigmoid Layer and Pointwise-Multiplication}
             \label{sec:sigmoid-layer-and-pointwise-multiplication}
 
-                Optionally, information can also be passed through by those gates via a Sigmoid layer and point-wise multiplication as can be seen in figure \ref{fig:sigmoid-layer-and-pointwise-multiplication}.
+                Optionally, information can also be passed through those gates via a Sigmoid layer and point-wise multiplication as can be seen in figure \ref{fig:sigmoid-layer-and-pointwise-multiplication}.
                 \begin{figure}[h!]
                     \centering
                     \includegraphics[width=0.2\textwidth]{figures/sigmoid_layer.drawio.png}

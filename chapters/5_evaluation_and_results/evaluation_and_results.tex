@@ -238,26 +238,37 @@
       \subsubsection{CPU Prediction Analysis}
       \label{sec:user-defined-cpu-prediction-analysis}
 
-      \begin{table}
-        \centering
-        \caption{User Predicted CPU - Actual CPU Comparison}
-        \label{tab:user-predicted-cpu-comparison}
+        In this section, the user-defined prediction regarding CPU utilisation is analysed and compared with the actual CPU utilisation (see table \ref{tab:user-predicted-cpu-comparison}).
+        The CPU values are in percentage similar to section \ref{sec:data-analysis-evaluation}.
+        As can be seen in the $mean$ row, the user-predicted CPU utilisation is approximately 205 \% or 2 CPU cores over-allocated. Also, the first quartile in the user-predicted column already 
+        allocates four CPU cores while the required amount is close to one CPU core.
+        In the second and third quartiles, the user-predicted allocation was 600 \% in both cases, yet in the second quartile, the required amount is about $3.6$ times less than allocated.
+        Even in the third quartile, one and a half CPU cores were allocated but idle.
+        As stated in \cite{thonglekImprovingResourceUtilization2019}, users over-estimate the actual requirements of their tasks in most cases.
+        Additionally, while the general trend is to over-estimate the required amount of CPU cores, the estimation of the maximum value in the actual CPU dataset with the utilisation of $7133.87 \%$ or 71 CPU cores could not be predicted successfully, where the maximum in the user-predicted dataset only reached a value of $3200\%$, or 32 CPU cores.
+        \begin{table}
+          \centering
+          \caption{User Predicted CPU - Actual CPU Comparison}
+          \label{tab:user-predicted-cpu-comparison}
 
-        \begin{tabular}{|l|rr|}
-          \toprule
-          {} &  User Predicted CPU &  Actual CPU Usage \\
-          \midrule
-          mean       &         569.86 &            364.39 \\
-          std        &         300.24 &            559.70 \\
-          min        &           5.00 &              0.00 \\
-          25\%        &         400.00 &             89.34 \\
-          50\%        &         600.00 &            165.37 \\
-          75\%        &         600.00 &            455.05 \\
-          max        &        3200.00 &           7133.87 \\
-          \bottomrule
-          \end{tabular}
-      \end{table}
-
+          \begin{tabular}{|l|rr|}
+            \toprule
+            {} &  User Predicted CPU &  Actual CPU Usage \\
+            \midrule
+            mean       &         569.86 &            364.39 \\
+            std        &         300.24 &            559.70 \\
+            min        &           5.00 &              0.00 \\
+            25\%        &         400.00 &             89.34 \\
+            50\%        &         600.00 &            165.37 \\
+            75\%        &         600.00 &            455.05 \\
+            max        &        3200.00 &           7133.87 \\
+            \bottomrule
+            \end{tabular}
+        \end{table}
+      In table \ref{tab:metric-cpu-user-predicted} the different metrics that are used for the comparison of the actual and predicted data are shown. 
+      This table is in the following evaluation scenarios used to compare the performance of the LSTM model to user-predicted values.
+      The metrics \nameref{sec:rmse-metrics-evaluation},  \nameref{sec:mape-metrics-evaluation} and \nameref{sec:smape-metrics-evaluation} are used for the performance comparison.
+      Also included in the table are the allocation distribution columns for \emph{Over-Allocation (OA)} and \emph{Under-Allocation (UA)} that are calculated by comparing each predicted value with its corresponding actual value and if the predicted value is higher, it is added to the over-allocated section and if the value is smaller then it is added to the under-allocated section.
       \begin{table}
         \centering
         \caption{Metrics for User Predicted CPU Allocation}
@@ -274,13 +285,18 @@
     \subsubsection{Memory Prediction Analysis}
     \label{sec:user-defined-memory-prediction-analysis}
 
+      In this section, the user-defined prediction regarding memory utilisation is analysed and compared with the actual memory utilisation (see table \ref{tab:user-predicted-memory-comparison}).
+      The memory values are shown in gigabytes (GB), similar to section \ref{sec:memory-data-analysis}.
+      The \emph{mean} in the user-predicted column shows that the required memory was overestimated by a factor of $2.32$ or $11.69$ GB.
+      Also, the standard deviation (std) of the \emph{mean} was higher in the user-predicted dataset by approximately $2.2$ GB.
+
       \begin{table}
         \centering
         \caption{User Predicted Memory - Actual Memory Comparison}
         \label{tab:user-predicted-memory-comparison}
         \begin{tabular}{|l|rr|}
           \toprule
-          {} &  Allocated Memory &  Actual Memory Usage \\
+          {} &  User Predicted Memory &  Actual Memory Usage \\
           \midrule
           mean       &          20.53 &              8.84 \\
           std        &          12.72 &             10.55 \\

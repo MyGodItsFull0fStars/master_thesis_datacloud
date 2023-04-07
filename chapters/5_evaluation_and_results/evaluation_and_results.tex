@@ -67,7 +67,7 @@
       \end{tabular}
     \end{figure}
     The mean memory utilisation in this dataset is approximately $8.8$ GB for an average task.
-    % TODO does this actually make sense from a statistical standpoint?
+    % TODO Does this make sense from a statistical standpoint?
     The standard deviation is $10.552$, thus the distribution of memory utilisation compared to the mean is rather high if the quartiles are taken into account, especially the third quartile, which has a value of $11.855$ and only closely peaks the standard deviation.
     The minimum is shown as being about $23$ megabytes for a task in the dataset.
     The maximum memory utilisation is approximately $250$ gigabytes, and same as for the CPU utilisation, a task might consist of multiple instances, and their memory utilisation is summed up similarly.
@@ -81,7 +81,7 @@
 % \section{Introduction}
 \section{Evaluation Setup}
 \label{sec:evaluation-setup}
-% How everything was set up (kubernetes, ml,...)
+% How everything was set up (Kubernetes, ml,...)
 
   In this section, the evaluation setup will be described in detail. 
   This involves what tools and technologies were used and how they were combined in order to evaluate our test cases. Additionally, the \nameref{sec:forecasting-metrics-evaluation-setup} that are used are briefly described since they are crucial for the forecast prediction performance comparisons.
@@ -122,7 +122,7 @@
     % The W\&B platform is designed to make it easier for data scientists, machine learning engineers, and researchers to manage the complexity of developing and deploying machine learning models. 
 
 
-    % Overall, W\&B provides a comprehensive solution for machine learning and deep learning development, and can be a valuable tool for organizations looking to streamline their machine learning operations and improve their ability to develop high-quality models.
+    % Overall, W\&B provides a comprehensive solution for machine learning and deep learning development and can be a valuable tool for organizations looking to streamline their machine learning operations and improve their ability to develop high-quality models.
   
   \subsection{Forecasting Metrics}
   \label{sec:forecasting-metrics-evaluation-setup}
@@ -202,7 +202,7 @@
 
 % \subsubsection{Theil's U-Statistic}
 
-% Theil's U-Statistic is a measure of the accuracy of a forecasting model relative to a naïve forecast. The naïve forecast is a simple forecast that uses the average or last observed value as the prediction for all future time points. Theil's U-Statistic is used to compare the accuracy of a forecast with the accuracy of the naïve forecast.
+% Theil's U-Statistic is a measure of the accuracy of a forecasting model relative to a naïve forecast. The naïve forecast is a simple forecast that uses the average or last observed value as the prediction for all future time points. Theil's U-Statistic is used to compare the accuracy of a forecast with the accuracy of naïve forecast.
 
 % The formula for Theil's U-Statistic is:
 
@@ -269,6 +269,7 @@
       This table is in the following evaluation scenarios used to compare the performance of the LSTM model to user-predicted values.
       The metrics \nameref{sec:rmse-metrics-evaluation},  \nameref{sec:mape-metrics-evaluation} and \nameref{sec:smape-metrics-evaluation} are used for the performance comparison.
       Also included in the table are the allocation distribution columns for \emph{Over-Allocation (OA)} and \emph{Under-Allocation (UA)} that are calculated by comparing each predicted value with its corresponding actual value and if the predicted value is higher, it is added to the over-allocated section and if the value is smaller then it is added to the under-allocated section.
+      As seen in the \emph{OA} and \emph{UA} columns, the CPU over-allocation is at almost $80 \%$.
       \begin{table}
         \centering
         \caption{Metrics for User Predicted CPU Allocation}
@@ -289,6 +290,10 @@
       The memory values are shown in gigabytes (GB), similar to section \ref{sec:memory-data-analysis}.
       The \emph{mean} in the user-predicted column shows that the required memory was overestimated by a factor of $2.32$ or $11.69$ GB.
       Also, the standard deviation (std) of the \emph{mean} was higher in the user-predicted dataset by approximately $2.2$ GB.
+      At the minimum amount, users predicted to require at least $1.95$ GB of memory, while the actual minimum was $20$ MB, which is almost $100$ times more than required for executing the task.
+      In the quartiles, the trend to over-estimate the memory requirements continues whereas, in the first quartile, the factor of over-estimation is $2.59$ or $4.8$ GB.
+      The amount of memory allocation is identical in both the second and third quartiles with $29.3$ GB.
+      The factor of over-estimation for the second quartile is $6.26$ or $24.3$ GB and in the third quartile, the factor is $2.47$ or $17.5$ GB.
 
       \begin{table}
         \centering
@@ -353,13 +358,13 @@
     \paragraph{CPU Prediction Evaluation}
     \label{par:cpu-prediction-evaluation-task-knowledge}
 
-      Providing categorical data is able to positively influence the prediction performance of the machine learning model. This is also seen in the predictions of our LSTM model. The additional knowledge about what type of tasks are present in the pipeline enabled the ML model to create more accurate predictions of the CPU utilisation for each task.
+      Providing categorical data can positively influence the prediction performance of the machine learning model. This is also seen in the predictions of our LSTM model. The additional knowledge about what type of tasks are present in the pipeline enabled the ML model to create more accurate predictions of the CPU utilisation for each task.
 
       As can be seen in the figure 
       % \ref{fig:cpu-comparision-no-tasks-vs-tasks} 
-      the CPU utilization could be predicted more accurately if the model was trained with the additional information about which type of task will be allocated onto the system.
-      Compared to the ML model trained without this additional knowledge (further on called NT-model, short for No-Tasks-model), the model trained with task knowledge is able to predict the required allocation on a finer granularity.
-      This is observed in the predictions as more changes in the prediction values occur compared to the NT-model, which often seems to predict an average value over a greater time span rather than predicting the allocation for each task itself.
+      the CPU utilization could be predicted more accurately if the model was trained with the additional information about which type of task will be allocated to the system.
+      Compared to the ML model trained without this additional knowledge (further on called NT-model, short for No-Tasks-model), the model trained with task knowledge can predict the required allocation on a finer granularity.
+      This is observed in the predictions as more changes in the prediction values occur compared to the NT-model, which often seems to predict an average value over a greater period rather than predicting the allocation for each task itself.
       The WT-model is also more sensitive to great utilization spikes and periods of utilization close to zero compared to the NT-model.
 
     \paragraph{Memory Prediction Evaluation}
@@ -414,7 +419,7 @@
 
   The batch size not only influences the required training time and how much sampling data at once the model weights are updated on. The used batch size even has an impact on the prediction performance of the LSTM model.
     
-  As can be seen in figure 
+  As can be seen in the figure 
   % \ref{fig:comparison-of-500-1000-batch-size}, 
   
   the batch size used while training the LSTM model has a significant impact on the overall prediction performance.
@@ -434,7 +439,7 @@
   In figure 
   % \ref{fig:comparison-of-500-1000-batch-size-2},
    it is shown that the model with a batch size of 1000 is more accurately predicting lower utilization values and its overall bias in the dataset is to predict lower utilization values.
-  The model trained with batch size 500 predicts a higher CPU utilization in general, but also did correctly increase/decrease the CPU utilization if the actual utilization was high/low for a longer period of time.
+  The model trained with batch size 500 predicts a higher CPU utilization in general but also did correctly increase/decrease the CPU utilization if the actual utilization was high/low for a longer period.
 
   The opposite is observed for the model with a batch size of 1000. 
   This model is more accurate in predicting short utilization spikes or declines compared to the model with a batch size of 500.
@@ -450,7 +455,7 @@
   In figure 
   % \ref{fig:comparison-of-500-1000-batch-size-mem}, 
   the prediction of the memory utilization is shown.
-  Opposed to the CPU utilization prediction, in the model trained with the smaller batch size is biased to predict lower values in general, and the model trained with a batch size of 1000 predicted higher utilization values. Also, it was able to produce accurate predictions of the memory utilization of tasks.
+  Opposed to the CPU utilization prediction, the model trained with the smaller batch size is biased to predict lower values in general, and the model trained with a batch size of 1000 predicted higher utilization values. Also, it was able to produce accurate predictions of the memory utilization of tasks.
   
 
   % TODO find out if I should keep this section

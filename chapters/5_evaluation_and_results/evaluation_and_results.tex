@@ -294,6 +294,7 @@
       In the quartiles, the trend to over-estimate the memory requirements continues whereas, in the first quartile, the factor of over-estimation is $2.59$ or $4.8$ GB.
       The amount of memory allocation is identical in both the second and third quartiles with $29.3$ GB.
       The factor of over-estimation for the second quartile is $6.26$ or $24.3$ GB and in the third quartile, the factor is $2.47$ or $17.5$ GB.
+      Similar to the CPU utilisation, the memory utilisation predicted by the user is less than half as much as is actually required for the maximum value. In the dataset of actual memory utilisation, the maximum requires approximately $252$ GB, yet the user predicted a memory utilisation of $117$ GB.
 
       \begin{table}
         \centering
@@ -313,7 +314,9 @@
           \bottomrule
           \end{tabular}
       \end{table}
-
+      The metrics of the table \ref{tab:metric-mem-user-predicted} for calculating the deviation from the actual values are the same as for the CPU utilisation prediction in table \ref{tab:metric-cpu-user-predicted}.
+      Similar to the CPU prediction, the over-allocation is predominant in the user-predicted memory allocation with $75.46\%$.
+      This table is used to compare the memory predictions of the different LSTM model configurations. 
 
       \begin{table}
         \centering
@@ -347,6 +350,12 @@
     \bottomrule
     \end{tabular}
 
+    \subsubsection{CPU Prediction Analysis}
+    \label{sec:cpu-prediction-analysis-simple-lstm-evaluation}
+
+    \subsubsection{Memory Prediction Analysis}
+    \label{sec:mem-prediction-analysis-simple-lstm-evaluation}
+
   \subsection*{2. Adding Task Knowledge}
   \label{sec:adding-task-knowledge-evaluation-scenarios}
 
@@ -354,6 +363,13 @@
     The tasks are mapped to a finite set of a one-hot encoded feature vector and their corresponding index is represented as the value $1$.
     The additional information about the task type enables the LSTM model to better discern the actual utilisation that is required for each task.
     The task knowledge also provides information regarding the order of tasks, since patterns of reoccurring tasks also help the model to generate more accurate predictions in theory.
+
+
+    \subsubsection{CPU Prediction Analysis}
+    \label{sec:cpu-prediction-analysis-task-knowledge-lstm-evaluation}
+
+    \subsubsection{Memory Prediction Analysis}
+    \label{sec:mem-prediction-analysis-task-knowledge-lstm-evaluation}
 
     \paragraph{CPU Prediction Evaluation}
     \label{par:cpu-prediction-evaluation-task-knowledge}
@@ -380,7 +396,14 @@
     In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:adding-task-knowledge-evaluation-scenarios} also information about the number of instances that are required to be deployed. While the knowledge about the number of instances is similarity one-hot encoded as is the task knowledge (see \ref{sec:adding-task-knowledge-evaluation-scenarios}), adding one feature vector column for every instance number would have resulted in exploding the feature data set with 800 additional columns since the minimum instance number is $1$ and the maximum is $800$.
     For this reason, the feature vector for the one-hot encoded instances was first clustered into $10$ buckets in $50$ iterations by k-means clustering \cite{hartiganAlgorithm136Kmeans1979}.
 
-  \subsection*{4. Training with Custom Loss Function}
+
+    \subsubsection{CPU Prediction Analysis}
+    \label{sec:cpu-prediction-analysis-instance-knowledge-lstm-evaluation}
+
+    \subsubsection{Memory Prediction Analysis}
+    \label{sec:mem-prediction-analysis-instance-knowledge-lstm-evaluation}
+
+  \subsection*{4. Training with Penalty Mean Squared Error Function}
   \label{sec:training-with-custom-loss-function-evaluation-scenarios}
 
       As discussed in the previous evaluation scenarios, 
@@ -388,6 +411,13 @@
       % TODO explain why this is a bad thing
       
       Therefore, a custom loss function was designed and implemented (see \nameref{sec:penalty-mse-loss-function-architecture-and-implementation}) to counter the tendency of the LSTM model with an increasing number of feature columns to predict values lower than the actual value.
+
+
+    \subsubsection{CPU Prediction Analysis}
+    \label{sec:cpu-prediction-analysis-pmse-lstm-evaluation}
+
+    \subsubsection{Memory Prediction Analysis}
+    \label{sec:mem-prediction-analysis-psme-lstm-evaluation}
 
   \subsection*{5. Training Time}
   \label{sec:training-time-evaluation-scenarios}

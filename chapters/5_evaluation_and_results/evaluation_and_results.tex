@@ -6,6 +6,17 @@
 
   % \subsection{Structure of the Trace Data}
   This section contains the analysis of the Alibaba datasets that are used in section \ref{sec:evaluation-setup}. This data analysis builds on top of data analysis done in \cite{fengcunDeepJSJobScheduling2023}.
+  Alibaba provides numerous monitoring traces clustered in different data clusters collected in a GitHub repository \cite{wengAlibabaClusterTrace2023}.
+  For the evaluation of the prediction performance of the LSTM model configurations, the GPU cluster dataset \texttt{cluster-trace-gpu-v2020} was chosen. Analysis and characterisation of the GPU cluster data were done in \cite{wengMLaaSWildWorkload2022}.
+  The data structure of the monitoring traces is shown in figure \ref{fig:gpu-trace-data-structure}, where a job consists of multiple tasks that get deployed on one or more instances depending on the defined number of instances.
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/gpu_dataset_structure.png}
+    \caption{GPU Trace Data Structure \cite{wengClusterdataClustertracegpuv2020Master}}
+    \label{fig:gpu-trace-data-structure}
+  \end{figure}
+  
 
   \subsection{CPU Data Analysis}
   \label{sec:cpu-data-analysis}

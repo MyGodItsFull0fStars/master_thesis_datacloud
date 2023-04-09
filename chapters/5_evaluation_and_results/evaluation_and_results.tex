@@ -24,7 +24,6 @@
     In table \ref{tab:actual-cpu-utilisation} the actual CPU utilisation of all tasks is shown.
     The dataset contains $5000$ elements and the CPU utilisation is represented in percentage, 
     thus a CPU utilisation of $200$ states that a task utilised two full CPU cores on average.
-
     \begin{table}
       \centering
       \caption{Actual CPU Utilisation}
@@ -33,23 +32,22 @@
         \toprule
         {} &  CPU Utilisation (in \%) \\
         \midrule
-        mean  &           364.386 \\
-        std   &           559.695 \\
-        min   &             0.000 \\
-        25\%   &            89.336 \\
-        50\%   &           165.370 \\
-        75\%   &           455.047 \\
-        max   &          7133.872 \\
+        mean  &    516.073 \\
+        std   &    881.832 \\
+        min   &      1.023 \\
+        25\%   &    103.632 \\
+        50\%   &    208.749 \\
+        75\%   &    528.076 \\
+        max   &   7790.371 \\
         \bottomrule
       \end{tabular}
     \end{table}
-    
-    The mean of the CPU utilisation in this dataset is $364.386$, 
-    so on average, a task required $559.695$ CPU cores in percentage for its execution.
-    The standard deviation is approximately $5.6$ CPU cores per task, therefore the \emph{average} distance from the mean value is $5.6$ CPU core utilisation.
-    In at least one case, no CPU cores were utilised, as can be seen in the minimum value of zero in the table.
-    The first quartile shows that not even a full CPU core is used, and the second quartile that $1.6$ CPU cores are utilised.
-    Next, the third quartile shows a CPU utilisation of $4.55$ CPU cores and finally, the maximum CPU utilisation used is approximately $71$ CPU cores. This high CPU utilisation as the maximum value is due to a task being deployed as many instances on multiple devices and the CPU utilisation being summed up for the task.
+    The mean of the CPU utilisation in this dataset is $516.073$, 
+    so on average, a task required $516.073$ CPU utilisation, or $5.16$ CPU cores for its execution.
+    The standard deviation is approximately $8.8$ CPU cores per task, therefore the \emph{average} distance from the mean value is $8.8$ CPU core utilisation.
+    In at least one case, CPU cores were utilised with only $1 \%$ (see $min$ in table), as can be seen in the minimum value of one in the table.
+    The first quartile shows that a full CPU core is used, and the second quartile that $2.08$ CPU cores are utilised.
+    Next, the third quartile shows a CPU utilisation of $5.28$ CPU cores and finally, the maximum CPU utilisation used is approximately $78$ CPU cores. This high CPU utilisation as the maximum value is due to a task being deployed as many instances on multiple devices and the CPU utilisation being summed up for the task.
   
 
   \subsection{Memory Data Analysis}
@@ -67,21 +65,21 @@
         \toprule
         {} &  Memory Utilisation (in GB) \\
         \midrule
-        mean  &             8.835 \\
-        std   &            10.552 \\
-        min   &             0.023 \\
-        25\%   &             3.013 \\
-        50\%   &             4.680 \\
-        75\%   &            11.855 \\
-        max   &           251.584 \\
+        mean  &    17.203 \\
+        std   &    74.761 \\
+        min   &     0.003 \\
+        25\%   &     2.160 \\
+        50\%   &     7.699 \\
+        75\%   &    15.976 \\
+        max   &  1992.484 \\
         \bottomrule
       \end{tabular}
     \end{figure}
-    The mean memory utilisation in this dataset is approximately $8.8$ GB for an average task.
-    % TODO Does this make sense from a statistical standpoint?
-    The standard deviation is $10.552$, thus the distribution of memory utilisation compared to the mean is rather high if the quartiles are taken into account, especially the third quartile, which has a value of $11.855$ and only closely peaks the standard deviation.
-    The minimum is shown as being about $23$ megabytes for a task in the dataset.
-    The maximum memory utilisation is approximately $250$ gigabytes, and same as for the CPU utilisation, a task might consist of multiple instances, and their memory utilisation is summed up similarly.
+    The mean memory utilisation in this dataset is approximately $17.2$ GB for an average task.
+    The standard deviation is $74.76$, thus the distribution of memory utilisation compared to the mean is rather high.
+    The minimum is shown as being about $3$ megabytes for a task in the dataset.
+    Up to the first quartile, the memory utilisation reaches $2$ GB, for the second quartile $7.7$ GB, and in the third quartile a value of approximately $16$ GB.
+    The maximum memory utilisation is approximately $1992$ gigabytes, and same as for the CPU utilisation, a task might consist of multiple instances, and their memory utilisation is summed up similarly.
     
 
   % \subsection{Alibaba Resource Analysis}
@@ -115,11 +113,9 @@
       \end{center}
 
 
-
-
   \subsection{LSTM Model Setup}
 
-  \subsection{LSTM Hyperparameters}
+  \subsection{LSTM Hyperparameter}
   \label{sec:lstm-hyperparameters-evaluation-setup}
 
 
@@ -152,6 +148,7 @@
 
     \subsubsection{Mean Absolute Percentage Error (MAPE)}
     \label{sec:mape-metrics-evaluation}
+
       Mean Absolute Percentage Error (MAPE) \cite{demyttenaereMeanAbsolutePercentage2016} is a commonly used metric for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values.
       The formula for MAPE is:
 
@@ -251,12 +248,12 @@
 
         In this section, the user-defined prediction regarding CPU utilisation is analysed and compared with the actual CPU utilisation (see table \ref{tab:user-predicted-cpu-comparison}).
         The CPU values are in percentage similar to section \ref{sec:data-analysis-evaluation}.
-        As can be seen in the $mean$ row, the user-predicted CPU utilisation is approximately 205 \% or 2 CPU cores over-allocated. Also, the first quartile in the user-predicted column already 
-        allocates four CPU cores while the required amount is close to one CPU core.
-        In the second and third quartiles, the user-predicted allocation was 600 \% in both cases, yet in the second quartile, the required amount is about $3.6$ times less than allocated.
-        Even in the third quartile, one and a half CPU cores were allocated but idle.
+        As can be seen in the $mean$ row, the user-predicted CPU utilisation is approximately $116$ \% or $1$ CPU core over-allocated. 
+        Also, the first quartile in the user-predicted column already allocates four CPU cores while the required amount is close to one CPU core, which results in a CPU resource wastage of three CPU cores.
+        In the second and third quartiles, the user-predicted allocation was 600 \% in both cases, yet in the second quartile, the required amount is about $2.88$ times less than allocated.
+        In the third quartile, about half a CPU cores was allocated but idle.
         As stated in \cite{thonglekImprovingResourceUtilization2019}, users over-estimate the actual requirements of their tasks in most cases.
-        Additionally, while the general trend is to over-estimate the required amount of CPU cores, the estimation of the maximum value in the actual CPU dataset with the utilisation of $7133.87 \%$ or 71 CPU cores could not be predicted successfully, where the maximum in the user-predicted dataset only reached a value of $3200\%$, or 32 CPU cores.
+        Additionally, while the general trend is to over-estimate the required amount of CPU cores, the estimation of the maximum value in the actual CPU dataset with the utilisation of $7790.37 \%$ or 78 CPU cores could not be predicted successfully, where the maximum in the user-predicted dataset only reached a value of $6400\%$, or 64 CPU cores.
         \begin{table}
           \centering
           \caption{User Predicted CPU - Actual CPU Comparison}
@@ -266,13 +263,13 @@
             \toprule
             {} &  User Predicted CPU &  Actual CPU Usage \\
             \midrule
-            mean       &         569.86 &            364.39 \\
-            std        &         300.24 &            559.70 \\
-            min        &           5.00 &              0.00 \\
-            25\%        &         400.00 &             89.34 \\
-            50\%        &         600.00 &            165.37 \\
-            75\%        &         600.00 &            455.05 \\
-            max        &        3200.00 &           7133.87 \\
+            mean       &         632.81 &     516.07 \\
+            std        &         496.24 &     881.83 \\
+            min        &           5.00 &       1.02 \\
+            25\%        &         400.00 &     103.63 \\
+            50\%        &         600.00 &     208.75 \\
+            75\%        &         600.00 &     528.08 \\
+            max        &        6400.00 &    7790.37 \\
             \bottomrule
             \end{tabular}
         \end{table}
@@ -280,7 +277,7 @@
       This table is in the following evaluation scenarios used to compare the performance of the LSTM model to user-predicted values.
       The metrics \nameref{sec:rmse-metrics-evaluation},  \nameref{sec:mape-metrics-evaluation} and \nameref{sec:smape-metrics-evaluation} are used for the performance comparison.
       Also included in the table are the allocation distribution columns for \emph{Over-Allocation (OA)} and \emph{Under-Allocation (UA)} that are calculated by comparing each predicted value with its corresponding actual value and if the predicted value is higher, it is added to the over-allocated section and if the value is smaller then it is added to the under-allocated section.
-      As seen in the \emph{OA} and \emph{UA} columns, the CPU over-allocation is at almost $80 \%$.
+      As seen in the \emph{OA} and \emph{UA} columns, the CPU over-allocation is at almost $73 \%$.
       \begin{table}
         \centering
         \caption{Metrics for User Predicted CPU Allocation}
@@ -289,7 +286,7 @@
           \toprule
           {} &     RMSE &     MAPE &   SMAPE &    OA &    UA \\
           \midrule
-          User CPU &  597.431 &  944.986 &  99.682 &  78.60 \% &  21.40 \% \\
+          User CPU &  812.497 &  355.049 &  89.466 &  72.8 &  27.2 \\
           \bottomrule
           \end{tabular}
       \end{table}
@@ -299,13 +296,14 @@
 
       In this section, the user-defined prediction regarding memory utilisation is analysed and compared with the actual memory utilisation (see table \ref{tab:user-predicted-memory-comparison}).
       The memory values are shown in gigabytes (GB), similar to section \ref{sec:memory-data-analysis}.
-      The \emph{mean} in the user-predicted column shows that the required memory was overestimated by a factor of $2.32$ or $11.69$ GB.
-      Also, the standard deviation (std) of the \emph{mean} was higher in the user-predicted dataset by approximately $2.2$ GB.
-      At the minimum amount, users predicted to require at least $1.95$ GB of memory, while the actual minimum was $20$ MB, which is almost $100$ times more than required for executing the task.
-      In the quartiles, the trend to over-estimate the memory requirements continues whereas, in the first quartile, the factor of over-estimation is $2.59$ or $4.8$ GB.
+      The \emph{mean} in the user-predicted column shows that the required memory was overestimated by a factor of $1.56$ or $9.69$ GB.
+      The standard deviation (std) of the \emph{mean} was lower in the user-predicted dataset by approximately $60$ GB.
+      This difference can be seen as users are more likely to predict similar values for their tasks, as can be seen in the dataset with very similar user predicted values, which result in a lower standard deviation.
+      At the minimum amount, users predicted to require at least $2$ GB of memory, while the actual minimum was $0$ MB. While it is necessary to provide an actual value to the GPU cluster, the user provided prediction still heavily overestimated the actual utilisation.
+      In the quartiles, the trend to over-estimate the memory requirements continues whereas, in the first quartile, the factor of over-estimation is $6.78$ or $12.5$ GB.
       The amount of memory allocation is identical in both the second and third quartiles with $29.3$ GB.
-      The factor of over-estimation for the second quartile is $6.26$ or $24.3$ GB and in the third quartile, the factor is $2.47$ or $17.5$ GB.
-      Similar to the CPU utilisation, the memory utilisation predicted by the user is less than half as much as is actually required for the maximum value. In the dataset of actual memory utilisation, the maximum requires approximately $252$ GB, yet the user predicted a memory utilisation of $117$ GB.
+      The factor of over-estimation for the second quartile is $3.8$ or $21.6$ GB and in the third quartile, the factor is $1.81$ or $13.3$ GB.
+      Similar to the CPU utilisation, the memory utilisation predicted by the user is less than half as much as is actually required for the maximum value. In the dataset of actual memory utilisation, the maximum requires approximately $1992$ GB, yet the user predicted a memory utilisation of $146.48$ GB, which is $13.6$ times less than was required.
 
       \begin{table}
         \centering
@@ -315,18 +313,18 @@
           \toprule
           {} &  User Predicted Memory &  Actual Memory Usage \\
           \midrule
-          mean       &          20.53 &              8.84 \\
-          std        &          12.72 &             10.55 \\
-          min        &           1.95 &              0.02 \\
-          25\%        &           7.81 &              3.01 \\
-          50\%        &          29.30 &              4.68 \\
-          75\%        &          29.30 &             11.85 \\
-          max        &         117.19 &            251.58 \\
+          mean       &          26.89 &    17.20 \\
+          std        &          15.26 &    74.76 \\
+          min        &           2.00 &     0.00 \\
+          25\%        &          14.65 &     2.16 \\
+          50\%        &          29.30 &     7.70 \\
+          75\%        &          29.30 &    15.98 \\
+          max        &         146.48 &  1992.48 \\
           \bottomrule
           \end{tabular}
       \end{table}
       The metrics of the table \ref{tab:metric-mem-user-predicted} for calculating the deviation from the actual values are the same as for the CPU utilisation prediction in table \ref{tab:metric-cpu-user-predicted}.
-      Similar to the CPU prediction, the over-allocation is predominant in the user-predicted memory allocation with $75.46\%$.
+      Similar to the CPU prediction, the over-allocation is predominant in the user-predicted memory allocation with $80.8\%$.
       This table is used to compare the memory predictions of the different LSTM model configurations. 
 
       \begin{table}
@@ -337,7 +335,7 @@
           \toprule
           {} &    RMSE &     MAPE &   SMAPE &     OA &     UA \\
           \midrule
-          User Memory &  18.654 &  545.366 &  90.441 &  75.46 &  24.54 \\
+          User Memory &  73.853 &  3672.256 &  97.613 &  80.8 &  19.2 \\
           \bottomrule
           \end{tabular}
       \end{table}
@@ -347,25 +345,71 @@
     
     The simple feature set denotes a \nameref{sec:lstm-background} model that was trained with a feature set that only contains the allocated CPU and memory a user provided for the submitted task as well as the capacity of the worker pool resource the task should be deployed to. Additionally, since LSTMs are designed to handle sequential data, the order of the incoming tasks is also a piece of important information for the model, and thus cannot be randomized as is common for other machine learning algorithms.
 
-    \begin{tabular}{|lrr|}
-    \toprule
-    {} &  Actual CPU Usage &  Predicted CPU Usage \\
-    \midrule
-    mean  &        218.992136 &           597.048348 \\
-    std   &        397.247882 &           774.300155 \\
-    min   &          1.022901 &            58.950184 \\
-    25\%   &         54.799999 &            97.586464 \\
-    50\%   &        103.868813 &           243.593903 \\
-    75\%   &        189.713745 &           627.078918 \\
-    max   &       5068.459473 &          5793.996094 \\
-    \bottomrule
-    \end{tabular}
 
     \subsubsection{CPU Prediction Analysis}
     \label{sec:cpu-prediction-analysis-simple-lstm-evaluation}
 
+
+    \begin{table}
+      \centering
+      \begin{tabular}{|l|rrr|}
+        \toprule
+        {} &  Actual CPU &  LSTM Predicted CPU &  User Predicted CPU \\
+        \midrule
+        mean  &           516.073 &              392.630 &        632.809 \\
+        std   &           881.832 &              705.771 &        496.245 \\
+        min   &             1.023 &                3.030 &          5.000 \\
+        25\%   &           103.632 &               97.586 &        400.000 \\
+        50\%   &           208.749 &              118.014 &        600.000 \\
+        75\%   &           528.076 &              281.472 &        600.000 \\
+        max   &          7790.372 &             5793.996 &       6400.000 \\
+        \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \begin{table}
+      \centering
+      \begin{tabular}{|l|rrrrr|}
+        \toprule
+        {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
+        \midrule
+        Simple LSTM &  701.099 &  868.561 &  92.649 &  57.34 &  42.66 \\
+        User CPU &  597.431 &  944.986 &  99.682 &  78.60 \% &  21.40 \% \\
+        \bottomrule
+        \end{tabular}
+    \end{table}
+
     \subsubsection{Memory Prediction Analysis}
     \label{sec:mem-prediction-analysis-simple-lstm-evaluation}
+
+    \begin{table}
+      \centering
+      \begin{tabular}{|l|rr|}
+        \toprule
+        {} &  Predicted Max. Memory &  Actual Memory Usage \\
+        \midrule
+        mean       &          26.89 &             17.20 \\
+        std        &          15.26 &             74.76 \\
+        min        &           2.00 &              0.00 \\
+        25\%        &          14.65 &              2.16 \\
+        50\%        &          29.30 &              7.70 \\
+        75\%        &          29.30 &             15.98 \\
+        max        &         146.48 &           1992.48 \\
+        \bottomrule
+      \end{tabular}
+    \end{table}
+
+    \begin{table}
+      \centering
+      \begin{tabular}{|l|rrrrr|}
+        \toprule
+        {} &    RMSE &     MAPE &   SMAPE &     OA &     UA \\
+        \midrule
+        Simple LSTM &  14.725 &  128.113 &  87.045 &  36.28 &  63.72 \\
+        User Memory &  18.654 &  545.366 &  90.441 &  75.46 &  24.54 \\
+        \bottomrule
+        \end{tabular}
+    \end{table}
 
   \subsection*{2. Adding Task Knowledge}
   \label{sec:adding-task-knowledge-evaluation-scenarios}
@@ -379,8 +423,67 @@
     \subsubsection{CPU Prediction Analysis}
     \label{sec:cpu-prediction-analysis-task-knowledge-lstm-evaluation}
 
+    \begin{figure}
+      \centering
+      \begin{tabular}{|l|rr|}
+        \toprule
+        {} &  Predicted CPU Usage &  Actual CPU Usage \\
+        \midrule
+        mean       &               273.94 &            364.39 \\
+        std        &               463.12 &            559.70 \\
+        min        &                 3.86 &              0.00 \\
+        25\%        &                74.80 &             89.34 \\
+        50\%        &               219.60 &            165.37 \\
+        75\%        &               253.62 &            455.05 \\
+        max        &              4999.80 &           7133.87 \\
+        percentage &               100.00 &            100.00 \\
+        \bottomrule
+      \end{tabular}
+    \end{figure}
+
+    \begin{figure}
+      \centering
+      \begin{tabular}{|l|rrrrr|}
+        \toprule
+        {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
+        \midrule
+        metrics &  648.602 &  399.351 &  88.734 &  42.68 &  57.32 \\
+        \bottomrule
+      \end{tabular}
+    \end{figure}
+
     \subsubsection{Memory Prediction Analysis}
     \label{sec:mem-prediction-analysis-task-knowledge-lstm-evaluation}
+
+      \begin{figure}
+        \centering
+
+        \begin{tabular}{|l|rr|}
+          \toprule
+          {} &  Predicted Memory Usage &  Actual Memory Usage \\
+          \midrule
+          mean       &                 3.78 &              8.84 \\
+          std        &                 4.20 &             10.55 \\
+          min        &                 0.14 &              0.02 \\
+          25\%        &                 0.74 &              3.01 \\
+          50\%        &                 2.02 &              4.68 \\
+          75\%        &                 8.54 &             11.85 \\
+          max        &                85.90 &            251.58 \\
+          \bottomrule
+        \end{tabular}
+      \end{figure}
+      
+      \begin{figure}
+        \centering
+        
+        \begin{tabular}{|l|rrrrr|}
+          \toprule
+          {} &    RMSE &    MAPE &    SMAPE &     OA &     UA \\
+          \midrule
+          metrics &  11.993 &  198.76 &  118.231 &  23.62 &  76.38 \\
+          \bottomrule
+        \end{tabular}
+      \end{figure}
 
     \paragraph{CPU Prediction Evaluation}
     \label{par:cpu-prediction-evaluation-task-knowledge}

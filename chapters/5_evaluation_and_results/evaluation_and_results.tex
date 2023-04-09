@@ -261,7 +261,7 @@
 
           \begin{tabular}{|l|rr|}
             \toprule
-            {} &  User Predicted CPU &  Actual CPU Usage \\
+            {} &  User Predicted CPU &  Actual CPU \\
             \midrule
             mean       &         632.81 &     516.07 \\
             std        &         496.24 &     881.83 \\
@@ -311,7 +311,7 @@
         \label{tab:user-predicted-memory-comparison}
         \begin{tabular}{|l|rr|}
           \toprule
-          {} &  User Predicted Memory &  Actual Memory Usage \\
+          {} &  User Predicted Memory &  Actual Memory \\
           \midrule
           mean       &          26.89 &    17.20 \\
           std        &          15.26 &    74.76 \\
@@ -352,6 +352,8 @@
 
     \begin{table}
       \centering
+      \caption{Comparison of Simple LSTM and User Predicted CPU}
+      \label{tab:comparison-simple-lstm-user-predicted-cpu}
       \begin{tabular}{|l|rrr|}
         \toprule
         {} &  Actual CPU &  LSTM Predicted CPU &  User Predicted CPU \\
@@ -369,14 +371,16 @@
 
     \begin{table}
       \centering
+      \caption{Regression Metrics - Simple LSTM and User Predicted CPU}
+      \label{tab:regression-metrics-simple-lstm-user-predicted-cpu}
       \begin{tabular}{|l|rrrrr|}
         \toprule
         {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
         \midrule
-        Simple LSTM &  701.099 &  868.561 &  92.649 &  57.34 &  42.66 \\
-        User CPU &  597.431 &  944.986 &  99.682 &  78.60 \% &  21.40 \% \\
+        Simple LSTM CPU &  797.289 &  206.062 &  85.626 &  41.94 &  58.06 \\
+        User Predicted CPU &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
         \bottomrule
-        \end{tabular}
+      \end{tabular}
     \end{table}
 
     \subsubsection{Memory Prediction Analysis}
@@ -384,31 +388,37 @@
 
     \begin{table}
       \centering
-      \begin{tabular}{|l|rr|}
+      \caption{Comparison of Simple LSTM and User Predicted Memory}
+      \label{tab:comparison-simple-lstm-user-predicted-memory}
+
+      \begin{tabular}{|l|rrr|}
         \toprule
-        {} &  Predicted Max. Memory &  Actual Memory Usage \\
+        {} &  Actual Memory &  Predicted Memory &  Allocated Memory \\
         \midrule
-        mean       &          26.89 &             17.20 \\
-        std        &          15.26 &             74.76 \\
-        min        &           2.00 &              0.00 \\
-        25\%        &          14.65 &              2.16 \\
-        50\%        &          29.30 &              7.70 \\
-        75\%        &          29.30 &             15.98 \\
-        max        &         146.48 &           1992.48 \\
+        mean &            17.203 &               29.904 &         26.895 \\
+        std  &            74.761 &               39.634 &         15.259 \\
+        min  &             0.003 &                1.951 &          2.000 \\
+        25\%  &             2.160 &               22.178 &         14.648 \\
+        50\%  &             7.699 &               24.620 &         29.297 \\
+        75\%  &            15.976 &               24.620 &         29.297 \\
+        max  &          1992.484 &              550.056 &        146.484 \\
         \bottomrule
-      \end{tabular}
+        \end{tabular}
     \end{table}
 
     \begin{table}
       \centering
+      \caption{Regression Metrics - Simple LSTM and User Predicted Memory}
+      \label{tab:regression-metrics-simple-lstm-user-predicted-memory}
+
       \begin{tabular}{|l|rrrrr|}
         \toprule
-        {} &    RMSE &     MAPE &   SMAPE &     OA &     UA \\
+        {} &    RMSE &      MAPE &    SMAPE &    OA &    UA \\
         \midrule
-        Simple LSTM &  14.725 &  128.113 &  87.045 &  36.28 &  63.72 \\
-        User Memory &  18.654 &  545.366 &  90.441 &  75.46 &  24.54 \\
+        Simple LSTM MEM &  77.902 &  7711.391 &  109.870 &  77.8 &  22.2 \\
+        User Predicted  &  73.853 &  3672.256 &   97.613 &  80.8 &  19.2 \\
         \bottomrule
-        \end{tabular}
+      \end{tabular}
     \end{table}
 
   \subsection*{2. Adding Task Knowledge}
@@ -423,67 +433,76 @@
     \subsubsection{CPU Prediction Analysis}
     \label{sec:cpu-prediction-analysis-task-knowledge-lstm-evaluation}
 
-    \begin{figure}
+    \begin{table}
       \centering
-      \begin{tabular}{|l|rr|}
+      \caption{Comparison of Task LSTM and User Predicted CPU}
+      \label{tab:comparison-task-lstm-user-predicted-cpu}
+      \begin{tabular}{|l|rrr|}
         \toprule
-        {} &  Predicted CPU Usage &  Actual CPU Usage \\
+        {} &  Actual CPU &  Predicted CPU &  User CPU \\
         \midrule
-        mean       &               273.94 &            364.39 \\
-        std        &               463.12 &            559.70 \\
-        min        &                 3.86 &              0.00 \\
-        25\%        &                74.80 &             89.34 \\
-        50\%        &               219.60 &            165.37 \\
-        75\%        &               253.62 &            455.05 \\
-        max        &              4999.80 &           7133.87 \\
-        percentage &               100.00 &            100.00 \\
+        mean &           516.073 &              454.205 &        632.809 \\
+        std  &           881.832 &              579.213 &        496.245 \\
+        min  &             1.023 &                2.395 &          5.000 \\
+        25\%  &           103.632 &              129.884 &        400.000 \\
+        50\%  &           208.749 &              249.392 &        600.000 \\
+        75\%  &           528.076 &              662.490 &        600.000 \\
+        max  &          7790.372 &             5634.635 &       6400.000 \\
         \bottomrule
       \end{tabular}
-    \end{figure}
+    \end{table}
 
-    \begin{figure}
+    \begin{table}
       \centering
+      \caption{Regression Metrics - Task LSTM and User Predicted CPU}
+      \label{tab:regression-metrics-task-lstm-user-predicted-cpu}
       \begin{tabular}{|l|rrrrr|}
         \toprule
         {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
         \midrule
-        metrics &  648.602 &  399.351 &  88.734 &  42.68 &  57.32 \\
+        LSTM Metrics   &  688.089 &  212.796 &  83.017 &  48.14 &  51.86 \\
+        User Predicted &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
         \bottomrule
       \end{tabular}
-    \end{figure}
+    \end{table}
 
     \subsubsection{Memory Prediction Analysis}
     \label{sec:mem-prediction-analysis-task-knowledge-lstm-evaluation}
 
-      \begin{figure}
+      \begin{table}
         \centering
+        \caption{Comparison of Task LSTM and User Predicted Memory}
+        \label{tab:comparison-task-lstm-user-predicted-memory}
 
-        \begin{tabular}{|l|rr|}
+        \begin{tabular}{|l|rrr|}
           \toprule
-          {} &  Predicted Memory Usage &  Actual Memory Usage \\
+          {} &  actual mem usage &  predicted mem usage &  allocated mem \\
           \midrule
-          mean       &                 3.78 &              8.84 \\
-          std        &                 4.20 &             10.55 \\
-          min        &                 0.14 &              0.02 \\
-          25\%        &                 0.74 &              3.01 \\
-          50\%        &                 2.02 &              4.68 \\
-          75\%        &                 8.54 &             11.85 \\
-          max        &                85.90 &            251.58 \\
+          mean &            17.203 &               29.134 &         26.895 \\
+          std  &            74.761 &               63.342 &         15.259 \\
+          min  &             0.003 &                0.156 &          2.000 \\
+          25\%  &             2.160 &                4.537 &         14.648 \\
+          50\%  &             7.699 &               14.679 &         29.297 \\
+          75\%  &            15.976 &               27.924 &         29.297 \\
+          max  &          1992.484 &              698.983 &        146.484 \\
           \bottomrule
-        \end{tabular}
-      \end{figure}
+          \end{tabular}
+      \end{table}
       
-      \begin{figure}
+      \begin{table}
         \centering
+        \caption{Regression Metrics - Task LSTM and User Predicted Memory}
+        \label{tab:regression-metrics-task-lstm-user-predicted-memory}
         
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &    RMSE &    MAPE &    SMAPE &     OA &     UA \\
+          {} &    RMSE &       MAPE &    SMAPE &     OA &     UA \\
           \midrule
-          metrics &  11.993 &  198.76 &  118.231 &  23.62 &  76.38 \\
+          LSTM Metrics   &  61.897 &  32287.182 &  119.715 &  56.66 &  43.34 \\
+          User Predicted &  73.853 &   3672.256 &   97.613 &  80.80 &  19.20 \\
           \bottomrule
-        \end{tabular}
-      \end{figure}
+          \end{tabular}
+      \end{table}
 
     \paragraph{CPU Prediction Evaluation}
     \label{par:cpu-prediction-evaluation-task-knowledge}
@@ -514,9 +533,78 @@
     \subsubsection{CPU Prediction Analysis}
     \label{sec:cpu-prediction-analysis-instance-knowledge-lstm-evaluation}
 
+      \begin{table}
+        \centering
+        \caption{Comparison of Instance LSTM and User Predicted CPU}
+        \label{tab:comparison-instance-lstm-user-predicted-cpu}
+
+        \begin{tabular}{|l|rrr|}
+          \toprule
+          {} &  actual cpu usage &  predicted cpu usage &  allocated cpu \\
+          \midrule
+          mean &           516.073 &              571.784 &        632.809 \\
+          std  &           881.832 &              690.524 &        496.245 \\
+          min  &             1.023 &                4.240 &          5.000 \\
+          25\%  &           103.632 &              215.433 &        400.000 \\
+          50\%  &           208.749 &              434.128 &        600.000 \\
+          75\%  &           528.076 &              821.406 &        600.000 \\
+          max  &          7790.372 &             6954.110 &       6400.000 \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+      
+      \begin{table}
+        \centering
+        \caption{Regression Metrics - Instance LSTM and User Predicted CPU}
+        \label{tab:regression-metrics-instance-lstm-user-predicted-cpu}
+
+        \begin{tabular}{|l|rrrrr|}
+          \toprule
+          {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
+          \midrule
+          LSTM Metrics   &  614.645 &  294.449 &  87.975 &  57.04 &  42.96 \\
+          User Predicted &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+
     \subsubsection{Memory Prediction Analysis}
     \label{sec:mem-prediction-analysis-instance-knowledge-lstm-evaluation}
 
+      \begin{table}
+        \centering
+        \caption{Comparison of Instance LSTM and User Predicted Memory}
+        \label{tab:comparison-instance-lstm-user-predicted-memory}
+
+        \begin{tabular}{|l|rrr|}
+          \toprule
+          {} &  actual mem usage &  predicted mem usage &  allocated mem \\
+          \midrule
+          mean &            17.203 &               43.098 &         26.895 \\
+          std  &            74.761 &               56.496 &         15.259 \\
+          min  &             0.003 &                0.055 &          2.000 \\
+          25\%  &             2.160 &               22.294 &         14.648 \\
+          50\%  &             7.699 &               27.067 &         29.297 \\
+          75\%  &            15.976 &               62.938 &         29.297 \\
+          max  &          1992.484 &             1208.922 &        146.484 \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+      
+      \begin{table}
+        \centering
+        \caption{Regression Metrics - Instance LSTM and User Predicted Memory}
+        \label{tab:regression-metrics-instance-lstm-user-predicted-memory}
+
+        \begin{tabular}{|l|rrrrr|}
+          \toprule
+          {} &    RMSE &       MAPE &    SMAPE &    OA &    UA \\
+          \midrule
+          LSTM Metrics   &  60.415 &  16855.899 &  131.774 &  69.9 &  30.1 \\
+          User Predicted &  73.853 &   3672.256 &   97.613 &  80.8 &  19.2 \\
+          \bottomrule
+          \end{tabular}
+      \end{table}
   \subsection*{4. Training with Penalty Mean Squared Error Function}
   \label{sec:training-with-custom-loss-function-evaluation-scenarios}
 
@@ -530,8 +618,78 @@
     \subsubsection{CPU Prediction Analysis}
     \label{sec:cpu-prediction-analysis-pmse-lstm-evaluation}
 
+      \begin{table}
+        \centering
+        \caption{Comparison of PMSE LSTM and User Predicted CPU}
+        \label{tab:comparison-pmse-lstm-user-predicted-cpu}
+
+        \begin{tabular}{|l|rrr|}
+          \toprule
+          {} &  actual cpu usage &  predicted cpu usage &  allocated cpu \\
+          \midrule
+          mean &           516.073 &              595.122 &        632.809 \\
+          std  &           881.832 &              550.389 &        496.245 \\
+          min  &             1.023 &                4.481 &          5.000 \\
+          25\%  &           103.632 &              248.302 &        400.000 \\
+          50\%  &           208.749 &              571.664 &        600.000 \\
+          75\%  &           528.076 &              808.049 &        600.000 \\
+          max  &          7790.372 &             5776.425 &       6400.000 \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+      
+      \begin{table}
+        \centering
+        \caption{Regression Metrics - PMSE LSTM and User Predicted CPU}
+        \label{tab:regression-metrics-pmse-lstm-user-predicted-cpu}
+
+        \begin{tabular}{|l|rrrrr|}
+          \toprule
+          {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
+          \midrule
+          LSTM Metrics   &  637.124 &  275.275 &  82.988 &  70.16 &  29.84 \\
+          User Predicted &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+
     \subsubsection{Memory Prediction Analysis}
     \label{sec:mem-prediction-analysis-psme-lstm-evaluation}
+
+      \begin{table}
+        \centering
+        \caption{Comparison of PMSE LSTM and User Predicted Memory}
+        \label{tab:comparison-pmse-lstm-user-predicted-memory}
+
+        \begin{tabular}{|l|rrr|}
+          \toprule
+          {} &  actual mem usage &  predicted mem usage &  allocated mem \\
+          \midrule
+          mean &            17.203 &               65.128 &         26.895 \\
+          std  &            74.761 &               64.252 &         15.259 \\
+          min  &             0.003 &                1.639 &          2.000 \\
+          25\%  &             2.160 &               19.961 &         14.648 \\
+          50\%  &             7.699 &               60.018 &         29.297 \\
+          75\%  &            15.976 &               85.906 &         29.297 \\
+          max  &          1992.484 &             1251.511 &        146.484 \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+      
+      \begin{table}
+        \centering
+        \caption{Regression Metrics - PMSE LSTM and User Predicted Memory}
+        \label{tab:regression-metrics-pmse-lstm-user-predicted-memory}
+
+        \begin{tabular}{|l|rrrrr|}
+          \toprule
+          {} &    RMSE &       MAPE &    SMAPE &     OA &     UA \\
+          \midrule
+          LSTM Metrics   &  77.541 &  27603.612 &  133.192 &  87.38 &  12.62 \\
+          User Predicted &  73.853 &   3672.256 &   97.613 &  80.80 &  19.20 \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
 
   \subsection*{5. Training Time}
   \label{sec:training-time-evaluation-scenarios}

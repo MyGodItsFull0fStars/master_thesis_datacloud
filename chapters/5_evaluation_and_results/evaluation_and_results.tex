@@ -251,7 +251,7 @@
         As can be seen in the $mean$ row, the user-predicted CPU utilisation is approximately $116$ \% or $1$ CPU core over-allocated. 
         Also, the first quartile in the user-predicted column already allocates four CPU cores while the required amount is close to one CPU core, which results in a CPU resource wastage of three CPU cores.
         In the second and third quartiles, the user-predicted allocation was 600 \% in both cases, yet in the second quartile, the required amount is about $2.88$ times less than allocated.
-        In the third quartile, about half a CPU cores was allocated but idle.
+        In the third quartile, about half a CPU core was allocated but idle.
         As stated in \cite{thonglekImprovingResourceUtilization2019}, users over-estimate the actual requirements of their tasks in most cases.
         Additionally, while the general trend is to over-estimate the required amount of CPU cores, the estimation of the maximum value in the actual CPU dataset with the utilisation of $7790.37 \%$ or 78 CPU cores could not be predicted successfully, where the maximum in the user-predicted dataset only reached a value of $6400\%$, or 64 CPU cores.
         \begin{table}
@@ -298,12 +298,12 @@
       The memory values are shown in gigabytes (GB), similar to section \ref{sec:memory-data-analysis}.
       The \emph{mean} in the user-predicted column shows that the required memory was overestimated by a factor of $1.56$ or $9.69$ GB.
       The standard deviation (std) of the \emph{mean} was lower in the user-predicted dataset by approximately $60$ GB.
-      This difference can be seen as users are more likely to predict similar values for their tasks, as can be seen in the dataset with very similar user predicted values, which result in a lower standard deviation.
-      At the minimum amount, users predicted to require at least $2$ GB of memory, while the actual minimum was $0$ MB. While it is necessary to provide an actual value to the GPU cluster, the user provided prediction still heavily overestimated the actual utilisation.
+      This difference can be seen as users are more likely to predict similar values for their tasks, as can be seen in the dataset with very similar user-predicted values, which result in a lower standard deviation.
+      At the minimum amount, users predicted to require at least $2$ GB of memory, while the actual minimum was $0$ MB. While it is necessary to provide an actual value to the GPU cluster, the user-provided prediction still heavily overestimated the actual utilisation.
       In the quartiles, the trend to over-estimate the memory requirements continues whereas, in the first quartile, the factor of over-estimation is $6.78$ or $12.5$ GB.
       The amount of memory allocation is identical in both the second and third quartiles with $29.3$ GB.
       The factor of over-estimation for the second quartile is $3.8$ or $21.6$ GB and in the third quartile, the factor is $1.81$ or $13.3$ GB.
-      Similar to the CPU utilisation, the memory utilisation predicted by the user is less than half as much as is actually required for the maximum value. In the dataset of actual memory utilisation, the maximum requires approximately $1992$ GB, yet the user predicted a memory utilisation of $146.48$ GB, which is $13.6$ times less than was required.
+      Similar to the CPU utilisation, the memory utilisation predicted by the user is less than half as much as is required for the maximum value. In the dataset of actual memory utilisation, the maximum requires approximately $1992$ GB, yet the user predicted a memory utilisation of $146.48$ GB, which is $13.6$ times less than was required.
 
       \begin{table}
         \centering
@@ -340,48 +340,56 @@
           \end{tabular}
       \end{table}
 
-  \subsection*{1. Simple Feature Set}
-  \label{sec:simple-feature-set-evaluation-scenarios}
+  \subsection*{1. Simple LSTM Model}
+  \label{sec:simple-lstm-model-evaluation-scenarios}
     
-    The simple feature set denotes a \nameref{sec:lstm-background} model that was trained with a feature set that only contains the allocated CPU and memory a user provided for the submitted task as well as the capacity of the worker pool resource the task should be deployed to. Additionally, since LSTMs are designed to handle sequential data, the order of the incoming tasks is also a piece of important information for the model, and thus cannot be randomized as is common for other machine learning algorithms.
+    The simple LSTM model denotes a \nameref{sec:lstm-background} model that was trained with a feature set that only contains the allocated CPU and memory a user provided for the submitted task as well as the capacity of the worker pool resource the task should be deployed to. Additionally, since LSTMs are designed to handle sequential data, the order of the incoming tasks is also a piece of important information for the model, and thus cannot be randomized as is common for other machine learning algorithms.
+    
 
 
     \subsubsection{CPU Prediction Analysis}
     \label{sec:cpu-prediction-analysis-simple-lstm-evaluation}
 
+      In this section, the CPU prediction of the simple LSTM model and the user-provided prediction are compared in tables \ref{tab:comparison-simple-lstm-user-predicted-cpu} and \ref{tab:regression-metrics-simple-lstm-user-predicted-cpu}.
+      The \emph{mean} of the predictions the LSTM model provided is lower by approximately one and the user prediction is higher by one CPU core than the actual \emph{mean} of $5.16$ CPU cores.
+      In regards to the \emph{standard deviation}, the LSTM prediction with $705.771$ is closer to the actual value of $881.832$ than the value of the user prediction with $496.245$. This indicates that the LSTM model is able to better predict changes in task utilisation than users that provide the tasks. 
+      The \emph{minimum} of the LSTM model with $3.03$ is also closer to the actual value with $1.023$ than the user-predicted minimum value of $5$.
+      Similarly, the first and second quartile in the LSTM prediction dataset is closer to the actual data values, yet the LSTM model is likely to predict values that are lower than the actual value. As already signalled by a lower \emph{mean} value, the second and third quartiles of the LSTM predictions both are lower than the similar quartiles of the actual dataset. In the third quartile, the user predictions of the CPU utilisation outperform the LSTM model, since these predictions only overestimate the CPU utilisation by $72\%$ of a CPU core, while the LSTM model underestimates the utilisation by approximately $2.5$ CPU cores.
+      This trend continues in the predicted maximum value. The LSTM model value is even lower than the value provided by the user, and therefore even smaller than the actual value.
+      A reason for the underestimation of values might be that the actual dataset consists of a large amount of \emph{low} utilisation values, as indicated by the second quartile. Since this LSTM model version is only provided with the user prediction of the tasks, the GPU worker pool capacity, and the actual CPU utilisation (after training in the loss function), it is likely that based on the limited information, the model learned to predict lower CPU utilisation values, since most of the actual data points are lower than the \emph{mean}. 
+      \begin{table}
+        \centering
+        \caption{Comparison of Simple LSTM and User Predicted CPU}
+        \label{tab:comparison-simple-lstm-user-predicted-cpu}
+        \begin{tabular}{|l|rrr|}
+          \toprule
+          {} &  Actual CPU &  LSTM Predicted CPU &  User Predicted CPU \\
+          \midrule
+          mean  &           516.073 &              392.630 &        632.809 \\
+          std   &           881.832 &              705.771 &        496.245 \\
+          min   &             1.023 &                3.030 &          5.000 \\
+          25\%   &           103.632 &               97.586 &        400.000 \\
+          50\%   &           208.749 &              118.014 &        600.000 \\
+          75\%   &           528.076 &              281.472 &        600.000 \\
+          max   &          7790.372 &             5793.996 &       6400.000 \\
+          \bottomrule
+          \end{tabular}
+      \end{table}
+      In table \ref{tab:regression-metrics-simple-lstm-user-predicted-cpu} the predictions of the LSTM model and the users are compared with commonly used regression metrics. A lower value denotes a better result by being closer to the actual values. The LSTM model did perform better in all three used regression metrics. Also, as indicated by a lower \emph{mean} value, the LSTM model is more likely to predict values lower than the actual value, which results in under-utilisation.
 
-    \begin{table}
-      \centering
-      \caption{Comparison of Simple LSTM and User Predicted CPU}
-      \label{tab:comparison-simple-lstm-user-predicted-cpu}
-      \begin{tabular}{|l|rrr|}
-        \toprule
-        {} &  Actual CPU &  LSTM Predicted CPU &  User Predicted CPU \\
-        \midrule
-        mean  &           516.073 &              392.630 &        632.809 \\
-        std   &           881.832 &              705.771 &        496.245 \\
-        min   &             1.023 &                3.030 &          5.000 \\
-        25\%   &           103.632 &               97.586 &        400.000 \\
-        50\%   &           208.749 &              118.014 &        600.000 \\
-        75\%   &           528.076 &              281.472 &        600.000 \\
-        max   &          7790.372 &             5793.996 &       6400.000 \\
-        \bottomrule
+      \begin{table}
+        \centering
+        \caption{Regression Metrics - Simple LSTM and User Predicted CPU}
+        \label{tab:regression-metrics-simple-lstm-user-predicted-cpu}
+        \begin{tabular}{|l|rrrrr|}
+          \toprule
+          {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
+          \midrule
+          Simple LSTM CPU &  797.289 &  206.062 &  85.626 &  41.94 &  58.06 \\
+          User Predicted CPU &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
+          \bottomrule
         \end{tabular}
-    \end{table}
-
-    \begin{table}
-      \centering
-      \caption{Regression Metrics - Simple LSTM and User Predicted CPU}
-      \label{tab:regression-metrics-simple-lstm-user-predicted-cpu}
-      \begin{tabular}{|l|rrrrr|}
-        \toprule
-        {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
-        \midrule
-        Simple LSTM CPU &  797.289 &  206.062 &  85.626 &  41.94 &  58.06 \\
-        User Predicted CPU &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
-        \bottomrule
-      \end{tabular}
-    \end{table}
+      \end{table}
 
     \subsubsection{Memory Prediction Analysis}
     \label{sec:mem-prediction-analysis-simple-lstm-evaluation}
@@ -424,7 +432,7 @@
   \subsection*{2. Adding Task Knowledge}
   \label{sec:adding-task-knowledge-evaluation-scenarios}
 
-    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:simple-feature-set-evaluation-scenarios} also \emph{task knowledge}. This task knowledge refers to the type a task is classified as. The task knowledge was first extracted from the data set and transformed with the \nameref{sec:one-hot-encoding-preprocessing-architecture} method. 
+    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:simple-lstm-model-evaluation-scenarios} also \emph{task knowledge}. This task knowledge refers to the type a task is classified as. The task knowledge was first extracted from the data set and transformed with the \nameref{sec:one-hot-encoding-preprocessing-architecture} method. 
     The tasks are mapped to a finite set of a one-hot encoded feature vector and their corresponding index is represented as the value $1$.
     The additional information about the task type enables the LSTM model to better discern the actual utilisation that is required for each task.
     The task knowledge also provides information regarding the order of tasks, since patterns of reoccurring tasks also help the model to generate more accurate predictions in theory.

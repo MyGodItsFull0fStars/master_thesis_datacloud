@@ -161,7 +161,7 @@
       Because of the scale sensitivity of RMSE, the number of actual and predicted values is equivalent for all our evaluation scenarios in order to be able to use RMSE for a comparison between different approaches.
       Overall, RMSE is a widely used and useful metric for evaluating the accuracy of forecasting models and can provide valuable information for understanding the magnitude of the errors in the predictions.
 
-      
+
     \subsubsection{Mean Absolute Percentage Error (MAPE)}
     \label{sec:mape-metrics-evaluation}
 
@@ -178,7 +178,7 @@
       Despite these limitations, MAPE is a widely used metric for evaluating forecasting models, especially if it is important to understand the relative magnitude of the errors in the predictions. 
       Overall, MAPE provides a useful way to measure the accuracy of forecasting models and can help to identify areas for improvement in the model or the data.
       One drawback of using MAPE is its asymmetric nature, which results in it being biased towards higher values.
-      This is the reason the variant \nameref{sec:smape-metrics-evaluation} is also used for comparing the predictions.
+      This drawback is the reason the variant \nameref{sec:smape-metrics-evaluation} is also used for comparing the predictions.
 
 
     \subsubsection{Symmetric Mean Absolute Percentage Error (sMAPE)}
@@ -194,6 +194,11 @@
       where $n$ denotes the number of data points and $Actual$ and $Predicted$ are the actual and predicted values, respectively.
       sMAPE provides a percentage error similar to \nameref{sec:mape-metrics-evaluation}, which makes it easy to interpret and compare the accuracy of forecasting models. Unlike MAPE, sMAPE is symmetrical, since it doesn't become undefined when the actual value is zero, and another difference is that it is less sensitive to outliers.
       Overall, sMAPE is a useful metric for evaluating the accuracy of forecasting models and can provide valuable information for understanding the relative magnitude of the errors in the predictions.
+      While sMAPE addresses the asymmetric nature and drawback of MAPE, it simultaneously creates another asymmetric value.
+      The cause of this is the denominator while overestimating and underestimating.
+      If the predictor underestimates, the sMAPE metric will be higher compared to overestimation, because the variable $Predicted$ raises the difference in both cases.
+      
+      Therefore, both the MAPE and the sMAPE metrics are used in the \nameref{ch:evaluation-and-results} chapter to compare the different prediction variants.
 
 
     % Mean Absolute Error (MAE): measures the average magnitude of the error between the predicted values and the actual values.
@@ -474,8 +479,12 @@
           \bottomrule
           \end{tabular}
       \end{table}
+      
+      In table \ref{tab:regression-metrics-task-lstm-user-predicted-cpu}, the two introduced LSTM variants are compared as well as the user-predicted values for CPU.
+      The Task LSTM did perform better than the Simple LSTM and user predictions regarding the RMSE metric, yet only performed better than the user-predicted values regarding the MAPE metric and worse by approximately $6.8$ than the Simple LSTM, which is similar to an error increase of 7\%. An explanation for the worse performance is the distribution of over-, and underestimated values in the datasets. As discussed in section \ref{sec:mape-metrics-evaluation}, the MAPE metric is biased towards higher values, therefore, overestimated values result in a higher overall loss.
+      The Task LSTM did perform better than both the Simple LSTM and the user predictions regarding the sMAPE metric.
+      Also the distribution of over-, and underestimated values is close to equal for the Task LSTM predictions.
 
- 
 
       \begin{table}
         \centering
@@ -483,7 +492,7 @@
         \label{tab:regression-metrics-task-lstm-user-predicted-cpu}
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
+          {} &     RMSE &     MAPE &   sMAPE &     OA &     UA \\
           \midrule
           Task LSTM   &  688.089 &  212.796 &  83.017 &  48.14 &  51.86 \\
           Simple LSTM &  797.289 &  206.062 &  85.626 &  41.94 &  58.06 \\
@@ -518,6 +527,8 @@
           \bottomrule
           \end{tabular}
       \end{table}
+
+      % Compare and relate high mean to high MAPE value
       
       \begin{table}
         \centering
@@ -532,7 +543,7 @@
           Simple LSTM &  77.902 &  7711.391 &  109.870 &  77.8 &  22.2 \\
           User Predicted &  73.853 &   3672.256 &   97.613 &  80.80 &  19.20 \\
           \bottomrule
-          \end{tabular}
+        \end{tabular}
       \end{table}
 
 
@@ -594,7 +605,7 @@
           \toprule
           {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
           \midrule
-          LSTM Metrics   &  614.645 &  294.449 &  87.975 &  57.04 &  42.96 \\
+          Instance LSTM   &  614.645 &  294.449 &  87.975 &  57.04 &  42.96 \\
           User Predicted &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
           \bottomrule
         \end{tabular}
@@ -632,7 +643,7 @@
           \toprule
           {} &    RMSE &       MAPE &    SMAPE &    OA &    UA \\
           \midrule
-          LSTM Metrics   &  60.415 &  16855.899 &  131.774 &  69.9 &  30.1 \\
+          Instance LSTM   &  60.415 &  16855.899 &  131.774 &  69.9 &  30.1 \\
           User Predicted &  73.853 &   3672.256 &   97.613 &  80.8 &  19.2 \\
           \bottomrule
           \end{tabular}

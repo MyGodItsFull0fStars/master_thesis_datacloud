@@ -146,6 +146,22 @@
     The choice of forecasting metric will depend on the specific goals and requirements of the forecasting task. Some metrics may be more appropriate for certain types of data or models, while others may be better suited for comparing different models.
     Overall, the use of appropriate forecasting metrics is critical for evaluating the accuracy of forecasting models and for identifying areas for improvement.
 
+    \subsubsection{Root Mean Square Error (RMSE)}
+    \label{sec:rmse-metrics-evaluation}
+
+      Root Mean Square Error (RMSE) \cite{chaiRootMeanSquare2014} is a metric used for evaluating the accuracy of forecasting models. It measures the average magnitude of the error between the predicted values and the actual values and provides a useful way to compare the magnitude of the errors in different models.
+      The formula for RMSE is:
+      \begin{pabox}{Root Mean Square Error}
+        $$RMSE = \sqrt{\frac{\sum_{i = 1}^{N}\left(Predicted_i - Actual_i\right)^2}{N}}$$
+      \end{pabox}
+      where $n$ denotes the number of data points and $Actual$ and $Predicted$ are the actual and predicted values, respectively.
+      RMSE provides a measure of the magnitude of the errors in the predictions, with lower values indicating a more accurate model. 
+      RMSE is particularly useful when the goal is to minimize the magnitude of the errors in the predictions.
+      One important thing to note about RMSE is that it is sensitive to the scale of the data. This means that it is more appropriate to use RMSE when the scale of the actual and predicted values is similar.
+      Because of the scale sensitivity of RMSE, the number of actual and predicted values is equivalent for all our evaluation scenarios in order to be able to use RMSE for a comparison between different approaches.
+      Overall, RMSE is a widely used and useful metric for evaluating the accuracy of forecasting models and can provide valuable information for understanding the magnitude of the errors in the predictions.
+
+      
     \subsubsection{Mean Absolute Percentage Error (MAPE)}
     \label{sec:mape-metrics-evaluation}
 
@@ -161,6 +177,8 @@
       However, there are some limitations to using MAPE, such as the fact that it can become undefined when the actual value is zero (in our case if there is no resource utilisation at some time step $i$), and it can be sensitive to outliers.
       Despite these limitations, MAPE is a widely used metric for evaluating forecasting models, especially if it is important to understand the relative magnitude of the errors in the predictions. 
       Overall, MAPE provides a useful way to measure the accuracy of forecasting models and can help to identify areas for improvement in the model or the data.
+      One drawback of using MAPE is its asymmetric nature, which results in it being biased towards higher values.
+      This is the reason the variant \nameref{sec:smape-metrics-evaluation} is also used for comparing the predictions.
 
 
     \subsubsection{Symmetric Mean Absolute Percentage Error (sMAPE)}
@@ -180,33 +198,19 @@
 
     % Mean Absolute Error (MAE): measures the average magnitude of the error between the predicted values and the actual values.
 
-    \subsubsection{Mean Square Error (MSE)}
-    \label{sec:mse-metric-evaluation}
+    % \subsubsection{Mean Square Error (MSE)}
+    % \label{sec:mse-metric-evaluation}
 
-      Mean squared error (MSE) was used as the loss function for all trained models except for the model in evaluation scenario \ref{sec:training-with-custom-loss-function-evaluation-scenarios}.
-      As already stated in section \ref{sec:penalty-mse-loss-function-architecture-and-implementation}, the MSE measures the average of the squares of the errors compared to ground truths (the actual values), which is the average squared difference between the actual value $y$ and the estimated value $\hat{y}$.
+    %   Mean squared error (MSE) was used as the loss function for all trained models except for the model in evaluation scenario \ref{sec:training-with-custom-loss-function-evaluation-scenarios}.
+    %   As already stated in section \ref{sec:penalty-mse-loss-function-architecture-and-implementation}, the MSE measures the average of the squares of the errors compared to ground truths (the actual values), which is the average squared difference between the actual value $y$ and the estimated value $\hat{y}$.
 
-      \begin{pabox}{Mean Squared Error}
-      \label{def:mean-squared-error-evaluation}
-        $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
-      \end{pabox}
-      As this metric is also used in the training loop of each LSTM model and also is widely used, it is also included in the metrics of each evaluation scenario.
+    %   \begin{pabox}{Mean Squared Error}
+    %   \label{def:mean-squared-error-evaluation}
+    %     $$MSE = \frac{1}{N} \sum_{i = 1}^{N}\left(y_i - \hat{y}_i\right)^2$$
+    %   \end{pabox}
+    %   As this metric is also used in the training loop of each LSTM model and also is widely used, it is also included in the metrics of each evaluation scenario.
     
 
-    \subsubsection{Root Mean Square Error (RMSE)}
-    \label{sec:rmse-metrics-evaluation}
-
-      Root Mean Square Error (RMSE) \cite{chaiRootMeanSquare2014} is a metric used for evaluating the accuracy of forecasting models. It measures the average magnitude of the error between the predicted values and the actual values and provides a useful way to compare the magnitude of the errors in different models.
-      The formula for RMSE is:
-      \begin{pabox}{Root Mean Square Error}
-        $$RMSE = \sqrt{\frac{\sum_{i = 1}^{N}\left(Predicted_i - Actual_i\right)^2}{N}}$$
-      \end{pabox}
-      where $n$ denotes the number of data points and $Actual$ and $Predicted$ are the actual and predicted values, respectively.
-      RMSE provides a measure of the magnitude of the errors in the predictions, with lower values indicating a more accurate model. 
-      RMSE is particularly useful when the goal is to minimize the magnitude of the errors in the predictions.
-      One important thing to note about RMSE is that it is sensitive to the scale of the data. This means that it is more appropriate to use RMSE when the scale of the actual and predicted values is similar.
-      Because of the scale sensitivity of RMSE, the number of actual and predicted values is equivalent for all our evaluation scenarios in order to be able to use RMSE for a comparison between different approaches.
-      Overall, RMSE is a widely used and useful metric for evaluating the accuracy of forecasting models and can provide valuable information for understanding the magnitude of the errors in the predictions.
 
 % \subsubsection{Theil's U-Statistic}
 
@@ -363,7 +367,7 @@
         \label{tab:comparison-simple-lstm-user-predicted-cpu}
         \begin{tabular}{|l|rrr|}
           \toprule
-          {} &  Actual CPU &  LSTM Predicted CPU &  User Predicted CPU \\
+          {} &  Actual CPU &  Simple LSTM CPU &  User Predicted CPU \\
           \midrule
           mean  &           516.073 &              392.630 &        632.809 \\
           std   &           881.832 &              705.771 &        496.245 \\
@@ -404,7 +408,7 @@
 
         \begin{tabular}{|l|rrr|}
           \toprule
-          {} &  Actual Memory &  Predicted Memory &  Allocated Memory \\
+          {} &  Actual Memory &  Simple LSTM Memory &  User Predicted Memory \\
           \midrule
           mean &            17.203 &               29.904 &         26.895 \\
           std  &            74.761 &               39.634 &         15.259 \\
@@ -428,7 +432,7 @@
           \toprule
           {} &    RMSE &      MAPE &    SMAPE &    OA &    UA \\
           \midrule
-          Simple LSTM MEM &  77.902 &  7711.391 &  109.870 &  77.8 &  22.2 \\
+          Simple LSTM &  77.902 &  7711.391 &  109.870 &  77.8 &  22.2 \\
           User Predicted  &  73.853 &  3672.256 &   97.613 &  80.8 &  19.2 \\
           \bottomrule
         \end{tabular}
@@ -438,6 +442,7 @@
   \label{sec:adding-task-knowledge-evaluation-scenarios}
 
     In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:simple-lstm-model-evaluation-scenarios} also \emph{task knowledge}. This task knowledge refers to the type a task is classified as. The task knowledge was first extracted from the data set and transformed with the \nameref{sec:one-hot-encoding-preprocessing-architecture} method. 
+    The one-hot encoding method is useful in general if categorical data needs to be provided to machine learning models.
     The tasks are mapped to a finite set of a one-hot encoded feature vector and their corresponding index is represented as the value $1$.
     The additional information about the task type enables the LSTM model to better discern the actual utilisation that is required for each task.
     The task knowledge also provides information regarding the order of tasks, since patterns of reoccurring tasks also help the model to generate more accurate predictions in theory.
@@ -447,27 +452,30 @@
     \subsubsection{CPU Prediction Analysis}
     \label{sec:cpu-prediction-analysis-task-knowledge-lstm-evaluation}
 
-      In this section, the memory prediction of the Task LSTM model and the user-provided prediction are compared in tables \ref{tab:comparison-task-lstm-user-predicted-cpu} and \ref{tab:regression-metrics-task-lstm-user-predicted-cpu}.
-
-
+      In this section, the CPU prediction of the Task LSTM model and the user-provided prediction are compared in tables \ref{tab:comparison-task-lstm-user-predicted-cpu} and \ref{tab:regression-metrics-task-lstm-user-predicted-cpu}.
+      As can be seen in table \ref{tab:comparison-task-lstm-user-predicted-cpu}, the \emph{mean} of the LSTM model that additionally receives information about the task types is closer to the actual \emph{mean} and is the closest of the currently presented prediction methods. The \emph{standard deviation} of the Task LSTM is smaller than the value of the Simple LSTM but closer than the value of the user prediction. The predicted \emph{minimum} value with $2.395$ is closer to the actual value of approximately $1$ than both the Simple LSTM and user prediction.
+      Also, the three quartiles of the Task LSTM variant combined are the closest to the actual quartiles, which indicates that the model managed to learn the distribution of the dataset the best of the currently presented predictions.
+      The \emph{maximum} value of the Task LSTM prediction is the farthest from the actual value, which could be a result of the lower \emph{standard deviation} of this variant, and also that providing the task knowledge is not sufficient to predict utilisation spikes in the GPU cluster.
       \begin{table}
         \centering
-        \caption{Comparison of Task LSTM and User Predicted CPU}
+        \caption{Comparison of LSTM Variants and User Predicted CPU}
         \label{tab:comparison-task-lstm-user-predicted-cpu}
-        \begin{tabular}{|l|rrr|}
+        \begin{tabular}{|l|rrrr|}
           \toprule
-          {} &  Actual CPU &  Predicted CPU &  User CPU \\
+          {} &  Actual CPU &  Task LSTM CPU &  Simple LSTM CPU &  User CPU \\
           \midrule
-          mean &           516.073 &              454.205 &        632.809 \\
-          std  &           881.832 &              579.213 &        496.245 \\
-          min  &             1.023 &                2.395 &          5.000 \\
-          25\%  &           103.632 &              129.884 &        400.000 \\
-          50\%  &           208.749 &              249.392 &        600.000 \\
-          75\%  &           528.076 &              662.490 &        600.000 \\
-          max  &          7790.372 &             5634.635 &       6400.000 \\
+          mean &     516.073 &        454.205 &          392.630 &      632.809 \\
+          std  &     881.832 &        579.213 &          705.771 &      496.245 \\
+          min  &       1.023 &          2.395 &            3.030 &        5.000 \\
+          25\%  &     103.632 &        129.884 &           97.586 &      400.000 \\
+          50\%  &     208.749 &        249.392 &          118.014 &      600.000 \\
+          75\%  &     528.076 &        662.490 &          281.472 &      600.000 \\
+          max  &    7790.371 &       5634.635 &         5793.996 &     6400.000 \\
           \bottomrule
-        \end{tabular}
+          \end{tabular}
       \end{table}
+
+ 
 
       \begin{table}
         \centering
@@ -477,11 +485,14 @@
           \toprule
           {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
           \midrule
-          LSTM Metrics   &  688.089 &  212.796 &  83.017 &  48.14 &  51.86 \\
+          Task LSTM   &  688.089 &  212.796 &  83.017 &  48.14 &  51.86 \\
+          Simple LSTM &  797.289 &  206.062 &  85.626 &  41.94 &  58.06 \\
           User Predicted &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
           \bottomrule
         \end{tabular}
       \end{table}
+
+      Therefore, providing categorical data can positively influence the prediction performance of the machine learning model. This is also seen in the predictions of the Task LSTM model. The additional knowledge about what type of tasks are present in the pipeline enabled the ML model to create more accurate predictions of the CPU utilisation for each task.
 
     \subsubsection{Memory Prediction Analysis}
     \label{sec:mem-prediction-analysis-task-knowledge-lstm-evaluation}
@@ -490,20 +501,20 @@
 
       \begin{table}
         \centering
-        \caption{Comparison of Task LSTM and User Predicted Memory}
+        \caption{Comparison of LSTM Variants and User Predicted Memory}
         \label{tab:comparison-task-lstm-user-predicted-memory}
 
-        \begin{tabular}{|l|rrr|}
+        \begin{tabular}{|l|rrrr|}
           \toprule
-          {} &  actual mem usage &  predicted mem usage &  allocated mem \\
+          {} &  Actual MEM &  Task LSTM MEM &  Simple LSTM MEM &  User MEM \\
           \midrule
-          mean &            17.203 &               29.134 &         26.895 \\
-          std  &            74.761 &               63.342 &         15.259 \\
-          min  &             0.003 &                0.156 &          2.000 \\
-          25\%  &             2.160 &                4.537 &         14.648 \\
-          50\%  &             7.699 &               14.679 &         29.297 \\
-          75\%  &            15.976 &               27.924 &         29.297 \\
-          max  &          1992.484 &              698.983 &        146.484 \\
+          mean &         17.203 &            29.134 &              29.904 &       26.895 \\
+          std  &         74.761 &            63.342 &              39.634 &       15.259 \\
+          min  &          0.003 &             0.156 &               1.951 &        2.000 \\
+          25\%  &          2.160 &             4.537 &              22.178 &       14.648 \\
+          50\%  &          7.699 &            14.679 &              24.620 &       29.297 \\
+          75\%  &         15.976 &            27.924 &              24.620 &       29.297 \\
+          max  &       1992.484 &           698.983 &             550.056 &      146.484 \\
           \bottomrule
           \end{tabular}
       \end{table}
@@ -517,30 +528,32 @@
           \toprule
           {} &    RMSE &       MAPE &    SMAPE &     OA &     UA \\
           \midrule
-          LSTM Metrics   &  61.897 &  32287.182 &  119.715 &  56.66 &  43.34 \\
+          Task LSTM   &  61.897 &  32287.182 &  119.715 &  56.66 &  43.34 \\
+          Simple LSTM &  77.902 &  7711.391 &  109.870 &  77.8 &  22.2 \\
           User Predicted &  73.853 &   3672.256 &   97.613 &  80.80 &  19.20 \\
           \bottomrule
           \end{tabular}
       \end{table}
 
-    \paragraph{CPU Prediction Evaluation}
-    \label{par:cpu-prediction-evaluation-task-knowledge}
 
-      Providing categorical data can positively influence the prediction performance of the machine learning model. This is also seen in the predictions of our LSTM model. The additional knowledge about what type of tasks are present in the pipeline enabled the ML model to create more accurate predictions of the CPU utilisation for each task.
+    % \paragraph{CPU Prediction Evaluation}
+    % \label{par:cpu-prediction-evaluation-task-knowledge}
 
-      As can be seen in the figure 
-      % \ref{fig:cpu-comparision-no-tasks-vs-tasks} 
-      the CPU utilization could be predicted more accurately if the model was trained with the additional information about which type of task will be allocated to the system.
-      Compared to the ML model trained without this additional knowledge (further on called NT-model, short for No-Tasks-model), the model trained with task knowledge can predict the required allocation on a finer granularity.
-      This is observed in the predictions as more changes in the prediction values occur compared to the NT-model, which often seems to predict an average value over a greater period rather than predicting the allocation for each task itself.
-      The WT-model is also more sensitive to great utilization spikes and periods of utilization close to zero compared to the NT-model.
+    %   
 
-    \paragraph{Memory Prediction Evaluation}
-    \label{par:memory-prediction-evaluation-task-knowledge}
+    %   As can be seen in the figure 
+    %   % \ref{fig:cpu-comparision-no-tasks-vs-tasks} 
+    %   the CPU utilization could be predicted more accurately if the model was trained with the additional information about which type of task will be allocated to the system.
+    %   Compared to the ML model trained without this additional knowledge (further on called NT-model, short for No-Tasks-model), the model trained with task knowledge can predict the required allocation on a finer granularity.
+    %   This is observed in the predictions as more changes in the prediction values occur compared to the NT-model, which often seems to predict an average value over a greater period rather than predicting the allocation for each task itself.
+    %   The WT-model is also more sensitive to great utilization spikes and periods of utilization close to zero compared to the NT-model.
 
-      Similar to the prediction of CPU utilization, memory utilization was improved if the ML model was trained with additional information about the task type. This enabled the model to achieve a more accurate prediction of the actual memory usage compared to the NT-model.
+    % \paragraph{Memory Prediction Evaluation}
+    % \label{par:memory-prediction-evaluation-task-knowledge}
 
-      This improvement is even more apparent compared to the allocated memory data, which heavily over-allocates the required amount of memory. Compared to the NT-model and allocated memory the WT-models predictions are able to reduce the gap between predicted memory utilization and actual memory utilization the furthest.
+    %   Similar to the prediction of CPU utilization, memory utilization was improved if the ML model was trained with additional information about the task type. This enabled the model to achieve a more accurate prediction of the actual memory usage compared to the NT-model.
+
+    %   This improvement is even more apparent compared to the allocated memory data, which heavily over-allocates the required amount of memory. Compared to the NT-model and allocated memory the WT-models predictions are able to reduce the gap between predicted memory utilization and actual memory utilization the furthest.
 
   \subsection*{3. Adding Instance Knowledge}
   \label{sec:adding-instance-knowledge-evaluation-scenarios}

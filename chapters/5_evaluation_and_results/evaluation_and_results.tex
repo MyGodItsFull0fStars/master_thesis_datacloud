@@ -245,7 +245,7 @@
 % what is common in the scenarios (or some of them)
     In evaluation scenarios 1-4, the forecast performance of different machine learning training scenarios is evaluated and compared with each other. Each of them builds on top of the previous evaluation scenario to compare the improvement.
 
-  \subsection*{0. User-Defined Hardware Utilisation}
+  \subsection{User-Defined Hardware Utilisation}
   \label{sec:user-defined-hardware-utilisation}
 
       This evaluation scenario analysis the user-defined hardware utilisation. 
@@ -349,7 +349,7 @@
           \end{tabular}
       \end{table}
 
-  \subsection*{1. Simple LSTM Model}
+  \subsection{Simple LSTM Model}
   \label{sec:simple-lstm-model-evaluation-scenarios}
     
     The simple LSTM model denotes a \nameref{sec:lstm-background} model that was trained with a feature set that only contains the allocated CPU and memory a user provided for the submitted task as well as the capacity of the worker pool resource the task should be deployed to. Additionally, since LSTMs are designed to handle sequential data, the order of the incoming tasks is also a piece of important information for the model, and thus cannot be randomized as is common for other machine learning algorithms.
@@ -443,7 +443,7 @@
         \end{tabular}
       \end{table}
 
-  \subsection*{2. Adding Task Knowledge}
+  \subsection{Adding Task Knowledge}
   \label{sec:adding-task-knowledge-evaluation-scenarios}
 
     In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:simple-lstm-model-evaluation-scenarios} also \emph{task knowledge}. This task knowledge refers to the type a task is classified as. The task knowledge was first extracted from the data set and transformed with the \nameref{sec:one-hot-encoding-preprocessing-architecture} method. 
@@ -553,7 +553,7 @@
         \end{tabular}
       \end{table}
 
-  \subsection*{3. Adding Instance Knowledge}
+  \subsection{Adding Instance Knowledge}
   \label{sec:adding-instance-knowledge-evaluation-scenarios}
 
     In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:adding-task-knowledge-evaluation-scenarios} also information about the number of instances that are required to be deployed. While the knowledge about the number of instances is similarity one-hot encoded as is the task knowledge (see \ref{sec:adding-task-knowledge-evaluation-scenarios}), adding one feature vector column for every instance number would have resulted in exploding the feature data set with 800 additional columns since the minimum instance number is $1$ and the maximum is $800$.
@@ -562,6 +562,8 @@
 
     \subsubsection{CPU Prediction Analysis}
     \label{sec:cpu-prediction-analysis-instance-knowledge-lstm-evaluation}
+
+      In this section the CPU prediction of the Instance LSTM
 
       \begin{table}
         \centering
@@ -636,7 +638,7 @@
           \end{tabular}
       \end{table}
 
-  \subsection*{4. Training with Penalty Mean Squared Error Function}
+  \subsection{Training with Penalty Mean Squared Error Function}
   \label{sec:training-with-custom-loss-function-evaluation-scenarios}
 
       As discussed in the previous evaluation scenarios, 
@@ -722,14 +724,14 @@
         \end{tabular}
       \end{table}
 
-  \subsection*{5. Training Time}
+  \subsection{Training Time}
   \label{sec:training-time-evaluation-scenarios}
 
     The evaluation scenario regarding the training time measures the time that is required for the LSTM model to train for one epoch. The number of data points is fixed and the same for all evaluation scenarios and LSTM models, so ...
     % TODO explain that only the difference between the models is calculated
     % plus I take the average of the training time per epoch
 
-  \subsection*{6. Inference Time}
+  \subsection{Inference Time}
   \label{sec:inference-time-evaluation-scenarios}
 
     The evaluation scenario regarding the inference time measures the time that is required for the LSTM model to forward a prediction.
@@ -740,7 +742,7 @@
     Finally, the hardware the LSTM model resides on has a major influence on the time that is required to infer a prediction from input data. Deep learning nowadays heavily relies on the usage of modern GPUs that use so-called \emph{tensor cores} specifically build for machine learning tasks to accelerate both the training and the inference times.
 
 
-  \subsection*{7. Prediction Performance Depending on Batch Size}
+  \subsection{Prediction Performance Depending on Batch Size}
   \label{sec:prediction-performance-depending-on-batch-size-evaluation-scenarios}
 
 

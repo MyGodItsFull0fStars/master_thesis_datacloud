@@ -553,26 +553,6 @@
         \end{tabular}
       \end{table}
 
-
-    % \paragraph{CPU Prediction Evaluation}
-    % \label{par:cpu-prediction-evaluation-task-knowledge}
-
-    %   
-
-    %   As can be seen in the figure 
-    %   % \ref{fig:cpu-comparision-no-tasks-vs-tasks} 
-    %   the CPU utilization could be predicted more accurately if the model was trained with the additional information about which type of task will be allocated to the system.
-    %   Compared to the ML model trained without this additional knowledge (further on called NT-model, short for No-Tasks-model), the model trained with task knowledge can predict the required allocation on a finer granularity.
-    %   This is observed in the predictions as more changes in the prediction values occur compared to the NT-model, which often seems to predict an average value over a greater period rather than predicting the allocation for each task itself.
-    %   The WT-model is also more sensitive to great utilization spikes and periods of utilization close to zero compared to the NT-model.
-
-    % \paragraph{Memory Prediction Evaluation}
-    % \label{par:memory-prediction-evaluation-task-knowledge}
-
-    %   Similar to the prediction of CPU utilization, memory utilization was improved if the ML model was trained with additional information about the task type. This enabled the model to achieve a more accurate prediction of the actual memory usage compared to the NT-model.
-
-    %   This improvement is even more apparent compared to the allocated memory data, which heavily over-allocates the required amount of memory. Compared to the NT-model and allocated memory the WT-models predictions are able to reduce the gap between predicted memory utilization and actual memory utilization the furthest.
-
   \subsection*{3. Adding Instance Knowledge}
   \label{sec:adding-instance-knowledge-evaluation-scenarios}
 
@@ -772,43 +752,43 @@
 
   The batch size not only influences the required training time and how much sampling data at once the model weights are updated on. The used batch size even has an impact on the prediction performance of the LSTM model.
     
-  As can be seen in the figure 
-  % \ref{fig:comparison-of-500-1000-batch-size}, 
+  % As can be seen in the figure 
+  % % \ref{fig:comparison-of-500-1000-batch-size}, 
   
-  the batch size used while training the LSTM model has a significant impact on the overall prediction performance.
-  In the figure, the training batches have the sizes 500 (orange dashed line) and 1000 (blue dashed line) elements per batch, the actual CPU utilization is shown as the black line and the CPU cores (in \%) allocated by the user are shown in the green line. While the prediction with a batch size of 500 did overestimate the CPU utilization, it has some great prediction results in the largest utilization spike, where it did come closest to the actual CPU utilization and also corrected the CPU allocation in multiple instances to either correctly use less or more CPU cores for a task.
+  % the batch size used while training the LSTM model has a significant impact on the overall prediction performance.
+  % In the figure, the training batches have the sizes 500 (orange dashed line) and 1000 (blue dashed line) elements per batch, the actual CPU utilization is shown as the black line and the CPU cores (in \%) allocated by the user are shown in the green line. While the prediction with a batch size of 500 did overestimate the CPU utilization, it has some great prediction results in the largest utilization spike, where it did come closest to the actual CPU utilization and also corrected the CPU allocation in multiple instances to either correctly use less or more CPU cores for a task.
   
-  % The training was done on a dataset size of 4000 elements total, which is only a small fraction of the actual dataset size.
+  % % The training was done on a dataset size of 4000 elements total, which is only a small fraction of the actual dataset size.
   
   
-  % \begin{figure}[h!]
-  %     \centering
-  %      \includegraphics[width=\columnwidth]{figures/500_1000bs_comparison.png}
-  %     \caption{CPU Comparison of Batch Sizes 500 and 1000 - Part 1}
-  %     \label{fig:comparison-of-500-1000-batch-size}
-  % \end{figure}
+  % % \begin{figure}[h!]
+  % %     \centering
+  % %      \includegraphics[width=\columnwidth]{figures/500_1000bs_comparison.png}
+  % %     \caption{CPU Comparison of Batch Sizes 500 and 1000 - Part 1}
+  % %     \label{fig:comparison-of-500-1000-batch-size}
+  % % \end{figure}
 
 
-  In figure 
-  % \ref{fig:comparison-of-500-1000-batch-size-2},
-   it is shown that the model with a batch size of 1000 is more accurately predicting lower utilization values and its overall bias in the dataset is to predict lower utilization values.
-  The model trained with batch size 500 predicts a higher CPU utilization in general but also did correctly increase/decrease the CPU utilization if the actual utilization was high/low for a longer period.
+  % In figure 
+  % % \ref{fig:comparison-of-500-1000-batch-size-2},
+  %  it is shown that the model with a batch size of 1000 is more accurately predicting lower utilization values and its overall bias in the dataset is to predict lower utilization values.
+  % The model trained with batch size 500 predicts a higher CPU utilization in general but also did correctly increase/decrease the CPU utilization if the actual utilization was high/low for a longer period.
 
-  The opposite is observed for the model with a batch size of 1000. 
-  This model is more accurate in predicting short utilization spikes or declines compared to the model with a batch size of 500.
+  % The opposite is observed for the model with a batch size of 1000. 
+  % This model is more accurate in predicting short utilization spikes or declines compared to the model with a batch size of 500.
   
-  % \begin{figure}[h!]
-  %     \centering
-  %      \includegraphics[width=\columnwidth]{figures/500_1000bs_comparison2.png}
-  %     \caption{CPU Comparison of Batch Sizes 500 and 1000 - Part 2}
-  %     \label{fig:comparison-of-500-1000-batch-size-2}
-  % \end{figure}
+  % % \begin{figure}[h!]
+  % %     \centering
+  % %      \includegraphics[width=\columnwidth]{figures/500_1000bs_comparison2.png}
+  % %     \caption{CPU Comparison of Batch Sizes 500 and 1000 - Part 2}
+  % %     \label{fig:comparison-of-500-1000-batch-size-2}
+  % % \end{figure}
 
 
-  In figure 
-  % \ref{fig:comparison-of-500-1000-batch-size-mem}, 
-  the prediction of the memory utilization is shown.
-  Opposed to the CPU utilization prediction, the model trained with the smaller batch size is biased to predict lower values in general, and the model trained with a batch size of 1000 predicted higher utilization values. Also, it was able to produce accurate predictions of the memory utilization of tasks.
+  % In figure 
+  % % \ref{fig:comparison-of-500-1000-batch-size-mem}, 
+  % the prediction of the memory utilization is shown.
+  % Opposed to the CPU utilization prediction, the model trained with the smaller batch size is biased to predict lower values in general, and the model trained with a batch size of 1000 predicted higher utilization values. Also, it was able to produce accurate predictions of the memory utilization of tasks.
   
 
   % TODO find out if I should keep this section

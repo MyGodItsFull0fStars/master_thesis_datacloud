@@ -9,7 +9,7 @@ a4paper, % Stock and paper size.
 onecolumn, % Only one column of text on a page.
 % openright, % Each chapter will start on a recto page.
 % openleft, % Each chapter will start on a verso page.
-openany, % A chapter may start on either a recto or verso page.
+% openany, % A chapter may start on either a recto or verso page.
 ]{memoir}
 \usepackage[utf8]{inputenc}
 \usepackage{import}  
@@ -49,8 +49,8 @@ openany, % A chapter may start on either a recto or verso page.
 %%% SECTIONAL DIVISIONS
 %%%------------------------------------------------------------------------------
 
-\maxsecnumdepth{subsection} % Subsections (and higher) are numbered
-\setsecnumdepth{subsection}
+\maxsecnumdepth{subsubsection} % Subsections (and higher) are numbered
+\setsecnumdepth{subsubsection}
 
 \makeatletter %
 \makechapterstyle{standard}{
@@ -73,10 +73,10 @@ openany, % A chapter may start on either a recto or verso page.
 
 \chapterstyle{standard}
 
-\setsecheadstyle{\normalfont\large\bfseries}
-\setsubsecheadstyle{\normalfont\normalsize\bfseries}
-\setparaheadstyle{\normalfont\normalsize\bfseries}
-\setparaindent{0pt}\setafterparaskip{0pt}
+% \setsecheadstyle{\normalfont\large\bfseries}
+% \setsubsecheadstyle{\normalfont\normalsize\bfseries}
+% \setparaheadstyle{\normalfont\normalsize\bfseries}
+% \setparaindent{0pt}\setafterparaskip{0pt}
 
 %%% FLOATS AND CAPTIONS
 %%%------------------------------------------------------------------------------
@@ -161,8 +161,8 @@ openany, % A chapter may start on either a recto or verso page.
 
 \usepackage{hyperref}   % Internal hyperlinks
 \hypersetup{
-pdfborder={0 0 0},      % No borders around internal hyperlinks
-pdfauthor={Christian Bauer} % author
+  pdfborder={0 0 0},      % No borders around internal hyperlinks
+  pdfauthor={Christian Bauer} % author
 }
 \usepackage{memhfixc}   %
   
@@ -265,8 +265,6 @@ pdfauthor={Christian Bauer} % author
   % \listoftheorems[ignoreall,show=pabox]
 
   \section*{Abstract}   
-
-
 
 
   \import{./chapters/1_introduction}{introduction.tex}

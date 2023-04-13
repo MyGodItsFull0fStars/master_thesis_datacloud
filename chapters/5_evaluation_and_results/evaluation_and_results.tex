@@ -246,14 +246,14 @@
     In evaluation scenarios 1-4, the forecast performance of different machine learning training scenarios is evaluated and compared with each other. Each of them builds on top of the previous evaluation scenario to compare the improvement.
 
   \subsection{User-Defined Hardware Utilisation}
-  \label{sec:user-defined-hardware-utilisation}
+  \label{sec:user-defined-hardware-prediction-evaluation-scenario}
 
       This evaluation scenario analysis the user-defined hardware utilisation. 
       In this variant, users are required to estimate the hardware utilisation of their tasks when providing those tasks to the GPU clusters.
       This user-defined prediction is the comparison base for improvement in the evaluation scenarios that will follow.
 
       \subsubsection{CPU Prediction Analysis}
-      \label{sec:user-defined-cpu-prediction-analysis}
+      \label{sec:user-defined-cpu-prediction-analysis-evaluation-scenario}
 
         In this section, the user-defined prediction regarding CPU utilisation is analysed and compared with the actual CPU utilisation (see table \ref{tab:user-predicted-cpu-comparison}).
         The CPU values are in percentage similar to section \ref{sec:data-analysis-evaluation}.
@@ -301,7 +301,7 @@
       \end{table}
 
     \subsubsection{Memory Prediction Analysis}
-    \label{sec:user-defined-memory-prediction-analysis}
+    \label{sec:user-defined-memory-prediction-analysis-evaluation-scenario}
 
       In this section, the user-defined prediction regarding memory utilisation is analysed and compared with the actual memory utilisation (see table \ref{tab:user-predicted-memory-comparison}).
       The memory values are shown in gigabytes (GB), similar to section \ref{sec:memory-data-analysis}.
@@ -353,11 +353,10 @@
   \label{sec:simple-lstm-model-evaluation-scenarios}
     
     The simple LSTM model denotes a \nameref{sec:lstm-background} model that was trained with a feature set that only contains the allocated CPU and memory a user provided for the submitted task as well as the capacity of the worker pool resource the task should be deployed to. Additionally, since LSTMs are designed to handle sequential data, the order of the incoming tasks is also a piece of important information for the model, and thus cannot be randomized as is common for other machine learning algorithms.
-    
 
 
     \subsubsection{CPU Prediction Analysis}
-    \label{sec:cpu-prediction-analysis-simple-lstm-evaluation}
+    \label{sec:cpu-prediction-analysis-simple-lstm-evaluation-scenarios}
 
       In this section, the CPU prediction of the simple LSTM model and the user-provided prediction are compared in tables \ref{tab:comparison-simple-lstm-user-predicted-cpu} and \ref{tab:regression-metrics-simple-lstm-user-predicted-cpu}.
       The \emph{mean} of the predictions the LSTM model provided is lower by approximately one and the user prediction is higher by one CPU core than the actual \emph{mean} of $5.16$ CPU cores.
@@ -401,7 +400,7 @@
       \end{table}
 
     \subsubsection{Memory Prediction Analysis}
-    \label{sec:mem-prediction-analysis-simple-lstm-evaluation}
+    \label{sec:mem-prediction-analysis-simple-lstm-evaluation-scenarios}
 
       In this section, the memory prediction of the simple LSTM model and the user-provided prediction are compared in tables \ref{tab:comparison-simple-lstm-user-predicted-memory} and \ref{tab:regression-metrics-simple-lstm-user-predicted-memory}.
       As can be seen in table \ref{tab:comparison-simple-lstm-user-predicted-memory}, the LSTM model did perform worse in almost all categories except the \emph{standard deviation, minimum} and \emph{maximum}.
@@ -504,7 +503,7 @@
       
 
     \subsubsection{Memory Prediction Analysis}
-    \label{sec:mem-prediction-analysis-task-knowledge-lstm-evaluation}
+    \label{sec:mem-prediction-analysis-task-knowledge-lstm-evaluation-scenarios}
 
       In this section, the memory prediction of the Task LSTM model and the user-provided prediction are compared in tables \ref{tab:comparison-task-lstm-user-predicted-memory} and \ref{tab:regression-metrics-task-lstm-user-predicted-memory}.
 
@@ -556,14 +555,21 @@
   \subsection{Adding Instance Knowledge}
   \label{sec:adding-instance-knowledge-evaluation-scenarios}
 
-    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:adding-task-knowledge-evaluation-scenarios} also information about the number of instances that are required to be deployed. While the knowledge about the number of instances is similarity one-hot encoded as is the task knowledge (see \ref{sec:adding-task-knowledge-evaluation-scenarios}), adding one feature vector column for every instance number would have resulted in exploding the feature data set with 800 additional columns since the minimum instance number is $1$ and the maximum is $800$.
+    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:adding-task-knowledge-evaluation-scenarios} also information about the number of instances that are required to be deployed.
+    Further on, the model trained with the additional instance knowledge is referred to as \texttt{Instance LSTM}.
+    While the knowledge about the number of instances is similarity one-hot encoded as is the task knowledge (see \ref{sec:adding-task-knowledge-evaluation-scenarios}), adding one feature vector column for every instance number would have resulted in exploding the feature data set with 800 additional columns since the minimum instance number is $1$ and the maximum is $800$.
     For this reason, the feature vector for the one-hot encoded instances was first clustered into $10$ buckets in $50$ iterations by k-means clustering \cite{hartiganAlgorithm136Kmeans1979}.
-
+    In the following prediction analysis sections \ref{sec:cpu-prediction-analysis-instance-knowledge-lstm-evaluation-scenarios}, \ref{sec:mem-prediction-analysis-instance-knowledge-lstm-evaluation-scenarios}, the Instance LSTM model is compared to the Task LSTM model of evaluation scenario \ref{sec:adding-task-knowledge-evaluation-scenarios} and the user predictions (see \ref{sec:user-defined-cpu-prediction-analysis-evaluation-scenario}).
 
     \subsubsection{CPU Prediction Analysis}
-    \label{sec:cpu-prediction-analysis-instance-knowledge-lstm-evaluation}
+    \label{sec:cpu-prediction-analysis-instance-knowledge-lstm-evaluation-scenarios}
 
-      In this section the CPU prediction of the Instance LSTM
+      In this section the CPU prediction of the Instance LSTM is compared to the prediction variants mentioned in section \ref{sec:adding-instance-knowledge-evaluation-scenarios}.
+      For the comparison, the tables \ref{tab:comparison-instance-lstm-user-predicted-cpu} and \ref{tab:regression-metrics-instance-lstm-user-predicted-cpu} are used.
+      As can be seen in the first table, the \emph{mean} value of the Instance LSTM with $571.784$ is the closest to the actual \emph{mean} value of $516.073$. Also the \emph{standard deviation} of the Instance LSTM model is the closest to the actual value. This signals that the Instance model learned to react to CPU spikes in the dataset.
+      Yet, when comparing the \emph{minimum} values, the first, second and third quartiles, the Instance LSTM has a worse performance than the Task LSTM and overestimated the actual values in the third quartile even more than the user-predicted variant.
+      When predicting the \emph{maximum}, the Instance LSTM model did perform better than any LSTM model presented before, and also better than the user-predicted variant.
+      The provided data in table \ref{tab:comparison-instance-lstm-user-predicted-cpu} indicates that the Instance LSTM model is capable of predicting the \emph{mean} value of the data, but also tends to overestimate the actual utilisation in order to account for CPU spikes.
 
       \begin{table}
         \centering
@@ -595,13 +601,14 @@
           {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
           \midrule
           Instance LSTM   &  614.645 &  294.449 &  87.975 &  57.04 &  42.96 \\
+          Task LSTM   &  688.089 &  212.796 &  83.017 &  48.14 &  51.86 \\
           User Predicted &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
           \bottomrule
         \end{tabular}
       \end{table}
 
     \subsubsection{Memory Prediction Analysis}
-    \label{sec:mem-prediction-analysis-instance-knowledge-lstm-evaluation}
+    \label{sec:mem-prediction-analysis-instance-knowledge-lstm-evaluation-scenarios}
 
       \begin{table}
         \centering

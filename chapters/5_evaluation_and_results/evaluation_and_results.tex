@@ -590,6 +590,9 @@
           \bottomrule
           \end{tabular}
       \end{table}
+
+      As seen in table \ref{tab:regression-metrics-instance-lstm-user-predicted-cpu}, the Instance LSTM has the lowest \emph{RMSE} value.
+      The \emph{MAPE} and \emph{sMAPE} both had a higher loss for the Instance LSTM than the Task LSTM variant but performed better than the user-predicted variant. Compared to the Task LSTM model it is more likely to overestimate the actual value. The likely reason is that the Instance LSTM provided additional information about the number of instances of a task that should be deployed. This additional information lets the model predict a CPU utilisation higher than the actual value since the tasks are denoted to be deployed on multiple resources.
       
       \begin{table}
         \centering
@@ -606,9 +609,18 @@
           \bottomrule
         \end{tabular}
       \end{table}
+      While the Instance LSTM model prediction performance does look promising in terms of \emph{mean} and \emph{standard deviation} (see \ref{tab:comparison-instance-lstm-user-predicted-cpu}), it did not do perform well in other mentioned metrics.
+      This LSTM variant is successful in terms of predicting CPU spikes more accurately than any other presented prediction, yet this also results in predicting CPU utilisation spikes in tasks that do not require such a vast amount of CPU resources, even if deployed on multiple resources.
 
     \subsubsection{Memory Prediction Analysis}
     \label{sec:mem-prediction-analysis-instance-knowledge-lstm-evaluation-scenarios}
+
+      In this section the memory prediction of the Instance LSTM is compared to the prediction variants mentioned in section \ref{sec:adding-instance-knowledge-evaluation-scenarios}.
+      As seen in table \ref{tab:comparison-instance-lstm-user-predicted-memory}, the Instance LSTM model did overestimate on average by a factor of $2.5$ compared to the actual \emph{mean}.
+      The \emph{standard deviation} is closer to the actual value than the user-predicted variant, yet the estimation performed worse than the one of the Task LSTM model.
+      The \emph{minimum} value could be predicted the best with the Instance LSTM model, similarly the \emph{maximum} value. 
+      This indicates that this LSTM variant is sensitive to utilisation spikes.
+      Yet, the performance in all three quartiles is worse than both the prediction of the Task LSTM and the user predictions, which is not surprising given the high \emph{mean} value.
 
       \begin{table}
         \centering
@@ -617,18 +629,19 @@
 
         \begin{tabular}{|l|rrrr|}
           \toprule
-          {} &  Actual CPU &  Instance LSTM CPU &  Task LSTM CPU &  User CPU \\
+          {} &  Actual MEM &  Instance LSTM MEM &  Task LSTM MEM &  User MEM \\
           \midrule
-          mean &     516.073 &            571.784 &        454.205 &   632.809 \\
-          std  &     881.832 &            690.524 &        579.213 &   496.245 \\
-          min  &       1.023 &              4.240 &          2.395 &     5.000 \\
-          25\%  &     103.632 &            215.433 &        129.884 &   400.000 \\
-          50\%  &     208.749 &            434.128 &        249.392 &   600.000 \\
-          75\%  &     528.076 &            821.406 &        662.490 &   600.000 \\
-          max  &    7790.371 &           6954.110 &       5634.635 &  6400.000 \\
+          mean &      17.203 &             43.098 &         29.134 &    26.895 \\
+          std  &      74.761 &             56.496 &         63.342 &    15.259 \\
+          min  &       0.003 &              0.055 &          0.156 &     2.000 \\
+          25\%  &       2.160 &             22.294 &          4.537 &    14.648 \\
+          50\%  &       7.699 &             27.067 &         14.679 &    29.297 \\
+          75\%  &      15.976 &             62.938 &         27.924 &    29.297 \\
+          max  &    1992.484 &           1208.922 &        698.983 &   146.484 \\
           \bottomrule
           \end{tabular}
       \end{table}
+      
       
       \begin{table}
         \centering
@@ -640,6 +653,7 @@
           {} &    RMSE &       MAPE &    SMAPE &    OA &    UA \\
           \midrule
           Instance LSTM   &  60.415 &  16855.899 &  131.774 &  69.9 &  30.1 \\
+          Task LSTM   &  61.897 &  32287.182 &  119.715 &  56.66 &  43.34 \\
           User Predicted &  73.853 &   3672.256 &   97.613 &  80.8 &  19.2 \\
           \bottomrule
           \end{tabular}

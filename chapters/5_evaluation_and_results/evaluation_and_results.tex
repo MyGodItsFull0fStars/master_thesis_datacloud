@@ -659,50 +659,63 @@
           \bottomrule
           \end{tabular}
       \end{table}
+      While the Instance LSTM did have good prediction performance regarding CPU utilisation, the prediction of memory utilisation is viable for detecting memory utilisation spikes but did otherwise overestimate the majority of values.
+      The reason for the \emph{MAPE} loss value being smaller than the value of the Task LSTM is, that the memory utilisation spikes were not predicted by the Task LSTM, hence the bad prediction performance.
 
   \subsection{Training with Penalty Mean Squared Error Function}
   \label{sec:training-with-custom-loss-function-evaluation-scenarios}
 
       As discussed in the previous evaluation scenarios, 
-      additional information regarding a task (see sections \ref{sec:adding-task-knowledge-evaluation-scenarios} and \ref{sec:adding-instance-knowledge-evaluation-scenarios}) will result in closer predictions to the actual value but also the LSTM model is more likely to predict values that are smaller than the actual value.
+      additional information regarding a task (see section \ref{sec:adding-task-knowledge-evaluation-scenarios}) will result in closer predictions to the actual value but also the LSTM model is more likely to predict values that are smaller than the actual value.
+      Since underestimating the actual utilisation of both CPU and memory resources can lead to erroneous behaviour while executing tasks, it is preferable to overestimate.
       % TODO explain why this is a bad thing
-      
       Therefore, a custom loss function was designed and implemented (see \nameref{sec:penalty-mse-loss-function-architecture-and-implementation}) to counter the tendency of the LSTM model with an increasing number of feature columns to predict values lower than the actual value.
-
+      This LSTM variant that is using said custom loss function is from now on referred to as \emph{Penalty LSTM}.
 
     \subsubsection{CPU Prediction Analysis}
     \label{sec:cpu-prediction-analysis-pmse-lstm-evaluation}
 
+      In this section, the CPU prediction of the Penalty LSTM is compared to the prediction variants mentioned in section \ref{sec:adding-instance-knowledge-evaluation-scenarios}.
+      The predicted \emph{mean} value of the Penalty LSTM variant is performing worse by a value of approximately $20$ than the Instance LSTM model.
+      Also, the distance of the \emph{standard deviation} value is larger for the Penalty LSTM model than the Instance LSTM but performs better than the user predictions.
+      
+      
+
       \begin{table}
         \centering
-        \caption{Comparison of PMSE LSTM and User Predicted CPU}
+        \caption{Comparison of Penalty, Instance LSTM and User Predicted CPU}
         \label{tab:comparison-pmse-lstm-user-predicted-cpu}
 
-        \begin{tabular}{|l|rrr|}
+        \begin{tabular}{|l|rrrr|}
           \toprule
-          {} &  Actual CPU &  Predicted CPU &  User CPU \\
+          {} &  Actual CPU &  Penalty LSTM CPU &  Instance LSTM CPU &  User CPU \\
           \midrule
-          mean &           516.073 &              595.122 &        632.809 \\
-          std  &           881.832 &              550.389 &        496.245 \\
-          min  &             1.023 &                4.481 &          5.000 \\
-          25\%  &           103.632 &              248.302 &        400.000 \\
-          50\%  &           208.749 &              571.664 &        600.000 \\
-          75\%  &           528.076 &              808.049 &        600.000 \\
-          max  &          7790.372 &             5776.425 &       6400.000 \\
+          mean &     516.073 &        595.122 &            571.784 &   632.809 \\
+          std  &     881.832 &        550.389 &            690.524 &   496.245 \\
+          min  &       1.023 &          4.481 &              4.240 &     5.000 \\
+          25\%  &     103.632 &        248.302 &            215.433 &   400.000 \\
+          50\%  &     208.749 &        571.664 &            434.128 &   600.000 \\
+          75\%  &     528.076 &        808.049 &            821.406 &   600.000 \\
+          max  &    7790.371 &       5776.425 &           6954.110 &  6400.000 \\
           \bottomrule
-        \end{tabular}
+          \end{tabular}
       \end{table}
+
+      As seen in table \ref{tab:regression-metrics-pmse-lstm-user-predicted-cpu}, the Penalty LSTM did perform slightly worse than the Instance LSTM regarding the \emph{RMSE} loss value but performed better for both the \emph{MAPE} and \emph{sMAPE} metrics.
+      Also, the overallocation of the Penalty LSTM is $70 \%$, so an increase of $13 \%$ when using the PMSE loss function compared to the Instance LSTM variant.
       
       \begin{table}
         \centering
-        \caption{Regression Metrics - PMSE LSTM and User Predicted CPU}
+        \caption{Regression Metrics - Penalty LSTM and User Predicted CPU}
         \label{tab:regression-metrics-pmse-lstm-user-predicted-cpu}
 
         \begin{tabular}{|l|rrrrr|}
           \toprule
           {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
           \midrule
-          LSTM Metrics   &  637.124 &  275.275 &  82.988 &  70.16 &  29.84 \\
+          Penalty LSTM   &  637.124 &  275.275 &  82.988 &  70.16 &  29.84 \\
+          Instance LSTM   &  614.645 &  294.449 &  87.975 &  57.04 &  42.96 \\
+          % Task LSTM   &  688.089 &  212.796 &  83.017 &  48.14 &  51.86 \\
           User Predicted &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
           \bottomrule
         \end{tabular}
@@ -713,34 +726,36 @@
 
       \begin{table}
         \centering
-        \caption{Comparison of PMSE LSTM and User Predicted Memory}
+        \caption{Comparison of Penalty, Instance LSTM and User Predicted Memory}
         \label{tab:comparison-pmse-lstm-user-predicted-memory}
 
-        \begin{tabular}{|l|rrr|}
+        \begin{tabular}{|l|rrrr|}
           \toprule
-          {} &  Actual Memory &  predicted Memory &  User Memory \\
+          {} &  Actual MEM &  Penalty LSTM MEM &  Instance LSTM MEM &  User MEM \\
           \midrule
-          mean &            17.203 &               65.128 &         26.895 \\
-          std  &            74.761 &               64.252 &         15.259 \\
-          min  &             0.003 &                1.639 &          2.000 \\
-          25\%  &             2.160 &               19.961 &         14.648 \\
-          50\%  &             7.699 &               60.018 &         29.297 \\
-          75\%  &            15.976 &               85.906 &         29.297 \\
-          max  &          1992.484 &             1251.511 &        146.484 \\
+          mean &      17.203 &            65.128 &             43.098 &    26.895 \\
+          std  &      74.761 &            64.252 &             56.496 &    15.259 \\
+          min  &       0.003 &             1.639 &              0.055 &     2.000 \\
+          25\%  &       2.160 &            19.961 &             22.294 &    14.648 \\
+          50\%  &       7.699 &            60.018 &             27.067 &    29.297 \\
+          75\%  &      15.976 &            85.906 &             62.938 &    29.297 \\
+          max  &    1992.484 &          1251.511 &           1208.922 &   146.484 \\
           \bottomrule
-        \end{tabular}
+          \end{tabular}
       \end{table}
       
       \begin{table}
         \centering
-        \caption{Regression Metrics - PMSE LSTM and User Predicted Memory}
+        \caption{Regression Metrics - Penalty LSTM and User Predicted Memory}
         \label{tab:regression-metrics-pmse-lstm-user-predicted-memory}
 
         \begin{tabular}{|l|rrrrr|}
           \toprule
           {} &    RMSE &       MAPE &    SMAPE &     OA &     UA \\
           \midrule
-          LSTM Metrics   &  77.541 &  27603.612 &  133.192 &  87.38 &  12.62 \\
+          Penalty LSTM   &  77.541 &  27603.612 &  133.192 &  87.38 &  12.62 \\
+          Instance LSTM   &  60.415 &  16855.899 &  131.774 &  69.9 &  30.1 \\
+          % Task LSTM   &  61.897 &  32287.182 &  119.715 &  56.66 &  43.34 \\
           User Predicted &  73.853 &   3672.256 &   97.613 &  80.80 &  19.20 \\
           \bottomrule
         \end{tabular}

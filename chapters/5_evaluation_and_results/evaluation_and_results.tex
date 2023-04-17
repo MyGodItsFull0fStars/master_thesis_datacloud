@@ -675,10 +675,11 @@
     \subsubsection{CPU Prediction Analysis}
     \label{sec:cpu-prediction-analysis-pmse-lstm-evaluation}
 
-      In this section, the CPU prediction of the Penalty LSTM is compared to the prediction variants mentioned in section \ref{sec:adding-instance-knowledge-evaluation-scenarios}.
+      In this section, the CPU prediction of the Penalty LSTM is compared to the prediction variants mentioned in section \ref{sec:cpu-prediction-analysis-instance-knowledge-lstm-evaluation-scenarios}.
       The predicted \emph{mean} value of the Penalty LSTM variant is performing worse by a value of approximately $20$ than the Instance LSTM model.
       Also, the distance of the \emph{standard deviation} value is larger for the Penalty LSTM model than the Instance LSTM but performs better than the user predictions.
-      
+      In the first and second quartiles, the Penalty LSTM did perform worse than the Instance LSTM, but slightly better for the third quartile.
+      The predicted \emph{maximum} value is the worst of the compared prediction variants.
       
 
       \begin{table}
@@ -703,6 +704,7 @@
 
       As seen in table \ref{tab:regression-metrics-pmse-lstm-user-predicted-cpu}, the Penalty LSTM did perform slightly worse than the Instance LSTM regarding the \emph{RMSE} loss value but performed better for both the \emph{MAPE} and \emph{sMAPE} metrics.
       Also, the overallocation of the Penalty LSTM is $70 \%$, so an increase of $13 \%$ when using the PMSE loss function compared to the Instance LSTM variant.
+
       
       \begin{table}
         \centering
@@ -721,8 +723,15 @@
         \end{tabular}
       \end{table}
 
+      Given the metrics and the preferably overestimated values of table \ref{tab:regression-metrics-pmse-lstm-user-predicted-cpu}, this LSTM variant is preferable to the other prediction variants for CPU utilisation prediction.
+
     \subsubsection{Memory Prediction Analysis}
     \label{sec:mem-prediction-analysis-psme-lstm-evaluation}
+
+      In this section, the memory prediction of the Penalty LSTM is compared to the prediction variants mentioned in section \ref{sec:mem-prediction-analysis-instance-knowledge-lstm-evaluation-scenarios}.
+      The Penalty LSTM variant performed the worst for predicting memory utilisation in all categories except the \emph{maximum} value as seen in table \ref{tab:comparison-pmse-lstm-user-predicted-memory}.
+      This is not surprising given the PMSE loss function did further shift the already overestimating tendency of the memory section into penalising the remaining underestimated values.
+      
 
       \begin{table}
         \centering
@@ -744,6 +753,8 @@
           \end{tabular}
       \end{table}
       
+      Similarly to the results in table \ref{tab:comparison-pmse-lstm-user-predicted-memory}, the results of the metrics for the Penalty LSTM in table \ref{tab:regression-metrics-pmse-lstm-user-predicted-memory} show that this LSTM variant did perform the worst for predicting memory utilisation of tasks.
+
       \begin{table}
         \centering
         \caption{Regression Metrics - Penalty LSTM and User Predicted Memory}
@@ -760,6 +771,7 @@
           \bottomrule
         \end{tabular}
       \end{table}
+      While the actual CPU utilisation did gain some performance gains using the PMSE loss function, it simultaneously decreased the prediction performance for the actual memory utilisation. 
 
   \subsection{Training Time}
   \label{sec:training-time-evaluation-scenarios}

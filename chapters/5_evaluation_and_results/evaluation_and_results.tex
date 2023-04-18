@@ -781,7 +781,10 @@
   \subsection{Training Time}
   \label{sec:training-time-evaluation-scenarios}
 
-    The evaluation scenario regarding the training time measures the time that is required for the LSTM model to train for one epoch. The number of data points is fixed and the same for all evaluation scenarios and LSTM models, so ...
+    The evaluation scenario regarding the training time measures the time that is required for the LSTM model to train for one epoch.
+    Each LSTM variant shown in table \ref{tab:training-time-comparison-of-lstm-variants} was trained with $100$ epochs and the number of data elements was $5000$ for each of them. The data points only differed in the dimensions, i.e., the number of feature columns.
+
+  %  The number of data points is fixed and the same for all evaluation scenarios and LSTM models, so ...
 
     \begin{figure}
       \centering
@@ -793,7 +796,6 @@
         \toprule
         {Seconds/Epoch} &  Simple LSTM &  Task LSTM &  Instance LSTM &  Penalty LSTM \\
         \midrule
-        % epochs   &           100 &         100 &             100 &                100 \\
         mean    &         2.3487 &      2.3853 &          2.3042 &             2.4001 \\
         std     &         0.0729 &      0.0949 &          0.0621 &             0.0922 \\
         min     &         2.2285 &      2.1869 &          2.1697 &             2.2086 \\
@@ -801,6 +803,8 @@
         \bottomrule
       \end{tabular}
     \end{figure}
+    As seen by the \emph{mean} value, each of the LSTM variants had a similar training time average ranging from approximately $2.3-2.4$ seconds.
+    Given that each model was trained with $100$ epochs, this results in an average training time difference of $100$ seconds between the fastest (Instance LSTM) and the slowest (Penalty LSTM) variant.
     % TODO explain that only the difference between the models is calculated
     % plus I take the average of the training time per epoch
 

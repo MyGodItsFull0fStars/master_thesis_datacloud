@@ -1,6 +1,11 @@
 \chapter{Evaluation and Results}
 \label{ch:evaluation-and-results}
 
+\section{Over-, Under-Allocation of Data}
+\label{sec:over-under-allocation-of-data}
+
+  placeholder
+
 \section{Trace Data}
 \label{sec:data-analysis-evaluation}
 
@@ -777,6 +782,25 @@
   \label{sec:training-time-evaluation-scenarios}
 
     The evaluation scenario regarding the training time measures the time that is required for the LSTM model to train for one epoch. The number of data points is fixed and the same for all evaluation scenarios and LSTM models, so ...
+
+    \begin{figure}
+      \centering
+
+      \caption{Training Time Comparison of LSTM Variants}
+      \label{tab:training-time-comparison-of-lstm-variants}
+
+      \begin{tabular}{|l|rrrr|}
+        \toprule
+        {Seconds/Epoch} &  Simple LSTM &  Task LSTM &  Instance LSTM &  Penalty LSTM \\
+        \midrule
+        % epochs   &           100 &         100 &             100 &                100 \\
+        mean    &         2.3487 &      2.3853 &          2.3042 &             2.4001 \\
+        std     &         0.0729 &      0.0949 &          0.0621 &             0.0922 \\
+        min     &         2.2285 &      2.1869 &          2.1697 &             2.2086 \\
+        max     &         2.5651 &      2.6898 &          2.5993 &             2.8930 \\
+        \bottomrule
+      \end{tabular}
+    \end{figure}
     % TODO explain that only the difference between the models is calculated
     % plus I take the average of the training time per epoch
 
@@ -791,8 +815,8 @@
     Finally, the hardware the LSTM model resides on has a major influence on the time that is required to infer a prediction from input data. Deep learning nowadays heavily relies on the usage of modern GPUs that use so-called \emph{tensor cores} specifically build for machine learning tasks to accelerate both the training and the inference times.
 
 
-  \subsection{Prediction Performance Depending on Batch Size}
-  \label{sec:prediction-performance-depending-on-batch-size-evaluation-scenarios}
+  % \subsection{Prediction Performance Depending on Batch Size}
+  % \label{sec:prediction-performance-depending-on-batch-size-evaluation-scenarios}
 
 
 
@@ -801,7 +825,7 @@
 
 
 
-  The batch size not only influences the required training time and how much sampling data at once the model weights are updated on. The used batch size even has an impact on the prediction performance of the LSTM model.
+  % The batch size not only influences the required training time and how much sampling data at once the model weights are updated on. The used batch size even has an impact on the prediction performance of the LSTM model.
     
   % As can be seen in the figure 
   % % \ref{fig:comparison-of-500-1000-batch-size}, 

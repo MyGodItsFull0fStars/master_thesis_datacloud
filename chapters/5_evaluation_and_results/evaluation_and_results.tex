@@ -118,10 +118,30 @@
       \end{center}
 
 
-  \subsection{LSTM Model Setup}
+  % \subsection{LSTM Model Setup}
 
   \subsection{LSTM Hyperparameter}
   \label{sec:lstm-hyperparameters-evaluation-setup}
+
+      The hyperparameters of all LSTM variants are stored in \texttt{YAML} configuration files.
+      A configuration file used for the Instance LSTM (see \ref{sec:adding-instance-knowledge-evaluation-scenarios}) is shown in listing \ref{lst:config-file-example}.
+      \begin{quote}
+        A hyperparameter is a machine learning parameter whose value is chosen before a learning algorithm is trained. Hyperparameters should not be confused with parameters. In machine learning, the label parameter is used to identify variables whose values are learned during training \cite{rouseHyperparameter2022}.
+      \end{quote}
+      The differences for the LSTM variants are found in the values \texttt{include\_tasks} and \texttt{include\_instance}.
+      If both values are set to \texttt{False}, the LSTM model only uses the capacity of the mapped computing resource and user predictions as seen in the evaluation scenario \ref{sec:simple-lstm-model-evaluation-scenarios}.
+      For the Task LSTM (see \ref{sec:adding-task-knowledge-evaluation-scenarios}), the value \texttt{include\_tasks} is set to \texttt{True}.
+      For both the Instance LSTM and the Penalty LSTM (see \ref{sec:training-with-custom-loss-function-evaluation-scenarios}) both the values  \texttt{include\_tasks} and \texttt{include\_instance} are set to \texttt{True} as seen in the mentioned listing.
+      The \texttt{loss} value only changes for the Penalty LSTM that uses the penalty loss function (see \ref{sec:penalty-mse-loss-function-architecture-and-implementation}) instead of the \emph{mean squared error function}.
+
+      All other hyperparameters are identical for all LSTM variants in the evaluation scenarios (see \ref{sec:evaluation-scenarios}) to be able to compare the performance impact of feeding additional feature columns to the LSTM models.
+
+      \lstinputlisting[
+        % language=YAML, 
+        caption=LSTM Model Config File Example, 
+        label={lst:config-file-example},
+        style=codestyle
+        ]{code_samples/config_file_example.yaml}
 
 
   \subsection{Weights \& Biases}
@@ -815,8 +835,38 @@
     The time measurement is done on different batch sizes. This is important to be able to forward the resource utilisation prediction to the scheduler in an acceptable time frame.
     A low inference time by the LSTM model is mandatory in order for its predictions to be usable by the scheduler of the \nameref{sec:scheduling-and-adaptation-background} approach. Too high inference times can lead to task pipeline congestion if the scheduler has to wait for tasks to arrive from the LSTM model.
     The required inference time depends on three major factors, the batch size, i.e., the number of tasks provided at once to the LSTM model to calculate a prediction of their hardware utilisation.
-    The next factor is the complexity of the LSTM model, where a more complex neural network architecture also requires more internal calculations while forwarding the input data (the tasks of the pipeline). The complexity of the LSTM model can be derived from the number of layers and LSTM cells as well as used hyper-parameters, most importantly the \emph{hidden size} of the LSTM layers, which has the most impact both on the internal complexity and the amount of space the LSTM model requires.
-    Finally, the hardware the LSTM model resides on has a major influence on the time that is required to infer a prediction from input data. Deep learning nowadays heavily relies on the usage of modern GPUs that use so-called \emph{tensor cores} specifically build for machine learning tasks to accelerate both the training and the inference times.
+
+    \begin{table}
+      \centering
+      \caption{Inference Times of LSTM Variants}
+      \label{tab:inference-time-of-lstm-variants}
+      \begin{tabular}{|l|rrrr|}
+        \toprule
+        {} &  Simple LSTM &  Task LSTM &  Instance LSTM &  Penalty LSTM \\
+        \midrule
+        mean  &     0.065724 &   0.066120 &       0.067292 &      0.067271 \\
+        std   &     0.034361 &   0.033345 &       0.033334 &      0.034054 \\
+        min   &     0.009691 &   0.009126 &       0.016284 &      0.010067 \\
+        max   &     0.114571 &   0.114148 &       0.120081 &      0.114867 \\
+        \bottomrule
+      \end{tabular}
+    \end{table}
+    The next factor is the complexity of the LSTM model, where a more complex neural network architecture also requires more internal calculations while forwarding the input data (the tasks of the pipeline). The complexity of the LSTM model can be derived from the number of layers and LSTM cells as well as used hyper-parameters, most importantly the \emph{hidden size} of the LSTM layers, which has the most impact both on the internal complexity and the amount of space the LSTM model requires. The \emph{hidden size} in all LSTM variants is the same, and this is the reason the inference time seen in figure \ref{fig:average-inference-time-per-batch-size} for all models is close to each other.
+
+    Next, the hardware the LSTM model resides on has a major influence on the time that is required to infer a prediction from input data. Deep learning nowadays heavily relies on the usage of modern GPUs that use so-called \emph{tensor cores} specifically build for machine learning tasks to accelerate both the training and the inference times.
+    \begin{figure}
+      \centering
+      \caption{Average Inference Time per Batch Size}
+      \label{fig:average-inference-time-per-batch-size}
+      \includegraphics[width=0.99\textwidth]{figures/inference_time_batch_size.png}
+    \end{figure}
+
+    As can be seen in figure \ref{fig:average-inference-time-per-batch-size} and table \ref{tab:inference-time-of-lstm-variants} the inference times of all LSTM variants are similar regarding all batch sizes except for the Instance LSTM variant (see \ref{sec:adding-instance-knowledge-evaluation-scenarios}). 
+    The Instance LSTM is the worst-performing variant in both the \emph{minimum} and \emph{maximum} values with the \emph{minimum} being $1.78$ worse than the best-performing (Task LSTM) variant. This is shown in the x-axis for the smallest batch size of $100$ in figure \ref{fig:average-inference-time-per-batch-size} by the noticeably higher line for the Instance LSTM.
+    Similarly, the Instance LSTM has worse inference time performance for higher batch sizes as seen in the rightmost area of the mentioned figure by the line spike corresponding to the model.
+    An explanation of why the Instance LSTM might be the worst-performing model might be the additional complexity of the feature dataset that is forwarded to the model, yet the Penalty LSTM is fed the same feature dataset and only differs in the loss function that is used to train the model.
+    
+    
 
 
   % \subsection{Prediction Performance Depending on Batch Size}

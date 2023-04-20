@@ -130,7 +130,7 @@ openany, % A chapter may start on either a recto or verso page.
 \makepagestyle{chap} % Make new chapter pagestyle
 
 \makeatletter
-\makeevenfoot{chap}{}{\small\bfseries\thepage}{} % Define new chapter pagestyle
+\makeevenfoot{chap}{}{\small\bfseries\thepage}{} % Define new chapter page style
 \makeoddfoot{chap}{}{\small\bfseries\thepage}{}  %
 \makeevenhead{chap}{}{}{}   %
 \makeoddhead{chap}{}{}{}    %
@@ -138,14 +138,14 @@ openany, % A chapter may start on either a recto or verso page.
 \makeatother
 
 \nouppercaseheads
-\pagestyle{standard}               % Choosing pagestyle and chapter pagestyle
+\pagestyle{standard}               % Choosing page style and chapter page style
 \aliaspagestyle{chapter}{chap} %
 
 %%% NEW COMMANDS
 %%%------------------------------------------------------------------------------
 
 \newcommand{\p}{\partial} %Partial
-% Or what ever you want
+% Or whatever you want
 
 %%% TABLE OF CONTENTS
 %%%------------------------------------------------------------------------------

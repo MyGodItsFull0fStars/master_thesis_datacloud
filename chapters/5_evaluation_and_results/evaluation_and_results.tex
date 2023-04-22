@@ -1,10 +1,26 @@
 \chapter{Evaluation and Results}
 \label{ch:evaluation-and-results}
 
+% TODO add description of this chapter here
+
 \section{Over-, Under-Allocation of Data}
 \label{sec:over-under-allocation-of-data}
 
-  placeholder
+  Over-, and under-allocation are terms used to describe if a predicted value for a task is either higher (over-allocated) or lower (under-allocated) than the actual value the task required. Over-, and under-allocated values that are predicted by an LSTM model or the user predictions are referred to as over-estimated or under-estimated values further on.
+  Predicted values are elements of prediction vectors and get compared to the actual values that are elements of a vector containing the actual values. These predicted/actual values correspond to a real task that was deployed on a GPU cluster.
+
+  \begin{pabox}{Calculation of Over/Under-Estimated Value}
+    \label{def:calculation-of-over-under-estimated-value}
+  
+      The prediction vector is defined as $\hat{P} = \{p_1, p_2, \dots, p_n\}$, where $p_i, 1 \leq i \leq n$ is a predicted value of a task. The actual vector is defined as $\hat{A} = \{a_1, a_2, \dots, a_n\}$, where $a_i$ is the actual value of a task, i.e., the value that was traced while executing the task.
+      $$p_i = 
+      \begin{cases}
+        \operatorname{Over-Allocated}, & \quad \textrm{if } p_i > a_i \\
+        \operatorname{Under-Allocated},  & \quad \textrm{otherwise}
+      \end{cases}$$
+      Each predicted value is then stored in either a vector that contains over, or underestimated values to determine the distribution for each LSTM variant.
+  
+    \end{pabox}
 
 \section{Trace Data}
 \label{sec:data-analysis-evaluation}

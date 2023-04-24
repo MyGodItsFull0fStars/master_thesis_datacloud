@@ -20,18 +20,19 @@
             This results in a higher resource allocation than necessary to execute and finish tasks in time and also results in a less stable infrastructure since tasks might not be deployed on fitting resources, since all their capacity might be allocated.
             Task scheduling with communication delays is a well-researched problem that is known to be strongly NP-hard problems for both homogeneous and heterogeneous resources \cite{orrOptimalTaskScheduling2021}.
             Numerous polynomial-time heuristic algorithms have been proposed that provide non-optimal solutions, yet do so within a reasonable time frame in order to be used for scheduling. Recent developments in machine learning and large datasets that trace the behaviour of hyper-scale data centres \cite{vanooteghemWhatHyperscaleData2023} while executing various task types lay a promising groundwork to use deep learning techniques to provide a resource utilisation estimator that is trained on said immense amount of data and then fine-tuned for the specific infrastructure it is part of. 
-            Various machine learning approaches to improve resource utilisation prediction and scheduling emerged in recent years as are mentioned in section \ref{ch:state-of-the-art}. Yet, there is no consensus on the best machine learning approach and while task scheduling is challenging, 
-            deep learning algorithms made promising progress in providing more accurate predictors in many fields.
+            Various machine learning approaches to improve resource utilisation prediction and scheduling emerged in recent years as are mentioned in section \ref{ch:state-of-the-art}. Yet, there is no consensus on the best machine learning approach and while task scheduling is challenging, deep learning algorithms made promising progress in providing more accurate predictors in many fields.
+            The wastage occurring in utilizing resources on large-scale systems (or computing clusters) is further described in sections \ref{sec:public-cloud-provider-traces-in-available-data-related-work} and \ref{sec:data-analysis-evaluation}.
+            This wastage is the basis for the evaluation of potential improvements upon the currently used prediction methods.
+            
+            The scope is the analysis of available literature on machine learning techniques used to predict hardware utilisation of tasks and how the authors did implement the state-of-the-art algorithms to improve the predictions.
+            An overview of the theoretical concepts regarding the required terminology of scheduling and machine learning is done in order to provide the reader with knowledge of the subjects in this thesis.
+            Also, an analysis of real data traces is done, that compares the actual hardware utilisation regarding the CPU and memory allocation and the deviation of the provided utilisation prediction corresponding to both hardware types. This analysis also shows the need to improve upon the currently used variant of prediction to better utilise the available hardware clusters. 
+            An implementation of a Long-Short Term Memory neural network model and its related components and architecture are further elaborated upon. Different model configurations are analysed and compared regarding their prediction accuracy.
+
 
             % TODO Is there something missing from the motivation?
             % TODO add the scope
             % TODO elaborate the wastage
-            The wastage occurring in utilizing resources on large-scale systems (or computing clusters) is further described in sections \ref{sec:public-cloud-provider-traces-in-available-data-related-work} and \ref{sec:data-analysis-evaluation}.
-
-        % Our motivation is to improve the resource utilisation in distributed infrastructures consisting of a vast amount of computing resources, which in term also results in reduced costs for the providers as well as reduced energy consumption based on the number of tasks finished.
-        %     The wastage occurring in utilizing resources on large-scale systems (or computing clusters) is further described in sections \ref{sec:public-cloud-provider-traces-in-available-data-related-work} and \ref{sec:data-analysis-evaluation}.
-        %     The reduction of resource wastage is presented by our \nameref{sec:scheduling-and-adaptation-background} approach. 
-        %     This approach consists of two main parts. One is the matching game-based scheduling algorithm, which is presented in the publication \emph{Matching-based Scheduling of Asynchronous Data Processing Workflows on the Computing Continuum} \cite{mehranMatchingbasedSchedulingAsynchronous2022} that decides which tasks are mapped to a resource via a two-sided ranking procedure, and second is the adaptation, that consists of continuous monitoring of the tasks and resources, as well as analysis of both and adapting them depending with the help of various tools.
 
         %     This masters thesis is a product of the work done for the project \emph{DataCloud} and a published paper \emph{Big Data Pipeline Scheduling and Adaptation on the Computing Continuum} \cite{kimovskiBigDataPipeline2022}.
 
@@ -43,7 +44,6 @@
         %     The reduction of resource wastage is presented by our \nameref{sec:scheduling-and-adaptation-background} approach. 
         %     This approach consists of two main parts. One is the matching game-based scheduling algorithm, which is presented in the publication \emph{Matching-based Scheduling of Asynchronous Data Processing Workflows on the Computing Continuum} \cite{mehranMatchingbasedSchedulingAsynchronous2022} that decides which tasks are mapped to a resource via a two-sided ranking procedure, and second is the adaptation, that consists of continuous monitoring of the tasks and resources, as well as analysis of both and adapting them depending with the help of various tools.
 
-        % this is a test \cite{datacloudAbout}
         \section{Research Problems}
         \label{sec:research-problems-introduction}
 
@@ -76,6 +76,8 @@
         \label{sec:research-objectives-introduction}
 
             The research objectives of this thesis work are to provide a prediction method for a distributed system handling big data that can predict how much system resources are necessary and provide a rule-based analyser that monitors the system components for over-utilisation.
+            This is achieved by analysing existing real-data traces provided by cloud providers and using the gained knowledge to build fine-tuned predictors for the given task pipelines. One objective is to improve upon the existing prediction methods, such as predictions provided by users of cloud services, which have to provide an estimation of the resource utilisation the task that is to be deployed will require. 
+            The prediction performance is measured using regression metrics in order to make informed decisions regarding prediction accuracy.
 
         \section{Research Goals}
         \label{sec:goals-results-introduction}
@@ -91,6 +93,23 @@
         \section{Research Methodology}
         \label{sec:research-methodology-introduction}
 
+            The research methodology is split into multiple segments.
+            First, the state-of-the-art (see section \ref{ch:state-of-the-art}) approaches and algorithms were analysed based on their prediction performance, their applicability to the research problem and the feasibility of implementing each approach. This involves researching suitable scheduling and machine learning methods. Next, based on the available real-data cluster traces, an analysis is conducted to compare and decide on a well-fitted prediction variant.
+
+            Further, an analysis of the real-data traces is done to use the available data effectively based on the chosen methods.
+            This involves well-researched statistical analysis and transformations of the datasets. These steps are used to increase the likelihood of machine learning models learning the sequential patterns and inner attributes of the dataset.
+
+            The different machine learning models are compared using various regression metrics that are commonly used to analyse the prediction performance of trained models. This is done to be consistent and comparable with other works in related fields and to ensure an easy process of reproducing the testbed and evaluations.
+
+            
+
+        % Research methodology is a systematic approach to planning, conducting, and analyzing research. It involves the use of various techniques, tools, and strategies to gather and analyze data in order to answer a research question or test a hypothesis.
+
+        % The research methodology involves various steps, including identifying the research problem, formulating research questions, designing a study, selecting a sample, collecting data, analyzing data, and drawing conclusions. The methodology can vary depending on the research design, the field of study, and the research question being investigated.
+
+        % Some common research methodologies include quantitative research, which involves the use of numerical data and statistical analysis, and qualitative research, which focuses on exploring subjective experiences and perceptions through interviews, observations, and other non-numerical data collection methods.
+
+        % Overall, a well-designed research methodology is crucial for ensuring the validity and reliability of research findings and conclusions.
         
 
         

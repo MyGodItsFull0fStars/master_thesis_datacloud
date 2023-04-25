@@ -227,7 +227,7 @@
     
       Symmetric Mean Absolute Percentage Error (sMAPE) \cite{kreinovichHowEstimateForecasting2014} is a metric used for evaluating the accuracy of forecasting models. It measures the average percentage difference between the predicted values and the actual values and is symmetrical in that it treats positive and negative errors equally.
       In our evaluation of the prediction performance, this is especially useful since both over and under-utilisation are present in all prediction variants.
-      The formula for SMAPE is:
+      The formula for sMAPE is:
 
       \begin{pabox}{Symmetric Mean Absolute Percentage Error}
         $$sMAPE = \frac{1}{n} \times \sum \left|\frac{Actual - Predicted}{\left(Actual + Predicted\right) \div 2}\right| \times 100$$
@@ -334,7 +334,7 @@
         \label{tab:metric-cpu-user-predicted}
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &     RMSE &     MAPE &   SMAPE &    OA &    UA \\
+          {} &     RMSE &     MAPE &   sMAPE &    OA &    UA \\
           \midrule
           User CPU &  812.497 &  355.049 &  89.466 &  72.8 &  27.2 \\
           \bottomrule
@@ -383,7 +383,7 @@
         \label{tab:metric-mem-user-predicted}
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &    RMSE &     MAPE &   SMAPE &     OA &     UA \\
+          {} &    RMSE &     MAPE &   sMAPE &     OA &     UA \\
           \midrule
           User Memory &  73.853 &  3672.256 &  97.613 &  80.8 &  19.2 \\
           \bottomrule
@@ -432,7 +432,7 @@
         \label{tab:regression-metrics-simple-lstm-user-predicted-cpu}
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
+          {} &     RMSE &     MAPE &   sMAPE &     OA &     UA \\
           \midrule
           Simple LSTM CPU &  797.289 &  206.062 &  85.626 &  41.94 &  58.06 \\
           User Predicted CPU &  812.497 &  355.049 &  89.466 &  72.80 &  27.20 \\
@@ -475,7 +475,7 @@
 
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &    RMSE &      MAPE &    SMAPE &    OA &    UA \\
+          {} &    RMSE &      MAPE &    sMAPE &    OA &    UA \\
           \midrule
           Simple LSTM &  77.902 &  7711.391 &  109.870 &  77.8 &  22.2 \\
           User Predicted  &  73.853 &  3672.256 &   97.613 &  80.8 &  19.2 \\
@@ -584,7 +584,7 @@
         
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &    RMSE &       MAPE &    SMAPE &     OA &     UA \\
+          {} &    RMSE &       MAPE &    sMAPE &     OA &     UA \\
           \midrule
           Task LSTM   &  61.897 &  32287.182 &  119.715 &  56.66 &  43.34 \\
           Simple LSTM &  77.902 &  7711.391 &  109.870 &  77.8 &  22.2 \\
@@ -642,7 +642,7 @@
 
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
+          {} &     RMSE &     MAPE &   sMAPE &     OA &     UA \\
           \midrule
           Instance LSTM   &  614.645 &  294.449 &  87.975 &  57.04 &  42.96 \\
           Task LSTM   &  688.089 &  212.796 &  83.017 &  48.14 &  51.86 \\
@@ -692,7 +692,7 @@
 
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &    RMSE &       MAPE &    SMAPE &    OA &    UA \\
+          {} &    RMSE &       MAPE &    sMAPE &    OA &    UA \\
           \midrule
           Instance LSTM   &  60.415 &  16855.899 &  131.774 &  69.9 &  30.1 \\
           Task LSTM   &  61.897 &  32287.182 &  119.715 &  56.66 &  43.34 \\
@@ -754,7 +754,7 @@
 
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &     RMSE &     MAPE &   SMAPE &     OA &     UA \\
+          {} &     RMSE &     MAPE &   sMAPE &     OA &     UA \\
           \midrule
           Penalty LSTM   &  637.124 &  275.275 &  82.988 &  70.16 &  29.84 \\
           Instance LSTM   &  614.645 &  294.449 &  87.975 &  57.04 &  42.96 \\
@@ -803,7 +803,7 @@
 
         \begin{tabular}{|l|rrrrr|}
           \toprule
-          {} &    RMSE &       MAPE &    SMAPE &     OA &     UA \\
+          {} &    RMSE &       MAPE &    sMAPE &     OA &     UA \\
           \midrule
           Penalty LSTM   &  77.541 &  27603.612 &  133.192 &  87.38 &  12.62 \\
           Instance LSTM   &  60.415 &  16855.899 &  131.774 &  69.9 &  30.1 \\

@@ -72,15 +72,14 @@
         % explain that a subset of the problem is np-hard/complete
 
         
-        \section{Research Objectives}
+        \section{Research Goals and Objectives}
         \label{sec:research-objectives-introduction}
 
             The research objectives of this thesis work are to provide a prediction method for a distributed system handling big data that can predict how much system resources are necessary and provide a rule-based analyser that monitors the system components for over-utilisation.
             This is achieved by analysing existing real-data traces provided by cloud providers and using the gained knowledge to build fine-tuned predictors for the given task pipelines. One objective is to improve upon the existing prediction methods, such as predictions provided by users of cloud services, which have to provide an estimation of the resource utilisation the task that is to be deployed will require. 
             The prediction performance is measured using regression metrics in order to make informed decisions regarding prediction accuracy.
 
-        \section{Research Goals}
-        \label{sec:goals-results-introduction}
+            The research goals are as follows:
 
             \begin{itemize}
                 \item An analysis of different publicly available monitoring traces. This analysis should provide insights to improve the data quality by transforming the datasets and designing better-suited machine learning models, that are fine-tuned for the datasets.
@@ -91,17 +90,29 @@
                 \item Providing the adapted data prediction done by the machine learning component in a reasonable time frame in order to be usable by the matching-based scheduler. 
                 
             \end{itemize}
+        % \section{Research Goals}
+        % \label{sec:goals-results-introduction}
+
+        %     \begin{itemize}
+        %         \item An analysis of different publicly available monitoring traces. This analysis should provide insights to improve the data quality by transforming the datasets and designing better-suited machine learning models, that are fine-tuned for the datasets.
+                
+        %         \item Reviewing different methods and theories for resource utilisation prediction. 
+        %         \item A proof of concept machine learning component that is capable of improving resource utilisation compared to other methods, which includes evaluation of the improvement. 
+        %         \item Evaluating the machine learning component and existing prediction methods based on regression metrics and improving the models based on the gathered data insights to outperform said existing prediction methods.
+        %         \item Providing the adapted data prediction done by the machine learning component in a reasonable time frame in order to be usable by the matching-based scheduler. 
+                
+        %     \end{itemize}
             
-        \section{Research Methodology}
-        \label{sec:research-methodology-introduction}
+        % \section{Research Methodology}
+        % \label{sec:research-methodology-introduction}
 
-            The research methodology is split into multiple segments.
-            First, the state-of-the-art (see section \ref{ch:state-of-the-art}) approaches and algorithms were analysed based on their prediction performance, their applicability to the research problem and the feasibility of implementing each approach. This involves researching suitable scheduling and machine learning methods. Next, based on the available real-data cluster traces, an analysis is conducted to compare and decide on a well-fitted prediction variant.
+        %     The research methodology is split into multiple segments.
+        %     First, the state-of-the-art (see section \ref{ch:state-of-the-art}) approaches and algorithms were analysed based on their prediction performance, their applicability to the research problem and the feasibility of implementing each approach. This involves researching suitable scheduling and machine learning methods. Next, based on the available real-data cluster traces, an analysis is conducted to compare and decide on a well-fitted prediction variant.
 
-            Further, an analysis of the real-data traces is done to use the available data effectively based on the chosen methods.
-            This involves well-researched statistical analysis and transformations of the datasets. These steps are used to increase the likelihood of machine learning models learning the sequential patterns and inner attributes of the dataset.
+        %     Further, an analysis of the real-data traces is done to use the available data effectively based on the chosen methods.
+        %     This involves well-researched statistical analysis and transformations of the datasets. These steps are used to increase the likelihood of machine learning models learning the sequential patterns and inner attributes of the dataset.
 
-            The different machine learning models are compared using various regression metrics that are commonly used to analyse the prediction performance of trained models. This is done to be consistent and comparable with other works in related fields and to ensure an easy process of reproducing the testbed and evaluations.
+        %     The different machine learning models are compared using various regression metrics that are commonly used to analyse the prediction performance of trained models. This is done to be consistent and comparable with other works in related fields and to ensure an easy process of reproducing the testbed and evaluations.
 
             
 

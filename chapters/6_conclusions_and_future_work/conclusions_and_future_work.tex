@@ -15,8 +15,21 @@
 
     % How I would extend my work on the thesis.
 
-        \subsection{Energy Consumption}
+        \subsection{Energy Consumption and \COTWO Emissions}
         \label{sec:energy-consumption-future-work}
+
+            In the current state of the implementation, the energy consumption is not taken into account.
+            Energy consumption and the resulting \COTWO emissions of computing devices have become important topics in recent years.
+
+            \begin{quote}
+                Carbon dioxide emissions are the primary driver of global climate change. It's widely recognised that to avoid the worst impacts of climate change, the world needs to urgently reduce emissions. But, how this responsibility is shared between regions, countries, and individuals has been an endless point of contention in international discussions \cite{ritchieCOGreenhouseGas2020}. 
+            \end{quote}
+
+            Possible evaluation scenarios are the energy consumption and \COTWO emissions that are produced while training the different LSTM model variants (see \ref{sec:evaluation-scenarios}) and analyse how much the model complexity and data dimensionality impact both. 
+            This could be done either by using a static amount of training epochs for all LSTM models or train the models until they reach a predefined loss value. In the second variant, the model complexity and data dimensionality are likely to have a larger impact on energy consumption and \COTWO emissions.
+
+            Another evaluation scenario is to generate a simulation that is similar to the real dataset of the Alibaba GPU cluster to monitor the energy consumption and \COTWO emissions for different prediction variants and compare the results.
+            This comparison would be similar to the provided evaluations in the \nameref{sec:evaluation-scenarios}, but also provide metrics for the energy consumption and \COTWO emissions.
 
             % Energy Consumption of Machine Learning Algorithms while training, inference
             % Also consumption of task execution on GPU clusters, and if energy can be saved by using smarter predictors

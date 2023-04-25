@@ -78,7 +78,7 @@
     This is the same dataset as is used for the CPU data analysis in section \ref{sec:cpu-data-analysis} and contains the corresponding memory utilisation of the tasks. Memory utilisation is represented in gigabytes (GB). 
     Therefore, a memory utilisation of $10$ means that a task required $10$ GB at maximum for finishing its execution.
 
-    \begin{figure}
+    \begin{table}
       \centering
       \caption{Actual Memory Utilisation}
       \label{tab:actual-memory-utilisation}
@@ -95,7 +95,7 @@
         max   &  1992.484 \\
         \bottomrule
       \end{tabular}
-    \end{figure}
+    \end{table}
     The mean memory utilisation in this dataset is approximately $17.2$ GB for an average task.
     The standard deviation is $74.76$, thus the distribution of memory utilisation compared to the mean is rather high.
     The minimum is shown as being about $3$ megabytes for a task in the dataset.
@@ -131,7 +131,7 @@
 
         \hline
       \end{tabular}
-      \end{center}
+    \end{center}
 
 
   % \subsection{LSTM Model Setup}
@@ -822,7 +822,7 @@
 
   %  The number of data points is fixed and the same for all evaluation scenarios and LSTM models, so ...
 
-    \begin{figure}
+    \begin{table}
       \centering
 
       \caption{Training Time Comparison of LSTM Variants}
@@ -838,7 +838,7 @@
         max     &         2.5651 &      2.6898 &          2.5993 &             2.8930 \\
         \bottomrule
       \end{tabular}
-    \end{figure}
+    \end{table}
     As seen by the \emph{mean} value, each of the LSTM variants had a similar training time average ranging from approximately $2.3-2.4$ seconds.
     Given that each model was trained with $100$ epochs, this results in an average training time difference of $100$ seconds between the fastest (Instance LSTM) and the slowest (Penalty LSTM) variant.
     % TODO explain that only the difference between the models is calculated
@@ -872,9 +872,9 @@
     Next, the hardware the LSTM model resides on has a major influence on the time that is required to infer a prediction from input data. Deep learning nowadays heavily relies on the usage of modern GPUs that use so-called \emph{tensor cores} specifically build for machine learning tasks to accelerate both the training and the inference times.
     \begin{figure}
       \centering
+      \includegraphics[width=0.99\textwidth]{figures/inference_time_batch_size.png}
       \caption{Average Inference Time per Batch Size}
       \label{fig:average-inference-time-per-batch-size}
-      \includegraphics[width=0.99\textwidth]{figures/inference_time_batch_size.png}
     \end{figure}
 
     As can be seen in figure \ref{fig:average-inference-time-per-batch-size} and table \ref{tab:inference-time-of-lstm-variants} the inference times of all LSTM variants are similar regarding all batch sizes except for the Instance LSTM variant (see \ref{sec:adding-instance-knowledge-evaluation-scenarios}). 

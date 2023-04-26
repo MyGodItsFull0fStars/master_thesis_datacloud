@@ -31,14 +31,28 @@
             Another evaluation scenario is to generate a simulation that is similar to the real dataset of the Alibaba GPU cluster to monitor the energy consumption and \COTWO emissions for different prediction variants and compare the results.
             This comparison would be similar to the provided evaluations in the \nameref{sec:evaluation-scenarios}, but also provide metrics for the energy consumption and \COTWO emissions.
 
-            % Energy Consumption of Machine Learning Algorithms while training, inference
-            % Also consumption of task execution on GPU clusters, and if energy can be saved by using smarter predictors
-
         \subsection{Adaptation Loop}
         \label{sec:adaptation-loop-future-work}
 
-            % Mention that the adaptation is not fully tested or included
-            % Mention that the adaptation loop should be tested with some edge cases such as really bad schedule and how it is corrected
+            While the components of the Adaptation Loop described in section \ref{sec:adaptation-saa-background} work independently and to some degree can be used with one another, the full integration of the Adaptation Loop is yet not fully implemented nor tested.
+            In the following sections, missing integration steps are explained, as to why they need to be implemented in order for the system to be functional.
+            Similarly, the testing environment section contains suggestions for test scenarios that enable the analysis of the Adaptation Loop behaviour under stress and existing mismanagement of tasks and resources.
+
+            \paragraph{Full Integration}
+            Full integration into a live system is the next step that requires the following steps:
+            \begin{itemize}
+                \item Processing batches of recently monitored data to be used as training data for the LSTM model and continuously training the model on monitored data in order to gain higher accuracy and react to recent trends.
+                \item Provide a process to easily deploy LSTM models for inference. A possible way to deploy LSTM models in a scalable manner are \emph{PyTorch TorchScripts} \cite{inkawhichSavingLoadingModels}.
+                \item Provide a wrapper for incoming and outgoing data that is sent to and from the LSTM model to be easily used with other components such as monitoring tools and the \CMATCH scheduler.
+            \end{itemize}
+
+            \paragraph{Testing Environment}
+            For testing the system, the following scenarios should be implemented to test the Adaptation Loop for its stability and its feasibility:
+            \begin{itemize}
+                \item Create a small testbed with a few Cloud, Fog and Edge devices. This should be done to be able to reach utilisation limits on the desired devices. Reaching the limits of a resource has the goal of analysing the behaviour of the Adaptation Loop in such a scenario.
+                \item Provide a schedule plan that maps tasks to not suited resources on purpose. This should be done to see the behaviour of the Adaptation Loop when its rule-based system notifies it of the resources not being used in a reasonable manner.
+                \item Provide a schedule plan that while being within utilisation and finishing time goals still has potential for improvement.
+            \end{itemize}
 
         \subsection{Comparison with other Datasets}
         \label{sec:comparison-with-other-datasets-future-work}

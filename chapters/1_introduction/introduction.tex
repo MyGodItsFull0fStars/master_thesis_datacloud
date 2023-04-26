@@ -14,10 +14,18 @@
         %     \end{quote}
 
     The Internet and computational devices have penetrated all fields and areas. 
-    This interconnected network of computers increases by the day and results in an immense amount of data being produced, which is commonly referred to as \emph{Big Data}.
-
+    The data produced by this interconnected network of computers increases by the day. 
+    This vast amount of data is often referred to as \emph{Big Data}.
+    Big Data includes healthcare data such as remote patient monitoring, treatment, sensor data of autonomous smart cities, communications, media and entertainment and other industries. 
+    Most of this produced data is unstructured and needs to be processed in order to be usable and analysed.
+    As the computational demands of processing large amounts of data are increasing and more complex data structures are being sent on the Internet, e.g. video streams, the processing of data is requiring more powerful resources.
     The ever-increasing amount of data to process resulted in the need for more powerful computing resources such as the \emph{Cloud}.
-    The \emph{Cloud} physically resides in large-scale data centres that enable applications to quickly scale depending on resource utilisation spikes. Additionally, they possess the required computing power to analyse Big Data in a performant manner.
+    The Cloud physically resides in large-scale data centres that enable applications to quickly scale depending on resource utilisation spikes. Additionally, they possess the required computing power to analyse Big Data in a performant manner.
+
+    Yet, while the Cloud is capable to process large amounts of data, it also has various disadvantages to only using a Cloud system for Big Data processing. To use the processing power or access the storage units of the Cloud system, an Internet connection is required. Given the increasing amount of data to be sent to the Cloud, this also results in requiring fast internet speed for the Cloud processing to be used in a reasonable time frame. Another disadvantage is the potential downtime of the Cloud system, either by an unstable Internet connection or a system failure at the Cloud system. This downtime can lead to total failures of infrastructures that entirely rely on the Cloud for data storage and processing.
+    Also, the physical distance of the Cloud system to the devices producing data leads to latencies due to sending information back and forth over the Internet. Real-time applications require fast processing times, thus sending data and waiting for information provided by a Cloud system is not suitable for this application type.
+    These disadvantages resulted in creating the \emph{Computing Continuum}. 
+    The Computing Continuum covers Cloud, Fog and Edge systems that promise to omit the disadvantages of solely relying on a Cloud system.
     
     Modern large-scale distributed infrastructures that consist of a vast amount of heterogeneous resources require complex workflow sequences in order to functionally operate. Additionally, specific domain knowledge is required to be able to properly map tasks residing on a big data pipeline onto heterogeneous resources. Yet, this often results in a degradation of the performance of the system since research shows that humans tend to over-provision the available resources.
 

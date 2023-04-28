@@ -33,8 +33,8 @@
     \section{Future Work}
     \label{sec:future-work}
 
-    % TODO
-    % How I would extend my work on the thesis.
+        This section contains possible future work on how the contents of this thesis would be extended in the future.
+        These extensions cover topics such as energy consumption and \COTWO emissions, implementation details, comparisons with other datasets, comparisons with other machine learning architectures, improving the PMSE loss function and using additional machine learning components to improve the prediction performance of the LSTM variants covered in this thesis.
 
         \subsection{Energy Consumption and \COTWO Emissions}
         \label{sec:energy-consumption-future-work}
@@ -135,6 +135,9 @@
 
             Yet, it became clear that this approach also requires a deep understanding of multiple disciplines and the translation of monitoring traces to graph-structured data is also an error-prone and difficult task.
 
+            Another possible option to improve the predictions of the LSTM variants might be to add additional machine-learning architecture components such as \emph{Variational Autoencoders (VAE)}. 
+            VAE currently show astonishing results when generating images. 
+            Also, they show great results for anomaly detection, and an idea of how to integrate them into the current LSTM architecture is to append them after a pre-trained LSTM to be fed the results and learn how to correct some of the predicted utilisation values that have a great distance to the actual resource utilisation.
 
 
     % * Energy 

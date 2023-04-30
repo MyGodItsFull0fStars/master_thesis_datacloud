@@ -35,109 +35,32 @@
 
         This section contains possible future work on how the contents of this thesis would be extended in the future.
         These extensions cover topics such as energy consumption and \COTWO emissions, implementation details, comparisons with other datasets, comparisons with other machine learning architectures, improving the PMSE loss function and using additional machine learning components to improve the prediction performance of the LSTM variants covered in this thesis.
+        
+        In the current state of the implementation, the energy consumption is not taken into account.
+        Energy consumption and the resulting \COTWO emissions of computing devices have become important topics in recent years.
 
-        \subsection{Energy Consumption and \COTWO Emissions}
-        \label{sec:energy-consumption-future-work}
+        While the components of the Adaptation Loop described in section \ref{sec:adaptation-saa-background} work independently and to some degree can be used with one another, the full integration of the Adaptation Loop is yet not fully implemented nor tested.
+        In the following sections, missing integration steps are explained, as to why they need to be implemented in order for the system to be functional.
 
-            In the current state of the implementation, the energy consumption is not taken into account.
-            Energy consumption and the resulting \COTWO emissions of computing devices have become important topics in recent years.
+        While the LSTM model that used the PMSE loss function did gain performance gains over other variants in some scenarios, it also was likely to overestimate the actual resource utilisation for both CPU and memory usage.
+        A well-suited penalty value could improve prediction accuracy.
 
-            \begin{quote}
-                Carbon dioxide emissions are the primary driver of global climate change. It's widely recognised that to avoid the worst impacts of climate change, the world needs to urgently reduce emissions. But, how this responsibility is shared between regions, countries, and individuals has been an endless point of contention in international discussions \cite{ritchieCOGreenhouseGas2020}.
-            \end{quote}
+        The results of the LSTM variants are promising for the chosen GPU cluster traces. 
+        Yet, these cluster traces only contain various machine-learning tasks. 
+        Alibaba provides access to other monitoring traces, each with its specific focus, such as micro-services.
+        Similarly, Google provides monitoring traces of their clusters, thus one possible evaluation scenario for future work is the comparison of a GPU cluster dataset by Google to see how well the LSTM variants perform on these cluster traces.
 
-            Possible evaluation scenarios are the energy consumption and \COTWO emissions that are produced while training the different LSTM model variants (see \ref{sec:evaluation-scenarios}) and analyse how much the model complexity and data dimensionality impact both. 
-            This could be done either by using a static amount of training epochs for all LSTM models or train the models until they reach a predefined loss value. In the second variant, the model complexity and data dimensionality are likely to have a larger impact on energy consumption and \COTWO emissions.
+        While researching possible resource utilisation machine learning approaches, other model architectures were also considered.
+        One very promising machine learning architecture is called \emph{Graph Neural Networks (GNN)}.
+        GNNs are capable of doing inference on an arbitrary number of tasks (similar to LSTMs), yet one major advantage is their characteristic of not requiring the tasks to be ordered.
 
-            Another evaluation scenario is to generate a simulation that is similar to the real dataset of the Alibaba GPU cluster to monitor the energy consumption and \COTWO emissions for different prediction variants and compare the results.
-            This comparison would be similar to the provided evaluations in the \nameref{sec:evaluation-scenarios}, but also provide metrics for the energy consumption and \COTWO emissions.
+        One reason the Alibaba dataset of the GPU cluster was chosen is task independence, i.e. no task has dependencies on other tasks in the dataset.
+        This characteristic of independence made the process of predicting resource utilisation simpler to implement.
+        Since many tasks that are being executed on distributed infrastructures do have dependencies on other tasks and are often deployed onto different resources, it is necessary to take these dependencies into account when predicting the utilisation and deploying the tasks to resources.
 
-        \subsection{Adaptation Loop}
-        \label{sec:adaptation-loop-future-work}
-
-            While the components of the Adaptation Loop described in section \ref{sec:adaptation-saa-background} work independently and to some degree can be used with one another, the full integration of the Adaptation Loop is yet not fully implemented nor tested.
-            In the following sections, missing integration steps are explained, as to why they need to be implemented in order for the system to be functional.
-            Similarly, the testing environment section contains suggestions for test scenarios that enable the analysis of the Adaptation Loop behaviour under stress and existing mismanagement of tasks and resources.
-
-            \paragraph{Full Integration}
-            Full integration into a live system is the next step that requires the following steps:
-            \begin{itemize}
-                \item Processing batches of recently monitored data to be used as training data for the LSTM model and continuously training the model on monitored data in order to gain higher accuracy and react to recent trends.
-                \item Provide a process to easily deploy LSTM models for inference. A possible way to deploy LSTM models in a scalable manner are \emph{PyTorch TorchScripts} \cite{inkawhichSavingLoadingModels}.
-                \item Provide a wrapper for incoming and outgoing data that is sent to and from the LSTM model to be easily used with other components such as monitoring tools and the \CMATCH scheduler.
-            \end{itemize}
-
-            \paragraph{Testing Environment}
-            For testing the system, the following scenarios should be implemented to test the Adaptation Loop for its stability and its feasibility:
-            \begin{itemize}
-                \item Create a small testbed with a few Cloud, Fog and Edge devices. This should be done to be able to reach utilisation limits on the desired devices. Reaching the limits of a resource has the goal of analysing the behaviour of the Adaptation Loop in such a scenario.
-                \item Provide a schedule plan that maps tasks to not suited resources on purpose. This should be done to see the behaviour of the Adaptation Loop when its rule-based system notifies it of the resources not being used in a reasonable manner.
-                \item Provide a schedule plan that while being within utilisation and finishing time goals still has potential for improvement.
-            \end{itemize}
-
-        \subsection{Improve PMSE Loss Function}
-        \label{sec:improve-pmse-loss-function-future-work}
-
-            While the LSTM model that used the PMSE loss function did gain some performance gains over other variants in some scenarios, it also was likely to overestimate the actual resource utilisation for both CPU and memory usage.
-            One option for improving the predictions might be to find a well-suited penalty value that is added to the loss function.
-            In the evaluation scenario \ref{sec:training-with-custom-loss-function-evaluation-scenarios} the PMSE loss function used a penalty value of $0.05$ in case the predicted value was underestimating the utilisation. 
-            This penalty value is likely too high given the trend of overestimating in the inference. Further tests are required to find a penalty value that compensates for the prediction of underestimated values while not overestimating by a too high distance to the actual value.
-            Also, a static penalty value might not be the best option for adding a penalty to a loss function.
-
-            Another option, that does not use a static penalty value might be to multiply a penalty value with the resulting loss of each loss element instead of adding a value. This would penalise predicted values that have a higher distance to the actual value than those that are close to the actual value.
-            
-            Additionally, it could be tested to penalise both the over- and underestimation regarding the distance to the actual values.
-            This might result in the LSTM model not overestimating as much as the current version does.
-        \subsection{Comparison with other Datasets}
-        \label{sec:comparison-with-other-datasets-future-work}
-
-            The results of the LSTM variants are promising for the chosen GPU cluster traces. 
-            Yet, these cluster traces only contain various machine-learning tasks. 
-            Alibaba provides access to other monitoring traces, each with its specific focus, such as micro-services.
-            Similarly, Google provides monitoring traces of their clusters, thus one possible evaluation scenario for future work is the comparison of a GPU cluster dataset by Google to see how well the LSTM variants perform on these cluster traces.
-
-            Another possible comparison option is to see how well the current LSTM configurations perform on real-data traces that focus on other task types. For this, either the LSTM variants have to be modified, to be able to feed the feature sets into them, or the dataset has to be configured. For the comparison, the metrics used in the evaluation scenarios should be used to translate the results of inference on new datasets to the current results.
+        
             
 
-
-
-        \subsection{Analyse and Integrate the Dependencies of Tasks}
-        \label{sec:analyse-and-integrate-the-dependencies-of-tasks-future-work}
-
-            % Explain that the current dataset does not have dependencies 
-            % And that this is a future improvement to the current state
-            One reason the Alibaba dataset of the GPU cluster was chosen is task independence, i.e. no task has dependencies on other tasks in the dataset.
-            This characteristic of independence made the process of predicting resource utilisation simpler to implement.
-            Since many tasks that are being executed on distributed infrastructures do have dependencies on other tasks and are often deployed onto different resources, it is necessary to take these dependencies into account when predicting the utilisation and deploying the tasks to resources.
-
-        \subsection{Generalise Monitoring Traces Dataset}
-        \label{sec:generalise-dataset-future-work}
-
-            Following sections \ref{sec:comparison-with-other-datasets-future-work} and \ref{sec:analyse-and-integrate-the-dependencies-of-tasks-future-work} the dataset used for training and inference should be generalised in future work. 
-            A general dataset should contain tasks of various types, such as machine learning tasks, micro-service tasks, micro-architecture, etc.
-            Additionally, it should take the task dependencies and independencies into account.
-            Using a general dataset will help train the machine learning models on a broader application spectrum.
-
-            Yet, the results of the current LSTM variants show that for the LSTM model to be generalised, it will have to be modified to handle the more general prediction of task utilisation. For this, at least the task dependencies have to be encoded, as well as the different task types have to include micro-services etc. as one-hot encoded data.
-            
-            
-
-        \subsection{Explore other Machine Learning Algorithms}
-        \label{sec:explore-other-machine-learning-algorithms-future-work}
-
-            % Mention to include other ML algos to the LSTM to see if improvements are possible such as VAE after LSTM
-            % Mention GNN as another approach
-            While researching possible resource utilisation machine learning approaches, other model architectures were also considered.
-            One very promising machine learning architecture is called \emph{Graph Neural Networks (GNN)}.
-            GNNs are capable of doing inference on an arbitrary number of tasks (similar to LSTMs), yet one major advantage is their characteristic of not requiring the tasks to be ordered. GNNs consider the relationship between nodes and edges in graph-structured data.
-            They show promising results in various fields, one of them being for combinatorial optimisation problems, e.g. task scheduling.
-            One recent publication called SOLO \cite{orenSOLOSearchOnline2021} might be able to solve various shortcomings of the current LSTM implementations mentioned in the previous sections of this future work chapter.
-
-            Yet, it became clear that this approach also requires a deep understanding of multiple disciplines and the translation of monitoring traces to graph-structured data is also an error-prone and difficult task.
-
-            Another possible option to improve the predictions of the LSTM variants might be to add additional machine-learning architecture components such as \emph{Variational Autoencoders (VAE)}. 
-            VAE currently show astonishing results when generating images. 
-            Also, they show great results for anomaly detection, and an idea of how to integrate them into the current LSTM architecture is to append them after a pre-trained LSTM to be fed the results and learn how to correct some of the predicted utilisation values that have a great distance to the actual resource utilisation.
 
 
     % * Energy 

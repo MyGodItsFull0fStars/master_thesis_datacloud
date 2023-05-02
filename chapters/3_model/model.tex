@@ -1,17 +1,12 @@
 \chapter{Model} % is the methodology
 \label{ch:model-methodology}
 
-    \section{Application Model}
-    \label{sec:application-model}
 
-    % An application model in research refers to a conceptual or theoretical framework that describes the structure, behavior, and interactions of a software application. It is a high-level representation of the system that captures its essential features, without getting into the details of its implementation.
 
-    % Application models are often used in research to analyze and design software applications, to identify potential problems or limitations, and to evaluate different approaches to solving them. They can be used to describe different aspects of the application, such as its functionality, performance, usability, and security.
+    \section{Data Pipeline Model}
+    \label{sec:data-pipeline-model}
 
-    % One of the most common types of application models used in research is the software development life cycle (SDLC) model. The SDLC model describes the different stages involved in developing a software application, from the initial planning and requirements gathering to the final deployment and maintenance. Other application models used in research include the user-centered design (UCD) model, the agile development model, and the model-view-controller (MVC) model.
-
-    % Overall, application models are an important tool in research for understanding and designing software applications, and they can help researchers to develop more effective and efficient systems.
-
+        We model Big Data pipeline workflow received through the DEF-PIPE tool as $W = M, E, Q, M_{SOURCE}, M_{SINK}$, where $M$ is the set of Big Data pipeline tasks, $E$ denotes the Big Data pipelines, $Q$ is the data queue between the tasks, $M_{SOURCE}$ is the data producers (sources) and $M_{SINK}$ is the data consumers (sinks).
 
     \section{Resource Model}
     \label{sec:resource-model}
@@ -58,15 +53,43 @@
         Then, we define a capacity of a resource as MONrt, denoting the monitored data of resource r at time step \TIMESTEPT. 
         In this case, St is defined as $\STATETMATH = {MON_{r1}^\TIMESTEPTMATH, MON_{r2}^\TIMESTEPTMATH, \dots, MON_{rn}^\TIMESTEPTMATH}$ as the combination of monitored data of a resource $r_i$ at a time step \TIMESTEPT.
 
+
     \section{Resource Prediction Model}
     \label{sec:resource-prediction-model}
 
         The monitoring system on the computing continuum records the performance metrics, such as CPU, GPU, memory utilisation and network usage, along with the runtime execution of tasks. We train an LSTM-based machine learning model on the monitored and historical data. Then, the output is obtained from the LSTM prediction model. In the case that the difference between the prediction and monitored data is less than a threshold value (e.g., 0.1), we obtain the predicted under-utilized resources for task scheduling. Otherwise, we tune the training model parameters or add more historical data to improve the prediction accuracy.
 
+
         \begin{figure}
             \centering
-            \includegraphics{figures/resource_prediction_flow_chart.pdf}
+            \includegraphics[width=0.9\textwidth]{figures/training_flowchart.pdf}
             \caption{Flow chart of resource prediction}
             \label{fig:flow-chart-of-resource-prediction}
         \end{figure}
 
+
+
+    \section{Application Model}
+    \label{sec:application-model}
+
+    % An application model in research refers to a conceptual or theoretical framework that describes the structure, behavior, and interactions of a software application. It is a high-level representation of the system that captures its essential features, without getting into the details of its implementation.
+
+    % Application models are often used in research to analyze and design software applications, to identify potential problems or limitations, and to evaluate different approaches to solving them. They can be used to describe different aspects of the application, such as its functionality, performance, usability, and security.
+
+    % One of the most common types of application models used in research is the software development life cycle (SDLC) model. The SDLC model describes the different stages involved in developing a software application, from the initial planning and requirements gathering to the final deployment and maintenance. Other application models used in research include the user-centered design (UCD) model, the agile development model, and the model-view-controller (MVC) model.
+
+    % Overall, application models are an important tool in research for understanding and designing software applications, and they can help researchers to develop more effective and efficient systems.
+
+    % TODO
+
+        We model the applications as shown in figure \ref{fig:application-model}.
+        It consists of numerous components mentioned in previous sections and is the structural framework.
+        It receives tasks as a pipeline via a Deployment API that is sent to a \emph{Dependency Analysis} component.
+        After the dependency analysis, these tasks are sent to the \emph{Scheduling} component
+
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\textwidth]{pdf/data_cloud_arch.pdf}
+            \caption{Application Model}
+            \label{fig:application-model}
+        \end{figure}

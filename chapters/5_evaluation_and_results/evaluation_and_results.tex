@@ -26,7 +26,7 @@
 \label{sec:data-analysis-evaluation}
 
   % \subsection{Structure of the Trace Data}
-  This section contains the analysis of the Alibaba datasets that are used in section \ref{sec:evaluation-setup}. This data analysis builds on top of data analysis done in \cite{fengcunDeepJSJobScheduling2023}.
+  This section contains the analysis of the Alibaba datasets used in section \ref{sec:evaluation-setup}. This data analysis builds on top of data analysis done in \cite{fengcunDeepJSJobScheduling2023}.
   Alibaba provides numerous monitoring traces clustered in different data clusters collected in a GitHub repository \cite{wengAlibabaClusterTrace2023}.
   For the evaluation of the prediction performance of the LSTM model configurations, the GPU cluster dataset \texttt{cluster-trace-gpu-v2020} was chosen. Analysis and characterisation of the GPU cluster data were done in \cite{wengMLaaSWildWorkload2022}.
   The data structure of the monitoring traces is shown in figure \ref{fig:gpu-trace-data-structure}, where a job consists of multiple tasks that get deployed on one or more instances depending on the defined number of instances.
@@ -114,7 +114,7 @@
 % How everything was set up (Kubernetes, ml,...)
 
   In this section, the evaluation setup will be described in detail. 
-  This involves what tools and technologies were used and how they were combined in order to evaluate our test cases. Additionally, the \nameref{sec:forecasting-metrics-evaluation-setup} that are used are briefly described since they are crucial for the forecast prediction performance comparisons.
+  This involves what tools and technologies were used and how they were combined in order to evaluate our test cases. Additionally, the \nameref{sec:forecasting-metrics-evaluation-setup} used are briefly described since they are crucial for the forecast prediction performance comparisons.
   
   \subsection{Hardware}
   \label{sec:hardware}
@@ -276,7 +276,7 @@
     \subsubsection{Resource Wastage}
     \label{sec:resource-wastage-metric-evaluation}
 
-      The resource wastage for a single task is defined as the difference between the predicted and the actual value. Since wastage refers to utilising more resources than necessary, only predicted values that are higher than the actual values are considered for this calculation.
+      The resource wastage for a single task is defined as the difference between the predicted and the actual value. Since wastage refers to utilising more resources than necessary, only predicted values higher than the actual values are considered for this calculation.
       % Calculated by subtracting the surface area of allocated - predicted.
 
 \section{Evaluation Scenarios}
@@ -323,10 +323,10 @@
             \bottomrule
             \end{tabular}
         \end{table}
-      In table \ref{tab:metric-cpu-user-predicted} the different metrics that are used for the comparison of the actual and predicted data are shown. 
+      In table \ref{tab:metric-cpu-user-predicted} the different metrics used for the comparison of the actual and predicted data are shown. 
       This table is in the following evaluation scenarios used to compare the performance of the LSTM model to user-predicted values.
       The metrics \nameref{sec:rmse-metrics-evaluation},  \nameref{sec:mape-metrics-evaluation} and \nameref{sec:smape-metrics-evaluation} are used for the performance comparison.
-      Also included in the table are the allocation distribution columns for \emph{Over-Allocation (OA)} and \emph{Under-Allocation (UA)} that are calculated by comparing each predicted value with its corresponding actual value and if the predicted value is higher, it is added to the over-allocated section and if the value is smaller then it is added to the under-allocated section.
+      Also included in the table are the allocation distribution columns for \emph{Over-Allocation (OA)} and \emph{Under-Allocation (UA)} calculated by comparing each predicted value with its corresponding actual value and if the predicted value is higher, it is added to the over-allocated section and if the value is smaller then it is added to the under-allocated section.
       As seen in the \emph{OA} and \emph{UA} columns, the CPU over-allocation is at almost $73 \%$.
       \begin{table}
         \centering
@@ -403,7 +403,7 @@
       The \emph{mean} of the predictions the LSTM model provided is lower by approximately one and the user prediction is higher by one CPU core than the actual \emph{mean} of $5.16$ CPU cores.
       In regards to the \emph{standard deviation}, the LSTM prediction with $705.771$ is closer to the actual value of $881.832$ than the value of the user prediction with $496.245$. This indicates that the LSTM model is able to better predict changes in task utilisation than users that provide the tasks. 
       The \emph{minimum} of the LSTM model with $3.03$ is also closer to the actual value with $1.023$ than the user-predicted minimum value of $5$.
-      Similarly, the first and second quartile in the LSTM prediction dataset is closer to the actual data values, yet the LSTM model is likely to predict values that are lower than the actual value. As already signalled by a lower \emph{mean} value, the second and third quartiles of the LSTM predictions both are lower than the similar quartiles of the actual dataset. In the third quartile, the user predictions of the CPU utilisation outperform the LSTM model, since these predictions only overestimate the CPU utilisation by $72\%$ of a CPU core, while the LSTM model underestimates the utilisation by approximately $2.5$ CPU cores.
+      Similarly, the first and second quartile in the LSTM prediction dataset is closer to the actual data values, yet the LSTM model is likely to predict values lower than the actual value. As already signalled by a lower \emph{mean} value, the second and third quartiles of the LSTM predictions both are lower than the similar quartiles of the actual dataset. In the third quartile, the user predictions of the CPU utilisation outperform the LSTM model, since these predictions only overestimate the CPU utilisation by $72\%$ of a CPU core, while the LSTM model underestimates the utilisation by approximately $2.5$ CPU cores.
       This trend continues in the predicted maximum value. The LSTM model value is even lower than the value provided by the user, and therefore even smaller than the actual value.
       A reason for the underestimation of values might be that the actual dataset consists of a large amount of \emph{low} utilisation values, as indicated by the second quartile. Since this LSTM model version is only provided with the user prediction of the tasks, the GPU worker pool capacity, and the actual CPU utilisation (after training in the loss function), it is likely that based on the limited information, the model learned to predict lower CPU utilisation values, since most of the actual data points are lower than the \emph{mean}. 
       \begin{table}
@@ -491,7 +491,7 @@
     The tasks are mapped to a finite set of a one-hot encoded feature vector and their corresponding index is represented as the value $1$.
     The additional information about the task type enables the LSTM model to better discern the actual utilisation that is required for each task.
     The task knowledge also provides information regarding the order of tasks, since patterns of reoccurring tasks also help the model to generate more accurate predictions in theory.
-    This LSTM model is referred to as \emph{Task LSTM model} in the following analysis sections.    
+    This LSTM model is referred to as \textbf{Task LSTM} model in the following analysis sections.    
 
 
     \subsubsection{CPU Prediction Analysis}
@@ -596,8 +596,8 @@
   \subsection{Adding Instance Knowledge}
   \label{sec:adding-instance-knowledge-evaluation-scenarios}
 
-    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:adding-task-knowledge-evaluation-scenarios} also information about the number of instances that are required to be deployed.
-    Further on, the model trained with the additional instance knowledge is referred to as \texttt{Instance LSTM}.
+    In this evaluation scenario, the feature set used to train the LSTM model contains additionally to the feature set arguments of the \nameref{sec:adding-task-knowledge-evaluation-scenarios} also information about the number of instances required to be deployed.
+    Further on, the model trained with the additional instance knowledge is referred to as \textbf{Instance LSTM}.
     While the knowledge about the number of instances is similarity one-hot encoded as is the task knowledge (see \ref{sec:adding-task-knowledge-evaluation-scenarios}), adding one feature vector column for every instance number would have resulted in exploding the feature data set with 800 additional columns since the minimum instance number is $1$ and the maximum is $800$.
     For this reason, the feature vector for the one-hot encoded instances was first clustered into $10$ buckets in $50$ iterations by k-means clustering \cite{hartiganAlgorithm136Kmeans1979}.
     In the following prediction analysis sections \ref{sec:cpu-prediction-analysis-instance-knowledge-lstm-evaluation-scenarios}, \ref{sec:mem-prediction-analysis-instance-knowledge-lstm-evaluation-scenarios}, the Instance LSTM model is compared to the Task LSTM model of evaluation scenario \ref{sec:adding-task-knowledge-evaluation-scenarios} and the user predictions (see \ref{sec:user-defined-cpu-prediction-analysis-evaluation-scenario}).

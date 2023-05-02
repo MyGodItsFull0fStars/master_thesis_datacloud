@@ -73,10 +73,10 @@ openany, % A chapter may start on either a recto or verso page.
 
 \chapterstyle{standard}
 
-% \setsecheadstyle{\normalfont\large\bfseries}
-% \setsubsecheadstyle{\normalfont\normalsize\bfseries}
-% \setparaheadstyle{\normalfont\normalsize\bfseries}
-% \setparaindent{0pt}\setafterparaskip{0pt}
+\setsecheadstyle{\normalfont\Large\bfseries}
+\setsubsecheadstyle{\normalfont\large\bfseries}
+\setparaheadstyle{\normalfont\normalsize\bfseries}
+% \setparaindent{5pt}\setafterparaskip{0pt}
 
 %%% FLOATS AND CAPTIONS
 %%%------------------------------------------------------------------------------
@@ -141,11 +141,7 @@ openany, % A chapter may start on either a recto or verso page.
 \pagestyle{standard}               % Choosing page style and chapter page style
 \aliaspagestyle{chapter}{chap} %
 
-%%% NEW COMMANDS
-%%%------------------------------------------------------------------------------
 
-\newcommand{\p}{\partial} %Partial
-% Or whatever you want
 
 %%% TABLE OF CONTENTS
 %%%------------------------------------------------------------------------------
@@ -154,7 +150,7 @@ openany, % A chapter may start on either a recto or verso page.
 \settocdepth{section}
 % \settocdepth{subsection}
 
-% \AtEndDocument{\addtocontents{toc}{\par}} % Add a \par to the end of the TOC
+\AtEndDocument{\addtocontents{toc}{\par}} % Add a \par to the end of the TOC
 
 %%% INTERNAL HYPERLINKS
 %%%-------------------------------------------------------------------------------
@@ -219,6 +215,10 @@ openany, % A chapter may start on either a recto or verso page.
   \renewcommand{\listtheoremname}{List of Definitions}%
 }
 
+
+%%% NEW COMMANDS
+%%%------------------------------------------------------------------------------
+
 \newcommand{\SAA}{\textsc{SAA }}
 \newcommand{\CMATCH}{$C^3$-MATCH }
 
@@ -255,10 +255,11 @@ openany, % A chapter may start on either a recto or verso page.
 
 \newcommand{\COTWO}{$CO_2$ }
 
-% \declaretheorem[name=Definition]{definition}
 \begin{document}
 
-  \maketitle
+  % \maketitle
+  \import{chapters/}{title.tex}
+
 
   \tableofcontents
   \listoffigures
@@ -269,7 +270,7 @@ openany, % A chapter may start on either a recto or verso page.
   \section*{Abstract}   
 
 
-  \import{./chapters/1_introduction}{introduction.tex}
+  \import{chapters/1_introduction}{introduction.tex}
 
   \import{chapters/2_background_related_work}{background.tex}
   \import{chapters/2_background_related_work}{related_work.tex}

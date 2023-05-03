@@ -24,9 +24,16 @@
         The custom loss function \emph{Penalty Mean Squared Error (PMSE)} did perform better in predicting utilisation spikes, yet it also is likely to over-estimate the resource utilisation, which results in a worse performance than the user predictions for memory utilisation also had the better prediction performance for CPU utilisation regarding the metrics \emph{MAPE} and \emph{sMAPE} than the Instance LSTM variant.
         The improvements are promising and further evaluations regarding this loss function or a new variant (see section \ref{sec:improve-pmse-loss-function-future-work}) should be done in future work.
 
+        For the \nameref{sec:rmse-metrics-evaluation} metric, the LSTM variants performed $2\%-27\%$ better than the user predictions for CPU utilisation, and for memory utilisation the LSTM variants Task and Instance LSTM performed $17\%-20\%$ better and the other variants slightly worse with $5\%$ than the user predictions.
+        For the \nameref{sec:mape-metrics-evaluation}, the LSTM variants performed $19\%-53\%$ better for CPU utilisation but worse for the memory utilisation by $70\%-160\%$ compared to the user predictions.
+        For the \nameref{sec:smape-metrics-evaluation}, the LSTM variants did perform $1.6-7.5\%$ better for CPU utilisation but slightly worse for memory utilisation by $12\%-31\%$ than the user predictions.
+        Therefore, there is potential for improvement regarding memory utilisation.
+
         Overall, the LSTM models did perform worse when predicting memory utilisation the more information is fed as a feature set to them and the more complex they have become.
         Additionally, not one LSTM variant did outperform the other LSTM model variants in all regression metrics.
         Each had a specific strength, which will require additional research to generalise the training in a manner to result in an LSTM model that is suitable for most task types. 
+        The prediction improvements for CPU utilisation did improve regarding every regression metric, yet the predictions for memory utilisation were still outperformed in many scenarios by the user predictions. 
+        The improvements in CPU utilisation predictions indicate that similar improvements are possible for memory utilisation, even if they have yet not been achieved.
 
 
 
@@ -59,11 +66,3 @@
         Since many tasks that are being executed on distributed infrastructures do have dependencies on other tasks and are often deployed onto different resources, it is necessary to take these dependencies into account when predicting the utilisation and deploying the tasks to resources.
 
         
-            
-
-
-
-    % * Energy 
-    % -- to see the influence of energy consumption and possible improvement.
-    % -- to investigate if energy was reduced or not
-    % * Explore with other ML ALGOS such as GNN

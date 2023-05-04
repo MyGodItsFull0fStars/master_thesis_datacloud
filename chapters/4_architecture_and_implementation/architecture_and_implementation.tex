@@ -9,20 +9,38 @@
 
   \begin{figure}
       \centering
-      \includegraphics[width=0.8\textwidth]{pdf/data_cloud_arch.pdf}
+      % \includegraphics[width=0.8\textwidth]{pdf/data_cloud_arch.pdf}
+      \includegraphics[width=0.99\textwidth]{figures/saa_diagram.pdf}
       \caption{\SAA Architecture}
       \label{fig:data-cloud-architecture}
   \end{figure}
 
-  \paragraph{Dependency analysis } orders the candidate tasks scheduled on each resource in a preference list based on the aggregate pipeline communication time to each task.
+  \paragraph{Data Pipeline}
 
-  \paragraph{Execution event detection } uses data from an external monitoring system to identify SLO violations or anomalies during execution.
+  \paragraph{REST API} enables the integration of the \SAA{} scheduling and adaptation tool with deployment and orchestration systems. \cite{kimovskiBigDataPipeline2022}
 
-  \paragraph{Scheduling } maps the pipeline tasks to the resources using a matching theory algorithm, applied to the task and resource preference lists in response to infrastructure drifts.
+  \paragraph{Alibaba Dataset}
 
-  \paragraph{Adaptation } dynamically applies re-scheduling or migration of the tasks based on the analyzed monitoring received from the execution event detection. Both the scheduling and adaptation interact with the deployment and orchestration system to perform the deployment and adaptation of the tasks.
+  \paragraph{Preprocessing}
 
-  \paragraph{Public API } enables the integration of the \SAA{} scheduling and adaptation tool with deployment and orchestration systems. \cite{kimovskiBigDataPipeline2022}
+  \paragraph{LSTM}
+
+  \paragraph{Dependency analysis} orders the candidate tasks scheduled on each resource in a preference list based on the aggregate pipeline communication time to each task.
+  
+  
+  \paragraph{Scheduling with \CMATCH } maps the pipeline tasks to the resources using a matching theory algorithm, applied to the task and resource preference lists in response to infrastructure drifts.
+  
+  % \paragraph{Adaptation } dynamically applies re-scheduling or migration of the tasks based on the analyzed monitoring received from the execution event detection. Both the scheduling and adaptation interact with the deployment and orchestration system to perform the deployment and adaptation of the tasks.
+  
+  
+  \paragraph{Netdata}
+
+  \paragraph{Prometheus} uses data from an external monitoring system to identify SLO violations or anomalies during execution.
+
+
+
+  \paragraph{Docker}
+
 
 
   \subsection{Scheduling}

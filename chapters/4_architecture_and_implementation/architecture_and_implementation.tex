@@ -15,32 +15,33 @@
         \label{fig:data-cloud-architecture}
     \end{figure}
 
-      \paragraph{Data Pipeline} 
+      \paragraph{Data Pipeline} consists of tasks provided by users that are to be deployed on the Computing Continuum. These tasks are forwarded to a REST API on our endpoint.
 
-      \paragraph{REST API} enables the integration of the \SAA{} scheduling and adaptation tool with deployment and orchestration systems. \cite{kimovskiBigDataPipeline2022}
+      \paragraph{REST API} enables the integration of the \SAA{} scheduling and adaptation tool with deployment and orchestration systems.
 
       \paragraph{Alibaba Dataset} is used to train the prediction model on real data traces consisting of tasks provided as a pipeline to a GPU cluster. The dataset is further described in chapter \nameref{ch:evaluation-and-results}.
 
       \paragraph{Preprocessing} is used to transform the data coming from either the data pipeline or the Alibaba dataset into a form that is possible to be fed to the machine learning models for training and inference. The methods used for preprocessing are described in section \ref{sec:data-preprocessing-techniques}.
 
-      \paragraph{LSTM}
+      \paragraph{LSTM} deep neural networks are used to predict the resource utilisation for the tasks incoming from the data pipeline.
+      The predicted resources are CPU and memory and both are predicted for each task. 
+      Further description of the LSTM variants used is found in section \ref{fig:lstm-model-architecture}.
 
       \paragraph{Dependency analysis} orders the candidate tasks scheduled on each resource in a preference list based on the aggregate pipeline communication time to each task.
       
-      
-      \paragraph{Scheduling with \CMATCH } maps the pipeline tasks to the resources using a matching theory algorithm, applied to the task and resource preference lists in response to infrastructure drifts.
+      \paragraph{Scheduling with \CMATCH} maps the pipeline tasks to the resources using a matching theory algorithm, applied to the task and resource preference lists in response to infrastructure drifts.
     
     % \paragraph{Adaptation } dynamically applies re-scheduling or migration of the tasks based on the analyzed monitoring received from the execution event detection. Both the scheduling and adaptation interact with the deployment and orchestration system to perform the deployment and adaptation of the tasks.
     
       
-      \paragraph{Netdata}
+      \paragraph{Netdata} is deployed on all computing devices that are used to execute the tasks and receive them from the \CMATCH scheduler. Netdata is a monitoring tool that tracks the status of a resource it it deployed on.
+      The capabilities and usage is described in more details in section \ref{sec:netdata-third-party}.
 
-      \paragraph{Prometheus} uses data from an external monitoring system to identify SLO violations or anomalies during execution.
+      \paragraph{Prometheus} fetches monitoring data from resources that have Netdata deployed to identify SLO violations or anomalies during execution. Additionally, it is used to aggregate and store monitoring traces of executed tasks to later use them for fine-tuning the LSTM model.
+      Further details are found in section \ref{sec:prometheus-third-party}.
 
-
-
-      \paragraph{Docker}
-
+      \paragraph{Docker} is used to containerise tools such as Netdata and Prometheus and deploy them on a Kubernetes cluster. Also the tasks in the data pipeline are containerised and deployed on the resources of the Computing Continuum \cite{kimovskiBigDataPipeline2022}.
+      Additional details are found in section \ref{sec:docker-third-party}.
 
 
     \subsection{Scheduling}

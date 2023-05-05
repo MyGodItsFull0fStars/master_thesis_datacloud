@@ -86,7 +86,7 @@
         \label{fig:adaptation-loop}
     \end{figure}
 
-    \subsection{The Approach}
+    \subsection{The SAA Approach}
 
       The SAA adaptation approach is defined as a loop, that cyclically updates every component contained in the loop.
       The adaptation loop is shown in figure \ref{fig:adaptation-loop} and consists of the Big Data pipeline and the \emph{resources} containing all registered and monitored to the \emph{Monitoring and Analysis} component. 
@@ -118,9 +118,7 @@
       \subsubsection*{Resource load over expected parameters $(S_3)$} 
 
         If a resource is over-utilized, there are multiple options. If it is detected that horizontal scaling solves the over-utilization and the resource instance is capable of being scaled up, it will be reconfigured to be within expected utilization levels. Furthermore, if an ill-defined task is detected and mapped to a resource that isn't capable to fulfil the computation within a reasonable time frame, this task will be migrated to another resource. 
-        This is categorized as $S_3$ in the analyser, and the action set will be modified so that resources grouped in $S_3$ will be less utilized with the upcoming updates of the action set. \cite{kimovskiBigDataPipeline2022}
-
-
+        This is categorized as $S_3$ in the analyser, and the action set will be modified so that resources grouped in $S_3$ will be less utilized with the upcoming updates of the action set \cite{kimovskiBigDataPipeline2022}.
 
 
   \section{Third-Party Tools}

@@ -17,7 +17,10 @@
 
     The application model structure is shown in figure \ref{fig:application-model}.
     The data pipeline is filled with task requests provided by users of the infrastructure.
-    Section \ref{sec:data-pipeline-model} describes the data pipeline model and the components that are sent to the Deployment API. 
+    Section \ref{sec:data-pipeline-model} describes the data pipeline model and the components that are sent to the Deployment API. It is then sent to the adaptation component (see \ref{sec:resource-prediction-model}). The tasks with their adapted resource utilisation are then sent to the Scheduling component. 
+    The tasks are scheduled and mapped onto available resources. 
+    The mapped tasks are provided to the orchestration component which then deploys the tasks onto the resources defined in the schedule.
+
 
 
     % We model the applications as shown in figure \ref{fig:application-model}.
@@ -31,7 +34,8 @@
         \caption{Application Model}
         \label{fig:application-model}
     \end{figure}
-    
+    \noindent
+    The state of the resources is tracked by the monitoring system (see \ref{sec:monitoring-model}) and the states of all resources are collected with the Execution Event Detection (EED) component. In case of a rule violation is detected on a resource by the EED component, the tasks deployed on the resource are evaluated for possible adaptation.
 
     \section{Data Pipeline Model}
     \label{sec:data-pipeline-model}
@@ -39,8 +43,8 @@
         We model Big Data pipeline workflow received through the DEF-PIPE tool as $W = M, E, Q, M_{SOURCE}, M_{SINK}$, where $M$ is the set of Big Data pipeline tasks, $E$ denotes the Big Data pipelines, $Q$ is the data queue between the tasks, $M_{SOURCE}$ is the data producers (sources) and $M_{SINK}$ is the data consumers (sinks).
 
 
-    \section{Dependency Analysis}
-    \label{sec:dependency-analysis-model}
+    % \section{Dependency Analysis}
+    % \label{sec:dependency-analysis-model}
 
     \section{Resource Model}
     \label{sec:resource-model}

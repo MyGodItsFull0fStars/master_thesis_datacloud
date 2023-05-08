@@ -17,9 +17,12 @@
 
     The application model structure is shown in figure \ref{fig:application-model}.
     The data pipeline is filled with task requests provided by users of the infrastructure.
-    Section \ref{sec:data-pipeline-model} describes the data pipeline model and the components that are sent to the Deployment API. It is then sent to the adaptation component (see \ref{sec:resource-prediction-model}). The tasks with their adapted resource utilisation are then sent to the Scheduling component. 
+    Section \ref{sec:data-pipeline-model} describes the data pipeline model and the components that are sent to the Deployment API.
+    It is then sent to a server that consumes the data pipeline through a \emph{Deployment API}.
+    Afterwards, the data pipeline is forwarded to the \emph{Preprocessing} component that prepares the data for further computations as described in section \ref{sec:data-preprocessing-techniques}.
+    It is then sent to the adaptation component (see \ref{sec:resource-prediction-model}). The tasks with their adapted resource utilisation are then sent to the Scheduling component. 
     The tasks are scheduled and mapped onto available resources. 
-    The mapped tasks are provided to the orchestration component which then deploys the tasks onto the resources defined in the schedule.
+    The mapped tasks are provided to the \emph{Orchestration} component which then deploys the tasks onto the resources defined in the schedule.
 
 
 
